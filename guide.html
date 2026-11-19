@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guide d’installation — Carnet</title>
+<meta name="theme-color" content="#0b0c0a">
+<meta name="color-scheme" content="dark">
+<style>
+:root{--bg:#0b0c0a;--card:#161914;--card2:#1d211a;--line:#272c23;--ink:#f2f5ee;--mute:#8b9384;--acc:#b6f23a;--accd:rgba(182,242,58,.14);--vio:#a78bfa;--viod:rgba(167,139,250,.15);--ora:#fb923c;--orad:rgba(251,146,60,.14)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:680px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 24px) 16px 60px}
+.hero{border-radius:26px;padding:24px 20px;border:1px solid #2b3324;background:radial-gradient(130% 110% at 100% 0%,rgba(182,242,58,.30),transparent 55%),linear-gradient(160deg,#1c2117,#10120e)}
+.tag{display:inline-block;font-size:11px;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);background:var(--accd);padding:4px 10px;border-radius:999px}
+h1{font-size:30px;line-height:1.1;margin:12px 0 6px;font-weight:800;letter-spacing:-.025em}
+h2{font-size:20px;margin:0 0 4px;font-weight:800;letter-spacing:-.015em;display:flex;align-items:center;gap:10px}
+h2 .n{width:30px;height:30px;border-radius:50%;background:var(--acc);color:#0b0c0a;display:grid;place-items:center;font-size:15px;flex:none}
+p{margin:6px 0}.mute{color:var(--mute)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0}
+.warn{border-color:rgba(251,146,60,.45);background:linear-gradient(var(--orad),var(--orad)),var(--card)}
+.vio{border-color:#36304d;background:linear-gradient(var(--viod),var(--viod)),var(--card)}
+ol{counter-reset:s;list-style:none;padding:0;margin:10px 0}
+ol li{counter-increment:s;position:relative;padding:3px 0 10px 38px}
+ol li::before{content:counter(s);position:absolute;left:0;top:2px;width:26px;height:26px;border-radius:50%;background:var(--accd);color:var(--acc);font-weight:800;font-size:13px;display:grid;place-items:center}
+ul{padding-left:20px;margin:8px 0}ul li{margin:5px 0}
+b{color:#fff}code,.k{background:var(--card2);border:1px solid var(--line);border-radius:7px;padding:1px 7px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;color:var(--acc);word-break:break-all}
+.files{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}
+.files span{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.tabs{grid-template-columns:1fr}}
+a{color:var(--acc)}
+.btn{display:inline-block;background:var(--acc);color:#0b0c0a;font-weight:750;text-decoration:none;padding:12px 18px;border-radius:999px;margin-top:10px}
+small{color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <span class="tag">Guide d’installation</span>
+    <h1>Ton carnet sur ton téléphone</h1>
+    <p class="mute">En 3 étapes : tu le mets en ligne une fois (gratuit, ~10 min, depuis un ordinateur), tu l’installes sur ton téléphone, et il marche ensuite sans Claude et sans réseau.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">1</span>Mettre l’appli en ligne (une seule fois)</h2>
+    <p class="mute">GitHub Pages héberge gratuitement des sites. Tu n’as rien à coder.</p>
+    <ol>
+      <li>Va sur <b>github.com</b> et crée un compte gratuit (ou connecte-toi). Ton <b>pseudo</b> fera partie de l’adresse.</li>
+      <li>En haut à droite, <b>+</b> → <b>New repository</b>. Nom : <code>carnet-salle</code>. Coche <b>Public</b>. Clique <b>Create repository</b>.</li>
+      <li>Sur la page du dépôt, clique le lien <b>uploading an existing file</b>.</li>
+      <li>Glisse <b>tous les fichiers</b> du dossier <code>carnet-salle</code> (pas le dossier lui-même) :
+        <div class="files"><span>index.html</span><span>guide.html</span><span>manifest.webmanifest</span><span>sw.js</span><span>icon-192.png</span><span>icon-512.png</span><span>apple-touch-icon.png</span></div>
+        Puis clique <b>Commit changes</b>.</li>
+      <li>Onglet <b>Settings</b> → menu de gauche <b>Pages</b>. Dans « Branch », choisis <b>main</b> et <b>/(root)</b>, puis <b>Save</b>.</li>
+      <li>Attends 1 à 2 minutes, recharge la page : l’adresse apparaît en haut.<br><code>https://TON-PSEUDO.github.io/carnet-salle/</code></li>
+    </ol>
+    <p><small>Astuce : envoie-toi cette adresse par message pour l’ouvrir facilement sur ton téléphone.</small></p>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">2</span>L’installer sur ton téléphone</h2>
+    <div class="tabs">
+      <div class="card" style="margin:10px 0 0">
+        <b>📱 iPhone</b>
+        <ol>
+          <li>Ouvre l’adresse dans <b>Safari</b> (obligatoire : pas Chrome ni l’appli Instagram/Messenger).</li>
+          <li>Touche le bouton <b>Partager</b> (carré avec une flèche vers le haut).</li>
+          <li>Fais défiler, touche <b>Sur l’écran d’accueil</b>, puis <b>Ajouter</b>.</li>
+        </ol>
+      </div>
+      <div class="card" style="margin:10px 0 0">
+        <b>🤖 Android</b>
+        <ol>
+          <li>Ouvre l’adresse dans <b>Chrome</b>.</li>
+          <li>Touche <b>Installer</b> si le bandeau apparaît, ou le menu <b>⋮</b> en haut à droite.</li>
+          <li>Choisis <b>Installer l’application</b> (ou « Ajouter à l’écran d’accueil »).</li>
+        </ol>
+      </div>
+    </div>
+    <p style="margin-top:14px">Une icône verte <b>Carnet</b> apparaît. Ouvre l’appli une première fois avec du réseau : ensuite elle marche aussi <b>sans connexion</b> (salle en sous-sol, gymnase…).</p>
+  </div>
+
+  <div class="card warn">
+    <h2>⚠️ La règle d’or</h2>
+    <p>Ouvre <b>toujours</b> le carnet depuis <b>son icône</b>. Sur iPhone, l’appli installée et Safari rangent leurs données séparément : si tu notes une séance dans Safari, tu ne la retrouveras pas dans l’appli.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">3</span>Premiers réglages</h2>
+    <ol>
+      <li>Au premier lancement, l’appli te demande ton prénom, ton programme (<b>Volley — Force & Détente</b> recommandé) et tes objectifs par semaine.</li>
+      <li>Onglet <b>Profil</b> : ajoute ton <b>atteinte debout</b> (bras tendu contre un mur, pieds à plat) pour calculer ta détente.</li>
+      <li>Onglet <b>Volley</b> : ajoute ton prochain match et fais ton premier <b>test de détente</b>.</li>
+      <li>À la salle : <b>Accueil → Commencer</b>. Entre charge et reps sur la 1re série, puis touche simplement <b>✓</b> pour les suivantes : le repos démarre et l’exercice suivant s’ouvre tout seul.</li>
+    </ol>
+  </div>
+
+  <div class="card vio">
+    <h2>💾 Sauvegarder & changer de téléphone</h2>
+    <ul>
+      <li><b>Profil → Sauvegarder</b> crée un fichier <code>.json</code> : range-le dans Fichiers, iCloud ou Google Drive. L’appli te le rappelle toutes les 2 semaines.</li>
+      <li>Nouveau téléphone : installe l’appli (étape 2), puis <b>Profil → Restaurer</b> et choisis ce fichier.</li>
+      <li>Tu avais déjà des séances dans l’ancienne version (dans Claude) ? Dans l’ancienne version : <b>Stats → Copier mes données</b>. Dans la nouvelle : <b>Profil → Copier / coller en texte → Importer le texte</b>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🔄 Mettre à jour l’appli</h2>
+    <p>Si tu reçois une nouvelle version des fichiers : sur GitHub, ouvre ton dépôt → <b>Add file → Upload files</b>, glisse les nouveaux fichiers (ils remplacent les anciens) → <b>Commit</b>. Sur le téléphone, ferme et rouvre l’appli deux fois : la mise à jour s’installe. <b>Tes données ne bougent pas.</b></p>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ Dépannage</h2>
+    <ul>
+      <li><b>Page 404 sur GitHub</b> : attends 2 minutes, vérifie que <code>index.html</code> est bien à la racine (pas dans un sous-dossier) et que Pages est sur <b>main / root</b>.</li>
+      <li><b>Pas d’option « Sur l’écran d’accueil »</b> : tu n’es pas dans Safari. Copie l’adresse et colle-la dans Safari.</li>
+      <li><b>Pas de son à la fin du repos</b> : sur iPhone, désactive le mode silencieux ; la vibration n’existe pas sur iPhone.</li>
+      <li><b>« Mesurer un saut » ne réagit pas</b> : sur iPhone, accepte l’accès « Mouvement et orientation ». Si tu l’as refusé, désinstalle puis réinstalle l’appli.</li>
+      <li><b>Mes données ont disparu</b> : tu as sûrement ouvert le site dans le navigateur au lieu de l’icône (voir la règle d’or). Sinon, restaure ta dernière sauvegarde.</li>
+    </ul>
+  </div>
+
+  <p style="text-align:center"><a class="btn" href="./">Ouvrir le carnet</a></p>
+</div>
+</body>
+</html>
