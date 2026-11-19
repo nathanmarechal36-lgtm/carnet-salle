@@ -475,10 +475,11 @@ const VID={squat:['LUgOTFvashU','Jack Vanbergen'],sdt:['QrgidWFKaYs','Myprotein 
  dipst:['Dbih-r0vMmw','Myprotein France'],dips:['Dbih-r0vMmw','Myprotein France'],ytw:['LyEBEGafDxw','Group HIIT'],copen:['-l0hvf5Oduk','Accès Physio'],dc:['SngodvMU0JA','Tibo InShape'],
  elat:['q_DYeb_daeY','Olymp’Fit'],tpoulie:['KIB9gJNq2lk','Adamantium Coach'],skull:['KXyN0XL9W6Q','Maxime Clergeau'],rowb:['lFsEtyhLmvw','Toute la musculation'],curlez:['NXaZ7F2yaAg','Etienne Niel'],
  presse:['VvbvoShCvo4','BmD'],lcurl:['vl5nUdE9mWM','Physique Development'],mollets:['yQv9y1oHitc','TeamSuperPhysique'],rdj:['7DoFMV1Dnow','Jeremy Sry'],planche:['50atGHc5828','SaturnoMovement'],
- crunchp:['M1HeORCwv8A','Snap Fitness'],pogo:['s_qM8NDHp1k','Health & High Performance'],sj:['H4mVcGRmQhI','Calixpert'],boxj:['NBY9-kTuHEk','CrossFit'],cmj:['_Qzsy59zGhA','Brieuc Le Dantec'],
+ crunchp:['M1HeORCwv8A','Snap Fitness'],pogo:['YhKaUCXP81s','Louis Bourlier'],
+ dropj:['AzPJZHOmGEg','Wil Fleming'],broadj:['dVgtvAXeBQw','Athletics Coach'],tuck:['Yl7tEmpzknY','Onnit'],mbslam:['QxYhFwMd1Ks','CORE Strong Fitness'],splitj:['ivXUvNUAN0M','Lepape'],sj:['H4mVcGRmQhI','Calixpert'],boxj:['NBY9-kTuHEk','CrossFit'],cmj:['_Qzsy59zGhA','Brieuc Le Dantec'],
  approach:['6GOHF5cNIKs','SIKANA'],blockj:['hJKueZn-tNQ','SIKANA'],skater:['wvrb9Wi35SM','Saguaro Shoes'],trapdl:['KTJranIRvjw','Nassim Sahili'],gobletsq:['u9xM9NQ7tNw','Franck Ropers'],frontsq:['H_d6oaCKG0U','Myprotein France']};
 // Photos départ / arrivée (Free Exercise DB, domaine public), à la racine : <id>-0.jpg et <id>-1.jpg
-const PHOTO=new Set('peck tpoulie arnold russian presse abduct pompes elat extnuque rowc dih curlinc nordic cmj sj tirv lext curlez sdt dc rowu hipthrust mbslam rowb roue deadbug bandpull dm splitj efront dipst curlpup dcs face adduct mollets crunchp frontsq boxj gainlat broadj tuck mbthrow hack stepup curlm oiseau pullo squat dropj pallof skull molassis trac rotext calfsl dips lomb dib planche rdj dch lcurl trapdl shrug gobletsq curlpb fentes'.split(' '));
+const PHOTO=new Set('peck tpoulie arnold russian presse abduct pompes elat extnuque rowc dih curlinc nordic cmj sj tirv lext curlez sdt dc rowu hipthrust mbslam rowb roue deadbug bandpull dm splitj efront dipst curlpup dcs face adduct mollets crunchp frontsq boxj gainlat broadj tuck mbthrow hack stepup curlm oiseau pullo squat dropj pallof skull molassis trac rotext calfsl dips lomb dib planche rdj dch lcurl trapdl shrug gobletsq curlpb fentes hurdle skater slhop'.split(' '));
 const photos=ex=>`<div class="exph" role="img" aria-label="Photos de l’exercice : départ et arrivée"><img src="${ex.id}-0.jpg" alt="" loading="lazy"><img src="${ex.id}-1.jpg" alt="" loading="lazy" class="b"><span class="ph0">Départ</span><span class="ph1">Arrivée</span></div>`;
 function media(ex){const v=VID[ex.id];
   const vis=PHOTO.has(ex.id)?photos(ex):demo(ex);
@@ -626,7 +627,7 @@ const ic=(n,c='')=>{const p=ICONS[n]||'';return `<svg class="i ${c}" viewBox="0 
 // ===================== STOCKAGE =====================
 const LS={get(key,d){try{const v=localStorage.getItem(key);return v===null?d:JSON.parse(v)}catch(e){return d}},
           set(key,v){try{localStorage.setItem(key,JSON.stringify(v))}catch(e){}}};
-const DEF_PROFILE={name:'',poste:'',taille:'',poids:'',age:'',sexe:'',reach:'',net:243,goalGym:3,goalVb:2,ngoal:'maintien',rdays:[],rtime:'18:00',nodl:'',onb:0};
+const DEF_PROFILE={name:'',poste:'',taille:'',poids:'',age:'',sexe:'',reach:'',net:243,goalGym:3,goalVb:2,ngoal:'maintien',rdays:[],rtime:'18:00',nodl:'',team:'',teamName:'',onb:0};
 let logs=LS.get('gym_logs',{}),swaps=LS.get('gym_swaps',{}),profile=Object.assign({},DEF_PROFILE,LS.get('gym_profile',{})),
     volley=LS.get('gym_volley',[]),jumps=LS.get('gym_jumps',[]),rpe=LS.get('gym_rpe',{}),match=LS.get('gym_match',''),weights=LS.get('gym_weights',[]),
     ready=LS.get('gym_ready',{}),prot=LS.get('gym_prot',{}),shop=LS.get('gym_shop',{}),custom=LS.get('gym_custom',{});
@@ -635,7 +636,7 @@ let tab='home',grp='plyo',libQ='',openEx=new Set(),progId='volley',sid=null,date
 try{const p=localStorage.getItem('gym_prog');if(p&&PROGS[p])progId=p}catch(e){}
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
 const saveLogs=()=>LS.set('gym_logs',logs),saveProfile=()=>LS.set('gym_profile',profile),saveVolley=()=>LS.set('gym_volley',volley),saveJumps=()=>LS.set('gym_jumps',jumps),saveWeights=()=>LS.set('gym_weights',weights);
-const saveProg=()=>{try{localStorage.setItem('gym_prog',progId)}catch(e){}};
+const saveProg=()=>{try{localStorage.setItem('gym_prog',progId)}catch(e){}markDirty()};
 function saveAll(){saveLogs();saveProfile();saveVolley();saveJumps();saveWeights();LS.set('gym_swaps',swaps);LS.set('gym_rpe',rpe);LS.set('gym_match',match);LS.set('gym_ready',ready);LS.set('gym_prot',prot);LS.set('gym_custom',custom)}
 
 // ===================== OUTILS =====================
@@ -1242,7 +1243,7 @@ function weightCard(g){const l=wSorted(),t=wTrend();
   <div class="goal" style="color:${t?'var(--acc)':'var(--mute)'}">${ic('target')}<span>${trendMsg(t,g)}</span></div>
   ${l.length?`<details style="margin-top:14px"><summary class="small muted">Mes pesées ${ic('chev')}</summary><div class="det">${[...l].reverse().slice(0,10).map(x=>`<div class="li"><div class="mid"><div class="nm">${fr(x.kg)} kg</div><div class="sub">${relDay(x.date)}</div></div><button class="xbtn" data-act="delw" data-id="${x.id}" aria-label="Supprimer">${ic('trash')}</button></div>`).join('')}</div></details>`:''}</div>`}
 function renderProgress(){
-  const segs={salle:'Salle',detente:'Détente',charge:'Charge',trophees:'Trophées',histo:'Calendrier'};
+  const segs=Object.assign({salle:'Salle',detente:'Détente',charge:'Charge',trophees:'Trophées'},profile.team||ptab==='equipe'?{equipe:'Équipe'}:{},{histo:'Calendrier'});
   let h=`<header class="hdr"><div><div class="hello">Tes performances</div><h1>Progrès</h1></div>${avatarBtn()}</header><div class="seg">${Object.keys(segs).map(s=>`<button class="${s===ptab?'on':''}" data-act="ptab" data-v="${s}">${segs[s]}</button>`).join('')}</div>`;
   const t=todayStr(),wk=monday(t),W8=[];for(let i=7;i>=0;i--)W8.push(addDays(wk,-7*i));
   if(ptab==='salle'){
@@ -1276,6 +1277,7 @@ function renderProgress(){
     <div class="card"><span class="t">${ic('flame')} Effort par semaine</span>${sbars(gymL,vbL,W8.map(fmtDM),7)}<div class="legend"><span><i style="background:var(--acc)"></i>Salle</span><span><i style="background:var(--vio)"></i>Volley</span></div></div>
     <div class="card"><span class="t">${ic('bolt')} Sauts de pliométrie</span>${bars(pc,W8.map(fmtDM),7,v=>v,'var(--yel)','rgba(250,204,21,.32)')}</div>
     <details class="card"><summary><span class="vchip">${ic('info')} Comment c’est calculé</span>${ic('chev')}</summary><div class="det">Effort = durée × intensité ressentie. L’appli compare tes 7 derniers jours à ta moyenne des 4 dernières semaines : entre 0,8 et 1,3, c’est la zone où l’on se blesse le moins.</div></details>`;
+  }else if(ptab==='equipe'){h+=teamView();
   }else if(ptab==='trophees'){const G=gameStats();
     h+=`<section class="hero nu"><span class="tag" style="color:var(--yel);background:var(--yeld)">${ic('trophy')} Niveau ${G.lvl}</span><h2>${G.title}</h2><p>${G.xp.toLocaleString('fr-FR')} XP au total · encore ${(G.need-G.into).toLocaleString('fr-FR')} XP pour « ${titleOf(G.lvl+1)} »</p>
      <div class="pbar"><i style="width:${Math.round(G.into/G.need*100)}%;background:var(--yel)"></i></div>
@@ -1312,6 +1314,7 @@ function renderProfile(){
    <label class="field"><span>Poste au volley</span><select data-pf="poste">${opt(POSTES.map(x=>[x,x||'—']),p.poste)}</select></label>
    <label class="field"><span>Atteinte debout (cm)</span><input data-pf="reach" inputmode="numeric" placeholder="${num(p.taille)?'≈ '+Math.round(num(p.taille)*1.33)+' (estimé)':'ex. 235'}" value="${esc(p.reach)}"><div class="help">Debout, pieds à plat, bras tendu contre un mur : hauteur du bout des doigts. Sert à calculer ta détente.</div></label>
    <label class="field" style="margin-bottom:4px"><span>Hauteur du filet</span><select data-pf="net">${opt([[243,'2,43 m (hommes)'],[235,'2,35 m (jeunes / mixte)'],[224,'2,24 m (femmes)'],[215,'2,15 m (jeunes)']],p.net)}</select></label></div>
+  ${acctCard()}
   <div class="card"><span class="t">${ic('target')} Mes objectifs par semaine</span><div class="small muted" style="margin-bottom:10px">Séances de salle</div>${goals('goalGym',5,1)}<div class="small muted" style="margin:18px 0 10px">Séances de volley</div>${goals('goalVb',5,0)}</div>
   <div class="card"><span class="t">${ic('cal')} Rappels</span><div class="small muted">Choisis tes jours de salle : l’appli crée un événement qui se répète chaque semaine dans ton calendrier, avec une alerte 15 min avant.</div>
    <div class="days" style="margin-top:14px">${'LMMJVSD'.split('').map((l,i)=>`<button class="${(p.rdays||[]).includes(i)?'on':''}" data-act="rday" data-v="${i}" aria-label="${DAYN[i]}" aria-pressed="${(p.rdays||[]).includes(i)}">${l}</button>`).join('')}</div>
@@ -1343,7 +1346,8 @@ function welcomeSheet(){draft={prog:progId,goalVb:profile.goalVb,goalGym:profile
   <div class="field"><span>Ton programme de salle</span>${Object.keys(PROGS).map(p=>`<button type="button" class="choice ${p===progId?'on':''}" data-act="wprog" data-v="${p}"><span class="thumb" style="background:var(--accd);color:var(--acc)">${ic(PROGS[p].icon)}</span><span><b>${PROGS[p].name}</b><small>${PROGS[p].desc}</small></span></button>`).join('')}</div>
   <div class="field"><span>Séances de salle par semaine</span>${optsHtml('goalGym',[[1,'1'],[2,'2'],[3,'3'],[4,'4']],draft.goalGym)}</div>
   <div class="field"><span>Séances de volley par semaine</span>${optsHtml('goalVb',[[0,'0'],[1,'1'],[2,'2'],[3,'3'],[4,'4+']],draft.goalVb)}</div>
-  <button class="btn acc block" data-act="wdone" style="margin-top:8px">C’est parti</button>`)}
+  <button class="btn acc block" data-act="wdone" style="margin-top:8px">C’est parti</button>
+  <div class="center" style="margin-top:12px"><button class="linkbtn" data-act="acct" data-v="login">J’ai déjà un compte : me connecter</button></div>`)}
 let tk='cmj';
 function testSheet(){
   const J=JK[tk],r=reach();
@@ -1461,6 +1465,142 @@ async function keepAwake(){clearTimeout(wlOff);wlOff=setTimeout(()=>{try{wl&&wl.
   try{if('wakeLock' in navigator&&!wl){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>{wl=null})}}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){if(tInt)tick();if(wlOff)keepAwake();if(!typing()&&$('#sheet').hidden)render()}});
 
+// ===================== COMPTES (Firebase) : connexion, synchronisation, équipes =====================
+// Configuration publique du projet Firebase (pas secrète : ce sont les règles Firestore qui protègent les données)
+const FB_CFG={apiKey:"AIzaSyD1YmIMUbX6PHLiX9KIsh4r7EXerMC-diA",authDomain:"my-volley-partner-mvp.firebaseapp.com",projectId:"my-volley-partner-mvp",storageBucket:"my-volley-partner-mvp.firebasestorage.app",messagingSenderId:"574816953425",appId:"1:574816953425:web:7ce5a1ee7522cad7f78470"};
+let fbAuth=null,fbDb=null,fbP=null,cUser=null,cState='off',cLast=0,cMuted=false,cT=null,cBusy=false,pendingLogin=false,teamCache=null,teamLoading=false;
+let sync=Object.assign({uid:'',stamp:0,dirty:false,n:0},LS.get('gym_sync',{}));
+const SYNCK=['gym_logs','gym_swaps','gym_profile','gym_volley','gym_jumps','gym_rpe','gym_match','gym_weights','gym_ready','gym_prot','gym_custom'];
+function markDirty(){if(cMuted)return;sync.dirty=true;LS.set('gym_sync',sync);if(cUser){clearTimeout(cT);cT=setTimeout(pushCloud,4000)}}
+{const _set=LS.set;LS.set=(k,v)=>{_set(k,v);if(SYNCK.includes(k))markDirty()}}
+// Chargement des fichiers Firebase seulement quand on en a besoin (copiés dans l’appli : marche hors ligne)
+function loadFb(){if(fbP)return fbP;const ld=src=>new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('load'));document.head.appendChild(s)});
+  fbP=ld('fb-app.js').then(()=>ld('fb-auth.js')).then(()=>ld('fb-firestore.js')).then(()=>{if(!firebase.apps.length)firebase.initializeApp(FB_CFG);fbAuth=firebase.auth();fbAuth.languageCode='fr';fbDb=firebase.firestore();
+    return new Promise(res=>{let first=true;fbAuth.onAuthStateChanged(u=>{onUser(u);if(first){first=false;res()}})})}).catch(e=>{fbP=null;throw e});return fbP}
+function fbErr(e){const c=(e&&e.code)||(e&&e.message)||'';return({'auth/email-already-in-use':'Un compte existe déjà avec cet e-mail : connecte-toi.','auth/invalid-email':'Adresse e-mail invalide.','auth/weak-password':'Mot de passe trop faible (8 caractères minimum).',
+  'auth/invalid-credential':'E-mail ou mot de passe incorrect.','auth/wrong-password':'Mot de passe incorrect.','auth/user-not-found':'Aucun compte avec cet e-mail.','auth/invalid-login-credentials':'E-mail ou mot de passe incorrect.',
+  'auth/too-many-requests':'Trop d’essais. Réessaie dans quelques minutes.','auth/network-request-failed':'Pas de réseau. Réessaie quand tu es connecté.','load':'Pas de réseau. Réessaie quand tu es connecté.',
+  'permission-denied':'Accès refusé : vérifie les règles de sécurité Firestore.','unavailable':'Serveur injoignable : vérifie ton réseau.'})[c]||('Erreur : '+c)}
+const hasLocal=()=>sessionDates().length+volley.length+jumps.length+weights.length>0;
+function onUser(u){cUser=u;if(!u){cState='off';refreshAcct();return}
+  if(pendingLogin||sync.uid!==u.uid){pendingLogin=false;firstSync(u)}else startSync(u)}
+async function fetchRemote(uid){const ur=fbDb.collection('users').doc(uid),s=await ur.get();if(!s.exists)return null;const d=s.data(),n=d.n||0;if(!n)return null;
+  const cs=await Promise.all(Array.from({length:n},(_,i)=>ur.collection('data').doc('c'+i).get()));return{stamp:d.stamp||0,n,o:JSON.parse(cs.map(c=>c.exists?c.data().t:'').join(''))}}
+// Remplace les données du téléphone par celles du compte
+function applyRemote(o){cMuted=true;logs=o.logs||{};swaps=o.swaps||{};profile=Object.assign({},DEF_PROFILE,o.profile||{},{onb:1});volley=o.volley||[];jumps=o.jumps||[];weights=o.weights||[];
+  rpe=o.rpe||{};match=o.match||'';ready=o.ready||{};prot=o.prot||{};custom=o.custom||{};if(o.prog&&PROGS[o.prog]){progId=o.prog;saveProg()}saveAll();cMuted=false;gC=null}
+// Fusionne : garde tout ce qui est sur le téléphone et ajoute ce qui n’existe que dans le compte
+function mergeData(o){cMuted=true;Object.keys(o.logs||{}).forEach(key=>{const v=o.logs[key];if(v&&EX[v.exId]&&!logs[key])logs[key]=v});
+  const un=(a,b)=>{const ids=new Set(a.map(x=>x.id));(b||[]).forEach(x=>{if(x&&x.id&&!ids.has(x.id))a.push(x)});return a},mo=(a,b)=>Object.assign({},b||{},a);
+  volley=un(volley,o.volley);jumps=un(jumps,o.jumps);weights=un(weights,o.weights);swaps=mo(swaps,o.swaps);rpe=mo(rpe,o.rpe);ready=mo(ready,o.ready);prot=mo(prot,o.prot);custom=mo(custom,o.custom);
+  profile=Object.assign({},DEF_PROFILE,profile,o.profile||{},{onb:1});if(!match&&o.match)match=o.match;saveAll();cMuted=false;gC=null;sync.dirty=true}
+async function firstSync(u){cState='sync';refreshAcct();
+  try{const r=await fetchRemote(u.uid);sync.uid=u.uid;
+    if(!r){if(!profile.name&&u.displayName){profile.name=u.displayName;saveProfile()}await pushCloud()}
+    else if(!hasLocal()){applyRemote(r.o);sync={uid:u.uid,stamp:r.stamp,dirty:false,n:r.n};LS.set('gym_sync',sync);cState='ok';cLast=Date.now();render();toast('Ta progression est récupérée ✓',2600)}
+    else{mergeData(r.o);sync.n=r.n;await pushCloud();render();toast('Données du téléphone et du compte réunies ✓',2800)}}
+  catch(e){console.warn(e);cState=navigator.onLine?'err':'offline';toast(fbErr(e),3500)}refreshAcct()}
+async function startSync(u){try{const r=await fetchRemote(u.uid);
+    if(!r){await pushCloud()}
+    else if(r.stamp>(sync.stamp||0)){if(sync.dirty){mergeData(r.o);sync.n=r.n;await pushCloud()}else{applyRemote(r.o);sync={uid:u.uid,stamp:r.stamp,dirty:false,n:r.n};LS.set('gym_sync',sync);cState='ok';cLast=Date.now()}if(!typing()&&$('#sheet').hidden)render()}
+    else if(sync.dirty)await pushCloud();else{cState='ok';cLast=Date.now()}}
+  catch(e){console.warn(e);cState=navigator.onLine?'err':'offline'}refreshAcct()}
+// Envoie les données (découpées en morceaux) + le résumé visible par l’équipe
+async function pushCloud(){if(!cUser||!fbDb)return;if(cBusy){clearTimeout(cT);cT=setTimeout(pushCloud,3000);return}if(navigator.onLine===false){cState='offline';refreshAcct();return}
+  cBusy=true;cState='sync';refreshAcct();
+  try{const uid=cUser.uid,txt=exportTxt(),CH=400000,parts=[];for(let i=0;i<txt.length;i+=CH)parts.push(txt.slice(i,i+CH));
+    const now=Date.now(),b=fbDb.batch(),ur=fbDb.collection('users').doc(uid);
+    parts.forEach((p,i)=>b.set(ur.collection('data').doc('c'+i),{t:p}));for(let i=parts.length;i<(sync.n||0);i++)b.delete(ur.collection('data').doc('c'+i));
+    b.set(ur,{name:profile.name||'',team:profile.team||'',n:parts.length,stamp:now,v:7},{merge:true});
+    if(profile.team)b.set(fbDb.collection('teams').doc(profile.team).collection('members').doc(uid),teamSummary());
+    await b.commit();sync={uid,stamp:now,dirty:false,n:parts.length};LS.set('gym_sync',sync);cState='ok';cLast=now}
+  catch(e){console.warn(e);cState=navigator.onLine?'err':'offline'}cBusy=false;refreshAcct()}
+function refreshAcct(){if(tab==='profile'||(tab==='progress'&&ptab==='equipe')){if(!typing()&&$('#sheet').hidden)render()}}
+function syncTxt(){return({off:'',sync:'Synchronisation…',ok:'Synchronisé'+(cLast?' à '+hhmm(cLast):''),offline:'Hors ligne : sera envoyé dès que tu as du réseau',err:'Échec de la synchro : réessaie'})[cState]+(sync.dirty&&cState!=='sync'&&cState!=='offline'?' · modifications en attente':'')}
+// Résumé partagé avec l’équipe (pas de poids ni de détails)
+function teamSummary(){const G=gameStats(),wk=monday(todayStr()),gd=sessionDates(),sq=sessionsFor('squat'),all=[...gd,...volley.map(v=>v.date)].sort(),aj=bestJ('attaque');
+  return{name:profile.name||'Sans nom',poste:profile.poste||'',lvl:G.lvl,title:G.title,xp:G.xp,streak:G.streak,nb:G.nb,wk:gd.filter(d=>monday(d)===wk).length+volley.filter(v=>monday(v.date)===wk).length,wkOf:wk,goal:G.goalT,
+    ses:gd.length,cmj:bestJ('cmj'),att:aj!=null?aj-net():null,sq:sq.length?Math.max(...sq.map(topW)):0,last:all[all.length-1]||'',stamp:Date.now()}}
+async function loadTeam(){if(!cUser||!profile.team||teamLoading)return;teamLoading=true;
+  try{const s=await fbDb.collection('teams').doc(profile.team).collection('members').get();teamCache={team:profile.team,at:Date.now(),list:s.docs.map(d=>Object.assign({uid:d.id},d.data()))}}
+  catch(e){teamCache={team:profile.team,at:Date.now(),list:[],err:fbErr(e)}}teamLoading=false;refreshAcct()}
+const TCODE='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',newCode=()=>Array.from({length:6},()=>TCODE[Math.random()*TCODE.length|0]).join('');
+async function createTeam(name){for(let i=0;i<5;i++){const code=newCode(),ref=fbDb.collection('teams').doc(code);if((await ref.get()).exists)continue;
+  await ref.set({name,owner:cUser.uid,created:Date.now()});profile.team=code;profile.teamName=name;saveProfile();await pushCloud();teamCache=null;return code}throw new Error('code')}
+async function joinTeam(code){const t=await fbDb.collection('teams').doc(code).get();if(!t.exists)return false;profile.team=code;profile.teamName=t.data().name||'Équipe';saveProfile();await pushCloud();teamCache=null;return true}
+async function leaveTeam(){const code=profile.team;try{await fbDb.collection('teams').doc(code).collection('members').doc(cUser.uid).delete()}catch(e){}profile.team='';profile.teamName='';saveProfile();teamCache=null;pushCloud()}
+function clearLocal(){try{Object.keys(localStorage).filter(k=>k.startsWith('gym_')).forEach(k=>localStorage.removeItem(k))}catch(e){}}
+// ----- Écrans des comptes -----
+function acctSheet(m){draft={m};openSheet(m==='signup'?'Créer un compte':m==='login'?'Se connecter':'Mot de passe oublié',`
+  <p class="lead">${m==='signup'?'Ta progression est sauvegardée en ligne : tu la retrouves sur n’importe quel téléphone, et tu peux rejoindre une équipe.':m==='login'?'Retrouve ta progression sur ce téléphone.':'Tu vas recevoir un e-mail pour choisir un nouveau mot de passe.'}</p>
+  ${m==='signup'?`<label class="field"><span>Prénom</span><input id="a-name" value="${esc(profile.name)}" autocomplete="given-name"></label>`:''}
+  <label class="field"><span>E-mail</span><input id="a-mail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false"></label>
+  ${m!=='reset'?`<label class="field"><span>Mot de passe</span><input id="a-pw" type="password" autocomplete="${m==='signup'?'new-password':'current-password'}" placeholder="${m==='signup'?'8 caractères minimum':''}"></label>`:''}
+  <div class="small" id="a-msg" style="color:var(--ora);min-height:20px;margin:-6px 2px 10px"></div>
+  <button class="btn acc block" data-act="asubmit">${m==='signup'?'Créer mon compte':m==='login'?'Se connecter':'Envoyer l’e-mail'}</button>
+  <div class="center" style="margin-top:14px">${m==='login'?`<button class="linkbtn" data-act="acct" data-v="reset">Mot de passe oublié ?</button><br><button class="linkbtn" data-act="acct" data-v="signup">Pas encore de compte ? Créer un compte</button>`:`<button class="linkbtn" data-act="acct" data-v="login">J’ai déjà un compte</button>`}</div>
+  ${m==='signup'?`<div class="small muted" style="margin-top:16px">Tes données sont stockées chez Google Firebase, en Europe. Ton équipe ne voit qu’un résumé (niveau, séances, détente, squat), jamais ton poids. Tu peux supprimer ton compte à tout moment.</div>`:''}`)}
+async function acctSubmit(){const m=draft.m,mail=$('#a-mail').value.trim(),pw=$('#a-pw')?$('#a-pw').value:'',msg=$('#a-msg'),btn=$('[data-act=asubmit]');
+  const say=(t,c)=>{msg.style.color=c||'var(--ora)';msg.textContent=t};
+  if(!/^\S+@\S+\.\S+$/.test(mail))return say('Entre une adresse e-mail valide.');
+  if(m!=='reset'&&pw.length<(m==='signup'?8:1))return say(m==='signup'?'Mot de passe : 8 caractères minimum.':'Entre ton mot de passe.');
+  say('Un instant…','var(--mute)');btn.disabled=true;
+  try{await loadFb();
+    if(m==='reset'){await fbAuth.sendPasswordResetEmail(mail);closeSheet();toast('E-mail envoyé ✓ Regarde aussi dans tes spams.',3500);return}
+    pendingLogin=true;
+    if(m==='signup'){const nm=$('#a-name').value.trim();if(nm){profile.name=nm;saveProfile()}const c=await fbAuth.createUserWithEmailAndPassword(mail,pw);if(nm)c.user.updateProfile({displayName:nm}).catch(()=>{})}
+    else await fbAuth.signInWithEmailAndPassword(mail,pw);
+    closeSheet();toast(m==='signup'?'Compte créé ✓':'Connecté ✓')}
+  catch(e){pendingLogin=false;btn.disabled=false;say(fbErr(e))}}
+function teamSheet(m){draft={m};openSheet(m==='create'?'Créer une équipe':'Rejoindre une équipe',`
+  <p class="lead">${m==='create'?'Tu recevras un code à partager. Chaque membre verra le classement de l’équipe.':'Demande le code à 6 caractères à la personne qui a créé l’équipe.'}</p>
+  <label class="field"><span>${m==='create'?'Nom de l’équipe':'Code de l’équipe'}</span><input id="t-in" ${m==='create'?'placeholder="ex. Volley Club Seniors"':'placeholder="ex. K7P2XQ" autocapitalize="characters" autocomplete="off" style="text-transform:uppercase;letter-spacing:.15em;font-weight:750"'}></label>
+  <div class="small" id="t-msg" style="color:var(--ora);min-height:20px;margin:-6px 2px 10px"></div>
+  <button class="btn acc block" data-act="tsubmit">${m==='create'?'Créer l’équipe':'Rejoindre'}</button>`)}
+async function teamSubmit(){const m=draft.m,v=$('#t-in').value.trim(),msg=$('#t-msg'),btn=$('[data-act=tsubmit]');if(!v){msg.textContent=m==='create'?'Donne un nom à l’équipe.':'Entre le code.';return}
+  btn.disabled=true;msg.style.color='var(--mute)';msg.textContent='Un instant…';
+  try{if(m==='create'){const code=await createTeam(v.slice(0,40));closeSheet();ptab='equipe';go('progress');toast('Équipe créée ! Code : '+code,4000)}
+    else{const ok=await joinTeam(v.toUpperCase().replace(/[^A-Z0-9]/g,''));if(!ok){btn.disabled=false;msg.style.color='var(--ora)';msg.textContent='Aucune équipe avec ce code.';return}closeSheet();ptab='equipe';go('progress');toast('Bienvenue dans '+profile.teamName+' !',3000)}}
+  catch(e){btn.disabled=false;msg.style.color='var(--ora)';msg.textContent=fbErr(e)}}
+function delSheet(){openSheet('Supprimer mon compte',`<p class="lead">Ton compte et toutes tes données en ligne seront supprimés définitivement. Tes données restent sur ce téléphone.</p>
+  <label class="field"><span>Confirme avec ton mot de passe</span><input id="d-pw" type="password" autocomplete="current-password"></label>
+  <div class="small" id="d-msg" style="color:var(--ora);min-height:20px;margin:-6px 2px 10px"></div>
+  <button class="btn block" data-act="cdel2" style="background:var(--red);border-color:var(--red);color:#1a0606">Supprimer définitivement</button>`)}
+async function deleteAccount(){const u=cUser,pw=$('#d-pw').value,msg=$('#d-msg');if(!pw){msg.textContent='Entre ton mot de passe.';return}msg.style.color='var(--mute)';msg.textContent='Suppression…';
+  try{await u.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(u.email,pw));
+    const ur=fbDb.collection('users').doc(u.uid),b=fbDb.batch();for(let i=0;i<(sync.n||0)+2;i++)b.delete(ur.collection('data').doc('c'+i));b.delete(ur);
+    if(profile.team)b.delete(fbDb.collection('teams').doc(profile.team).collection('members').doc(u.uid));await b.commit();await u.delete();
+    sync={uid:'',stamp:0,dirty:false,n:0};LS.set('gym_sync',sync);profile.team='';profile.teamName='';cMuted=true;saveProfile();cMuted=false;closeSheet();toast('Compte supprimé. Tes données restent sur ce téléphone.',3500);render()}
+  catch(e){msg.style.color='var(--ora)';msg.textContent=fbErr(e)}}
+async function signOutCloud(){if(!confirm('Te déconnecter ? Ta progression reste dans ton compte et sera retirée de ce téléphone.'))return;
+  if(sync.dirty)await pushCloud();
+  if(sync.dirty&&!confirm('Tes dernières modifications n’ont pas pu être envoyées (pas de réseau). Te déconnecter quand même ? Elles seront perdues.'))return;
+  try{await fbAuth.signOut()}catch(e){}clearLocal();location.reload()}
+function acctCard(){
+  if(!cUser)return `<div class="card ok-box"><span class="t">${ic('user')} Mon compte</span><div class="small muted">${sync.uid&&cState!=='off'?'Connexion…':'Crée un compte pour sauvegarder ta progression en ligne, la retrouver sur un autre téléphone et rejoindre une équipe.'}</div>
+    <div class="btnrow"><button class="btn acc" data-act="acct" data-v="signup">Créer un compte</button><button class="btn" data-act="acct" data-v="login">Se connecter</button></div></div>`;
+  return `<div class="card"><span class="t">${ic('user')} Mon compte</span><div style="font-weight:650;word-break:break-all">${esc(cUser.email)}</div>
+    <div class="small" style="margin-top:4px;color:${cState==='err'?'var(--ora)':cState==='ok'&&!sync.dirty?'var(--acc)':'var(--mute)'}">${esc(syncTxt())}</div>
+    <div class="btnrow"><button class="btn sm" data-act="csync">${ic('swap')} Synchroniser</button><button class="btn sm" data-act="cout">Se déconnecter</button></div>
+    <button class="linkbtn" data-act="cdel" style="color:var(--mute);margin-top:6px">Supprimer mon compte</button></div>
+   <div class="card"><span class="t">${ic('ball')} Mon équipe</span>${profile.team?`<div style="font-weight:750;font-size:17px">${esc(profile.teamName||'Équipe')}</div><div class="small muted" style="margin-top:2px">Code à partager : <b style="color:var(--acc);letter-spacing:.12em">${esc(profile.team)}</b></div>
+    <div class="btnrow"><button class="btn acc sm" data-act="go" data-go="progress" data-ptab="equipe">Voir l’équipe</button><button class="btn sm" data-act="tshare">${ic('share')} Inviter</button><button class="btn sm" data-act="tleave">Quitter</button></div>`
+    :`<div class="small muted">Crée une équipe pour ton club ou tes potes, ou rejoins-en une avec un code. Chacun voit le classement et la progression des autres.</div><div class="btnrow"><button class="btn acc sm" data-act="team" data-v="create">Créer une équipe</button><button class="btn sm" data-act="team" data-v="join">Rejoindre avec un code</button></div>`}</div>`}
+function teamView(){if(!cUser)return `<div class="card empty">Connecte-toi dans Profil pour voir ton équipe.</div>`;if(!profile.team)return `<div class="card empty">Tu n’es dans aucune équipe.<div class="btnrow" style="justify-content:center"><button class="btn acc sm" data-act="team" data-v="create">Créer une équipe</button><button class="btn sm" data-act="team" data-v="join">Rejoindre</button></div></div>`;
+  if(!teamCache||teamCache.team!==profile.team||Date.now()-teamCache.at>120000){loadTeam();if(!teamCache||teamCache.team!==profile.team)return `<div class="card empty">Chargement de l’équipe…</div>`}
+  if(teamCache.err)return `<div class="card warn"><div class="small">${esc(teamCache.err)}</div><div class="btnrow"><button class="btn sm" data-act="treload">Réessayer</button></div></div>`;
+  const wk=monday(todayStr()),me=cUser.uid,L=[...teamCache.list].sort((a,b)=>(b.xp||0)-(a.xp||0)),medal=['🥇','🥈','🥉'];
+  const best=(f,u)=>{const l=L.filter(x=>x[f]!=null&&x[f]>0).sort((a,b)=>b[f]-a[f])[0];return l?`<div class="kpi"><small>${u[0]}</small><b>${l[f]}</b><em>${u[1]}</em><div class="small muted" style="margin-top:2px">${esc(l.name)}</div></div>`:''};
+  return `<section class="hero vb" style="padding:20px 22px"><span class="tag" style="color:var(--vio);background:var(--viod)">${ic('ball')} ${L.length} membre${L.length>1?'s':''}</span><h2>${esc(profile.teamName||'Équipe')}</h2><p>Code à partager : <b style="color:var(--ink);letter-spacing:.12em">${esc(profile.team)}</b></p>
+    <div class="btnrow"><button class="btn sm" data-act="tshare">${ic('share')} Inviter</button><button class="btn sm" data-act="treload">${ic('swap')} Actualiser</button></div><div class="big">${ic('trophy')}</div></section>
+   <div class="sect-h"><h3>Classement</h3><span class="muted small">par XP</span></div>
+   <div class="card" style="padding:6px 16px">${L.map((m,i)=>{const w=m.wkOf===wk?m.wk:0;return `<div class="li" ${m.uid===me?'style="background:linear-gradient(90deg,var(--accd),transparent);margin:0 -16px;padding-left:16px;padding-right:16px"':''}>
+     <span class="lvb" style="width:42px;height:42px;font-size:17px;border-radius:14px">${m.lvl||1}</span><div class="mid"><div class="nm">${i<3?medal[i]+' ':''}${esc(m.name||'?')}${m.uid===me?' (toi)':''}</div>
+     <div class="sub">${esc(m.title||'')} · ${(m.xp||0).toLocaleString('fr-FR')} XP${m.streak?' · 🔥 '+m.streak:''}${m.last?' · '+relDay(m.last).toLowerCase():''}</div></div>
+     <div class="r"><span style="color:${w>=(m.goal||1)?'var(--acc)':'var(--mute)'}">${w}/${m.goal||'?'}</span><div class="small muted" style="font-weight:500">semaine</div></div></div>`}).join('')||'<div class="empty">Personne pour l’instant.</div>'}</div>
+   <div class="sect-h"><h3>Records de l’équipe</h3></div><div class="kpis">${best('cmj',['Détente sans élan','cm'])}${best('att',['Attaque au-dessus du filet','cm'])}${best('sq',['Squat','kg'])}${best('ses',['Séances de salle','au total'])}</div>
+   <div class="small muted" style="margin:4px 2px 0">Chacun ne partage qu’un résumé : niveau, séances, détente, squat. Les mises à jour arrivent quand chaque membre ouvre l’appli avec du réseau.</div>`}
+
 // ===================== INTERACTIONS =====================
 function checkSet(id,i){
   const ex=EX[id],e=getEntry(id),s=e.sets[i],pv=prev(id);
@@ -1489,6 +1629,18 @@ document.addEventListener('click',ev=>{
   case 'go':if(d.ptab)ptab=d.ptab;if(d.jk)jkind=d.jk;if(d.go==='workout'&&tab!=='lib'){date=todayStr();sid=null;showDate=false}go(d.go);break;
   case 'start':date=todayStr();sid=d.sid;showDate=false;autoKey='';openEx.clear();go('workout');openFocus();askReady();break;
   case 'rtgo':{const ss=PROGS[progId].sessions.filter(s=>s.rt===d.v&&!s.legs),n=nextSid();date=todayStr();sid=(ss.find(s=>s.id===n)||ss[0]||{}).id||null;showDate=false;autoKey='';openEx.clear();go('workout');openFocus();askReady();break}
+  case 'acct':acctSheet(d.v);break;
+  case 'asubmit':acctSubmit();break;
+  case 'csync':if(cUser){toast('Synchronisation…');startSync(cUser).then(()=>{if(cState==='ok')toast('Synchronisé ✓')})}break;
+  case 'cout':signOutCloud();break;
+  case 'cdel':delSheet();break;
+  case 'cdel2':deleteAccount();break;
+  case 'team':if(!cUser){acctSheet('signup');break}teamSheet(d.v);break;
+  case 'tsubmit':teamSubmit();break;
+  case 'treload':teamCache=null;render();break;
+  case 'tleave':if(confirm('Quitter l’équipe '+(profile.teamName||'')+' ?')){leaveTeam();if(ptab==='equipe')ptab='trophees';render();toast('Tu as quitté l’équipe')}break;
+  case 'tshare':{const txt=`Rejoins mon équipe « ${profile.teamName} » sur Carnet — Salle & Volley !\n1. Ouvre ${location.origin+location.pathname} dans Safari et ajoute-la à l’écran d’accueil\n2. Profil → Créer un compte\n3. Rejoindre avec le code : ${profile.team}`;
+    if(navigator.share)navigator.share({text:txt}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('Invitation copiée ✓')).catch(()=>toast('Code : '+profile.team));break}
   case 'vid':{if(navigator.onLine===false){toast('Pas de réseau : la vidéo a besoin d’internet. Regarde les photos en attendant.',3200);break}
     const box=t.previousElementSibling;if(box&&box.classList.contains('exmedia')){box.innerHTML=`<div class="vidbox"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(d.v)}?autoplay=1&playsinline=1&rel=0&modestbranding=1" title="Vidéo explicative" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`;t.remove()}break}
   case 'focus':openFocus();break;
@@ -1605,6 +1757,10 @@ window.addEventListener('appinstalled',()=>{deferredPrompt=null;LS.set('gym_hide
  F.addEventListener('touchend',e=>{if(fx===null)return;const t=e.changedTouches[0],dx=t.clientX-fx,dy=t.clientY-fy;fx=null;
    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){const j=fIdx+(dx<0?1:-1);if(j>=0&&j<curList().length){fDir=dx<0?1:-1;fIdx=j;renderFocus();F.scrollTop=0}}},{passive:true})}
 render();checkGame();
+// Compte : on se reconnecte automatiquement si on l’était, et on envoie avant que l’appli passe en arrière-plan
+if(sync.uid)loadFb().catch(()=>{cState='offline'});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&cUser&&sync.dirty){clearTimeout(cT);pushCloud()}});
+window.addEventListener('online',()=>{if(cUser&&sync.dirty)pushCloud()});
 if(!profile.onb){if(sessionDates().length||volley.length){profile.onb=1;saveProfile()}else welcomeSheet()}
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>

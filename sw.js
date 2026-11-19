@@ -1,9 +1,10 @@
 // Service worker : l'appli fonctionne hors ligne et se met à jour quand le réseau est là.
-const CACHE = 'carnet-salle-v9';
+const CACHE = 'carnet-salle-v11';
 const FILES = ['./', './index.html', './guide.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 // Photos des exercices : mises en cache à l'installation (sans bloquer si l'une manque)
-const PHOTOS = 'peck tpoulie arnold russian presse abduct pompes elat extnuque rowc dih curlinc nordic cmj sj tirv lext curlez sdt dc rowu hipthrust mbslam rowb roue deadbug bandpull dm splitj efront dipst curlpup dcs face adduct mollets crunchp frontsq boxj gainlat broadj tuck mbthrow hack stepup curlm oiseau pullo squat dropj pallof skull molassis trac rotext calfsl dips lomb dib planche rdj dch lcurl trapdl shrug gobletsq curlpb fentes'
-  .split(' ').flatMap(id => ['./' + id + '-0.jpg', './' + id + '-1.jpg']);
+const PHOTOS = 'peck tpoulie arnold russian presse abduct pompes elat extnuque rowc dih curlinc nordic cmj sj tirv lext curlez sdt dc rowu hipthrust mbslam rowb roue deadbug bandpull dm splitj efront dipst curlpup dcs face adduct mollets crunchp frontsq boxj gainlat broadj tuck mbthrow hack stepup curlm oiseau pullo squat dropj pallof skull molassis trac rotext calfsl dips lomb dib planche rdj dch lcurl trapdl shrug gobletsq curlpb fentes hurdle skater slhop'
+  .split(' ').flatMap(id => ['./' + id + '-0.jpg', './' + id + '-1.jpg'])
+  .concat(['./fb-app.js', './fb-auth.js', './fb-firestore.js']);
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES).then(() =>
