@@ -1,5 +1,5 @@
 // Service worker : l'appli fonctionne hors ligne et se met à jour quand le réseau est là.
-const CACHE = 'carnet-salle-v6';
+const CACHE = 'carnet-salle-v7';
 const FILES = ['./', './index.html', './guide.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
