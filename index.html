@@ -271,6 +271,7 @@ body.focus #focus{display:block}body.focus{overflow:hidden}body.focus #timer,bod
 @keyframes slL{from{opacity:0;transform:translateX(36px)}}@keyframes slR{from{opacity:0;transform:translateX(-36px)}}
 /* ---- Recettes ---- */
 .rmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.rmeta span{font-size:12px;font-weight:650;padding:3px 9px;border-radius:999px;background:var(--card2);color:var(--mute)}.rmeta span.p{background:var(--accd);color:var(--acc)}
+.demo{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:10px 10px 12px;margin:4px 0 2px}.demo svg{display:block;width:100%;max-width:300px;height:auto;margin:0 auto}
 .ing{margin:6px 0;padding-left:18px}.ing li{margin:4px 0}
 /* ---- Calendrier ---- */
 .calh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.calh h3{text-transform:capitalize}
@@ -407,6 +408,62 @@ const MU={pogo:'mol|qua tib',sj:'qua fes|mol',cmj:'qua fes|mol',boxj:'qua fes|mo
 Object.values(EX).forEach(e=>{const [p,s]=(MU[e.id]||'|').split('|');e.mp=p.split(' ').filter(Boolean);e.ms=(s||'').split(' ').filter(Boolean)});
 // Barre utilisée (pour le calcul des disques)
 const BAR={squat:20,frontsq:20,dc:20,dib:20,dcs:20,sdt:20,rowb:20,hipthrust:20,trapdl:25,curlez:10,skull:10};
+
+// ===================== DÉMOS ANIMÉES (silhouette de profil, hors ligne) =====================
+// Une pose = position des articulations : h tête, s épaule, e coude, w poignet, p hanche, k genou, a cheville, f pointe du pied (k2/a2/f2 = autre jambe)
+const shP=(p,dx,dy)=>{const o={};for(const j in p)o[j]=[p[j][0]+dx,p[j][1]+dy];return o},wA=(p,o)=>Object.assign({},p,o);
+const ST={h:[104,34],s:[101,48],e:[100,69],w:[101,89],p:[98,90],k:[102,118],a:[100,146],f:[113,149]};
+const JMP1={h:[112,52],s:[108,66],e:[96,80],w:[86,94],p:[92,108],k:[114,120],a:[100,146],f:[113,149]};
+const JMP2={h:[106,10],s:[101,24],e:[104,4],w:[107,-16],p:[98,66],k:[101,94],a:[100,122],f:[108,130]};
+const HANG={h:[107,20],s:[102,34],e:[103,13],w:[104,-8],p:[100,76],k:[106,102],a:[96,124],f:[106,128]};
+const BENCH=[['rect',36,124,96,7],['rect',44,131,6,19],['rect',118,131,6,19]],PULL=[['line',60,-8,150,-8]];
+const DC0={h:[56,116],s:[72,120],e:[72,100],w:[72,80],p:[114,120],k:[136,128],a:[140,148],f:[152,150]};
+const ANIM={
+ squat:{k:[wA(ST,{e:[86,60],w:[97,46]}),{h:[116,67],s:[110,80],e:[95,92],w:[106,78],p:[90,118],k:[118,124],a:[100,146],f:[113,149]}],eq:[['plate','s']],d:3,tip:'Hanches en arrière, dos droit, cuisses au moins parallèles au sol.'},
+ frontsq:{k:[wA(ST,{e:[118,52],w:[106,44]}),{h:[110,64],s:[106,78],e:[123,82],w:[111,74],p:[90,120],k:[118,126],a:[100,146],f:[113,149]}],eq:[['plate','w']],d:3,tip:'Coudes hauts, buste le plus droit possible.'},
+ gobletsq:{k:[wA(ST,{e:[108,64],w:[110,54]}),{h:[114,66],s:[108,80],e:[117,96],w:[119,86],p:[90,120],k:[118,126],a:[100,146],f:[113,149]}],eq:[['db','w']],d:3,tip:'Haltère contre la poitrine, descends entre les genoux.'},
+ sdt:{k:[ST,{h:[143,66],s:[130,72],e:[130,93],w:[128,113],p:[90,92],k:[104,118],a:[100,146],f:[113,149]}],eq:[['plate','w']],d:3.2,tip:'Les hanches reculent, la barre glisse le long des jambes, dos plat.'},
+ trapdl:{k:[ST,{h:[134,74],s:[122,84],e:[121,105],w:[120,124],p:[88,112],k:[114,120],a:[100,146],f:[113,149]}],eq:[['plate','w']],d:3,tip:'Pousse le sol avec les jambes, dos plat, monte d’un bloc.'},
+ hipthrust:{k:[{h:[48,98],s:[64,104],e:[76,118],w:[90,122],p:[92,128],k:[116,114],a:[122,146],f:[135,149]},{h:[48,96],s:[64,102],e:[78,100],w:[94,98],p:[96,102],k:[124,112],a:[122,146],f:[135,149]}],eq:[['rect',30,104,40,8],['rect',58,112,6,38],['plate','p']],d:2.6,tip:'Pousse dans les talons, bassin aligné avec les genoux en haut.'},
+ fentes:{k:[{h:[105,38],s:[102,52],e:[100,72],w:[100,92],p:[100,94],k:[122,118],a:[120,146],f:[133,149],k2:[80,118],a2:[60,116],f2:[50,112]},{h:[104,58],s:[100,72],e:[98,92],w:[98,112],p:[96,114],k:[124,120],a:[120,146],f:[133,149],k2:[84,140],a2:[60,116],f2:[50,112]}],eq:[['rect',36,114,34,8],['rect',44,122,6,28],['db','w']],d:2.8,tip:'Descends à la verticale, genou avant au-dessus de la cheville.'},
+ mollets:{k:[ST,wA(shP(ST,0,-9),{f:[113,149]})],d:1.8,tip:'Monte le plus haut possible, pause, descends lentement.'},
+ nordic:{k:[{h:[90,62],s:[88,76],e:[98,92],w:[102,80],p:[86,118],k:[84,146],a:[58,146],f:[52,140]},{h:[157,104],s:[145,111],e:[150,126],w:[156,142],p:[108,132],k:[84,146],a:[58,146],f:[52,140]}],d:3.6,tip:'Descends le plus lentement possible, corps droit des genoux à la tête.'},
+ dc:{k:[DC0,wA(DC0,{e:[60,130],w:[72,108]})],eq:BENCH.concat([['plate','w']]),d:2.6,tip:'Barre au bas des pecs, coudes à 45°, pousse vers le haut.'},
+ pompes:{k:[{h:[160,108],s:[146,114],e:[146,132],w:[146,150],p:[104,128],k:[76,137],a:[50,144],f:[42,150]},{h:[162,130],s:[146,136],e:[130,142],w:[146,150],p:[104,140],k:[76,144],a:[50,146],f:[42,150]}],d:2.2,tip:'Corps gainé et droit, poitrine près du sol.'},
+ dips:{k:[{h:[104,18],s:[100,32],e:[100,52],w:[101,72],p:[98,74],k:[92,100],a:[74,104],f:[70,98]},{h:[108,38],s:[104,52],e:[82,60],w:[101,72],p:[100,94],k:[94,120],a:[76,124],f:[72,118]}],eq:[['rect',84,72,50,4],['rect',126,76,4,74]],d:2.4,tip:'Descends jusqu’à avoir les épaules au niveau des coudes.'},
+ trac:{k:[HANG,{h:[110,-16],s:[102,2],e:[90,6],w:[104,-8],p:[100,44],k:[106,70],a:[96,92],f:[106,96]}],eq:PULL,d:2.6,tip:'Tire les coudes vers les hanches, menton au-dessus de la barre.'},
+ rdj:{k:[{h:[107,20],s:[102,34],e:[103,13],w:[104,-8],p:[101,76],k:[101,104],a:[101,130],f:[110,134]},{h:[107,20],s:[102,34],e:[103,13],w:[104,-8],p:[103,76],k:[130,70],a:[157,68],f:[160,58]}],eq:PULL,d:2.6,tip:'Monte les jambes sans te balancer, redescends lentement.'},
+ rowb:{k:[{h:[141,63],s:[128,70],e:[128,91],w:[128,111],p:[90,92],k:[106,118],a:[100,146],f:[113,149]},{h:[141,63],s:[128,70],e:[108,72],w:[118,92],p:[90,92],k:[106,118],a:[100,146],f:[113,149]}],eq:[['plate','w']],d:2.4,tip:'Buste fixe, tire la barre vers le nombril.'},
+ dm:{k:[wA(ST,{e:[114,60],w:[112,42]}),wA(ST,{e:[104,28],w:[104,8]})],eq:[['plate','w']],d:2.4,tip:'Pousse au-dessus de la tête, sans cambrer le dos.'},
+ curl:{k:[ST,wA(ST,{w:[115,55]})],eq:[['db','w']],d:2.2,tip:'Coude collé au corps, seul l’avant-bras bouge.'},
+ tpoulie:{k:[wA(ST,{e:[100,68],w:[116,56]}),wA(ST,{e:[100,68],w:[104,88]})],eq:[['circle',126,-14,5],['cable',126,-14,'w']],d:2.2,tip:'Coudes fixes contre les côtes, tends les bras en bas.'},
+ cmj:{k:[ST,JMP1,JMP2,JMP1],d:2.6,tip:'Descente rapide, puis explose vers le haut en lançant les bras.'},
+ pogo:{k:[ST,wA(shP(ST,0,-12),{f:[110,140]})],d:.7,tip:'Petits rebonds sur l’avant du pied, genoux presque tendus.'},
+ boxj:{k:[shP(ST,-30,0),shP(JMP1,-30,0),shP(JMP2,8,-14),shP(JMP1,45,-34),shP(ST,45,-34)],eq:[['rect',128,112,48,38]],d:3.2,tip:'Élan des bras, atterris en douceur sur la box, redescends en marchant.'},
+ mbslam:{k:[wA(shP(ST,0,-4),{e:[104,22],w:[106,2],a:[100,142],f:[113,149]}),{h:[134,64],s:[124,74],e:[132,96],w:[140,116],p:[92,104],k:[112,120],a:[100,146],f:[113,149]}],eq:[['ball','w']],d:1.6,tip:'Monte sur la pointe des pieds, frappe le sol de toutes tes forces.'},
+ planche:{k:[{h:[160,118],s:[146,124],e:[146,146],w:[166,146],p:[104,130],k:[76,137],a:[50,144],f:[42,150]},{h:[160,117],s:[146,123],e:[146,146],w:[166,146],p:[104,128],k:[76,136],a:[50,144],f:[42,150]}],d:3,tip:'Corps aligné de la tête aux pieds, fessiers et abdos serrés.'}};
+// Exercices qui reprennent le même mouvement
+Object.entries({calfsl:['mollets'],molassis:['mollets'],dch:['dc',BENCH.concat([['db','w']])],dib:['dc'],dih:['dc',BENCH.concat([['db','w']])],dcs:['dc'],dipst:['dips'],tirv:['trac'],rowu:['rowb',[['db','w']]],
+  arnold:['dm',[['db','w']]],curlez:['curl'],curlm:['curl'],curlinc:['curl'],curlpup:['curl'],curlpb:['curl'],sj:['cmj'],approach:['cmj'],blockj:['cmj'],hack:['squat',[]]}).forEach(([id,[b,eq]])=>{ANIM[id]=Object.assign({},ANIM[b],eq?{eq}:{})});
+const SEGM={t:['pec','dor','abs','obl','lom','hdd','trp'],ua:['epa','bic','tri','coi'],fa:['avb'],th:['qua','isc','fes','add'],sh:['mol','tib'],ft:[]};
+function demo(ex){const A=ANIM[ex.id];if(!A)return '';const ks=A.k,n=ks.length,d=A.d||2.6;
+  const kt=Array.from({length:n+1},(_,i)=>+(i/n).toFixed(3)).join(';'),sp=Array(n).fill('.45 0 .55 1').join(';');
+  const an=(at,j,i)=>`<animate attributeName="${at}" values="${ks.map(P=>P[j][i]).concat(ks[0][j][i]).join(';')}" keyTimes="${kt}" calcMode="spline" keySplines="${sp}" dur="${d}s" repeatCount="indefinite"/>`;
+  const col=g=>SEGM[g].some(m=>ex.mp.includes(m))?'var(--acc)':SEGM[g].some(m=>ex.ms.includes(m))?'#86a352':'#c9cfc2';
+  const ln=(a,b,g,far)=>ks[0][a]&&ks[0][b]?`<line x1="${ks[0][a][0]}" y1="${ks[0][a][1]}" x2="${ks[0][b][0]}" y2="${ks[0][b][1]}" stroke="${col(g)}" stroke-width="${g==='t'?8:g==='ft'?4:6}" stroke-linecap="round"${far?' opacity=".4"':''}>${an('x1',a,0)}${an('y1',a,1)}${an('x2',b,0)}${an('y2',b,1)}</line>`:'';
+  const dot=(j,r,fill,extra)=>`<circle cx="${ks[0][j][0]}" cy="${ks[0][j][1]}" r="${r}" fill="${fill}" ${extra||''}>${an('cx',j,0)}${an('cy',j,1)}</circle>`;
+  let back='',front='';(A.eq||[]).forEach(q=>{
+    if(q[0]==='rect')back+=`<rect x="${q[1]}" y="${q[2]}" width="${q[3]}" height="${q[4]}" rx="2" fill="#2a3025" stroke="#3d4535"/>`;
+    else if(q[0]==='line')back+=`<line x1="${q[1]}" y1="${q[2]}" x2="${q[3]}" y2="${q[4]}" stroke="#8d9586" stroke-width="4" stroke-linecap="round"/>`;
+    else if(q[0]==='circle')back+=`<circle cx="${q[1]}" cy="${q[2]}" r="${q[3]}" fill="#3d4535"/>`;
+    else if(q[0]==='cable')back+=`<line x1="${q[1]}" y1="${q[2]}" x2="${ks[0][q[3]][0]}" y2="${ks[0][q[3]][1]}" stroke="#5d6555" stroke-width="1.5">${an('x2',q[3],0)}${an('y2',q[3],1)}</line>`;
+    else if(q[0]==='plate')back+=dot(q[1],12,'#3a4232','stroke="#8d9586" stroke-width="2"');
+    else if(q[0]==='db')front+=dot(q[1],5.5,'#8d9586');
+    else if(q[0]==='ball')front+=dot(q[1],9,'var(--ora)')});
+  const body=ln('p','k2','th',1)+ln('k2','a2','sh',1)+ln('a2','f2','ft',1)+back+ln('s','p','t')+ln('p','k','th')+ln('k','a','sh')+ln('a','f','ft')+ln('s','e','ua')+ln('e','w','fa')+dot('h',9,'#c9cfc2');
+  return `<div class="demo"><svg viewBox="0 -30 200 184" role="img" aria-label="Démo animée : ${esc(ex.name)}"><line x1="0" y1="150.5" x2="200" y2="150.5" stroke="#3d4535" stroke-width="2"/>${body}${front}</svg>${A.tip?`<div class="small" style="text-align:center;color:#cfd5c9;margin-top:6px">${esc(A.tip)}</div>`:''}</div>`}
+const vidBtn=ex=>`<a class="btn sm" href="https://www.youtube.com/results?search_query=${encodeURIComponent(shortName(ex.id)+' exercice technique')}" target="_blank" rel="noopener">${ic('play')} Voir en vidéo</a><span class="small muted" style="margin-left:8px">(internet)</span>`;
+const howTo=ex=>`${demo(ex)}<div style="margin:${ANIM[ex.id]?'10px':'2px'} 0 6px">${vidBtn(ex)}</div><ul>${ex.tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h4>À éviter</h4><ul class="err">${ex.err.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`;
 const GSTY={pecs:['dumbbell','acc'],dos:['dumbbell','acc'],epaules:['dumbbell','acc'],biceps:['dumbbell','acc'],triceps:['dumbbell','acc'],jambes:['leg','ora'],abdos:['core','blu'],plyo:['bolt','yel'],prev:['shield','vio']};
 
 // Routines détente : ajoutées au début de chaque séance sauf celle des jambes
@@ -886,7 +943,7 @@ function renderFocus(){const l=curList(),box=$('#fmain');if(!l.length){closeFocu
      <div class="f-sets">${en.sets.map((x,j)=>`<span class="${x.d?'ok':j===i?'nx':''}">${x.d?fmtSet(ex,x):'Série '+(j+1)}</span>`).join('')}</div>
      <div class="goal" style="justify-content:center;text-align:left">${ic('target')}<span>${esc(goal(ex,it.sets,it.reps))}</span></div>
      ${pv?`<div class="small muted center" style="margin-top:8px">Dernière fois : <b style="color:var(--ink);font-weight:650">${lastTxt(pv)}</b></div>`:''}
-     <details class="card" style="margin-top:18px;padding:14px 16px"><summary><span class="vchip">${ic('info')} Comment bien le faire</span>${ic('chev')}</summary><div class="det"><ul>${ex.tips.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h4>À éviter</h4><ul class="err">${ex.err.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${bodyMap(ex.mp,ex.ms)}</div></details>`}
+     <details class="card" style="margin-top:18px;padding:14px 16px"><summary><span class="vchip">${ic(ANIM[ex.id]?'play':'info')} ${ANIM[ex.id]?'Démo et conseils':'Comment bien le faire'}</span>${ic('chev')}</summary><div class="det">${howTo(ex)}${bodyMap(ex.mp,ex.ms)}</div></details>`}
   justChecked='';
   h+=`</div><div class="f-nav"><button class="btn" data-act="fgo" data-v="${fIdx-1}" ${fIdx?'':'disabled'}>${ic('back')} Précédent</button><button class="btn" data-act="fgo" data-v="${fIdx+1}" ${fIdx<l.length-1?'':'disabled'}>Suivant ${ic('chev')}</button></div><div class="f-swipe">Glisse vers la gauche ou la droite pour changer d’exercice</div>`;
   box.innerHTML=h}
@@ -947,7 +1004,7 @@ function card(ex,orig,ov){
   <div class="btnrow" style="margin-top:12px"><button class="btn sm" data-act="addset" data-id="${ex.id}">${ic('plus')} Série</button><button class="btn sm" data-act="rest" data-id="${ex.id}">${ic('clock')} Repos ${fmtRest(ex.rest)}</button></div>
   <div class="goal">${ic('target')}<span>${esc(goal(ex,nS,reps))}</span></div>
   ${pv?`<div class="last">Dernière fois : <b>${lastTxt(pv)}</b></div>`:''}
-  <div class="more"><details><summary><span class="vchip" ${pv?'':'style="color:var(--acc)"'}>${ic('info')} ${pv?'Comment bien le faire':'1re fois ? Lis la fiche'}</span>${ic('chev')}</summary><div class="det"><ul>${ex.tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h4>À éviter</h4><ul class="err">${ex.err.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div></details>
+  <div class="more"><details><summary><span class="vchip" ${pv?'':'style="color:var(--acc)"'}>${ic(ANIM[ex.id]?'play':'info')} ${pv?(ANIM[ex.id]?'Démo et conseils':'Comment bien le faire'):'1re fois ? Regarde la démo'}</span>${ic('chev')}</summary><div class="det">${howTo(ex)}</div></details>
   <details><summary><span class="vchip">${ic('body')} Muscles travaillés</span>${ic('chev')}</summary><div class="det">${musChips(ex)}${bodyMap(ex.mp,ex.ms)}</div></details>
   ${sp.pts.length>1?`<details><summary><span class="vchip">${ic('chart')} Ma progression</span>${ic('chev')}</summary><div class="det">${line(sp.pts,'var(--acc)',sp.unit)}</div></details>`:''}
   <details ${en.note?'open':''}><summary><span class="vchip">${ic('note')} Note</span>${ic('chev')}</summary><div class="det"><input data-note="${ex.id}" placeholder="Réglage machine, sensation…" value="${esc(en.note||'')}"></div></details>
