@@ -477,9 +477,9 @@ const VID={squat:['LUgOTFvashU','Jack Vanbergen'],sdt:['QrgidWFKaYs','Myprotein 
  presse:['VvbvoShCvo4','BmD'],lcurl:['vl5nUdE9mWM','Physique Development'],mollets:['yQv9y1oHitc','TeamSuperPhysique'],rdj:['7DoFMV1Dnow','Jeremy Sry'],planche:['50atGHc5828','SaturnoMovement'],
  crunchp:['M1HeORCwv8A','Snap Fitness'],pogo:['s_qM8NDHp1k','Health & High Performance'],sj:['H4mVcGRmQhI','Calixpert'],boxj:['NBY9-kTuHEk','CrossFit'],cmj:['_Qzsy59zGhA','Brieuc Le Dantec'],
  approach:['6GOHF5cNIKs','SIKANA'],blockj:['hJKueZn-tNQ','SIKANA'],skater:['wvrb9Wi35SM','Saguaro Shoes'],trapdl:['KTJranIRvjw','Nassim Sahili'],gobletsq:['u9xM9NQ7tNw','Franck Ropers'],frontsq:['H_d6oaCKG0U','Myprotein France']};
-// Photos départ / arrivée (Free Exercise DB, domaine public), dans le dossier ex/
+// Photos départ / arrivée (Free Exercise DB, domaine public), à la racine : <id>-0.jpg et <id>-1.jpg
 const PHOTO=new Set('peck tpoulie arnold russian presse abduct pompes elat extnuque rowc dih curlinc nordic cmj sj tirv lext curlez sdt dc rowu hipthrust mbslam rowb roue deadbug bandpull dm splitj efront dipst curlpup dcs face adduct mollets crunchp frontsq boxj gainlat broadj tuck mbthrow hack stepup curlm oiseau pullo squat dropj pallof skull molassis trac rotext calfsl dips lomb dib planche rdj dch lcurl trapdl shrug gobletsq curlpb fentes'.split(' '));
-const photos=ex=>`<div class="exph" role="img" aria-label="Photos de l’exercice : départ et arrivée"><img src="ex/${ex.id}-0.jpg" alt="" loading="lazy"><img src="ex/${ex.id}-1.jpg" alt="" loading="lazy" class="b"><span class="ph0">Départ</span><span class="ph1">Arrivée</span></div>`;
+const photos=ex=>`<div class="exph" role="img" aria-label="Photos de l’exercice : départ et arrivée"><img src="${ex.id}-0.jpg" alt="" loading="lazy"><img src="${ex.id}-1.jpg" alt="" loading="lazy" class="b"><span class="ph0">Départ</span><span class="ph1">Arrivée</span></div>`;
 function media(ex){const v=VID[ex.id];
   const vis=PHOTO.has(ex.id)?photos(ex):demo(ex);
   const vb=v?`<button class="btn acc block" data-act="vid" data-v="${v[0]}" style="margin-top:10px">${ic('play')} Lire la vidéo explicative</button>`
