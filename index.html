@@ -382,6 +382,27 @@ h1{font-size:36px;line-height:1.02;margin-top:6px}h2{font-size:30px;line-height:
 .vjctl{display:flex;align-items:center;gap:8px;margin-top:10px}.vjctl .btn{flex:1}.vjctl span{flex:none;font-variant-numeric:tabular-nums;font-weight:750;min-width:74px;text-align:center}
 input[type=range]{padding:0;height:34px;background:none;border:0;-webkit-appearance:auto;appearance:auto;accent-color:var(--acc)}
 .vjsnap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.vjsnap div{text-align:center}.vjsnap canvas{width:100%;border-radius:10px;background:var(--bg2);display:block;aspect-ratio:3/4;object-fit:cover}.vjsnap small{display:block;color:var(--mute);font-size:11.5px;margin-top:4px}
+/* ---- v12 : visite guidée, annuler, hors ligne, texte plus grand, favoris ---- */
+:root{--mute:#9d98a5}
+body.big #view,body.big #fmain,body.big .sheet-p{zoom:1.12}
+.tour{position:fixed;inset:0;z-index:85}
+.tour-hole{position:fixed;border-radius:18px;box-shadow:0 0 0 9999px rgba(5,4,7,.78);outline:2px solid var(--acc);outline-offset:3px;transition:all .3s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.tour-tip{position:fixed;left:16px;right:16px;max-width:420px;margin:0 auto;background:#fff;color:#0b0a0d;border-radius:18px;padding:16px 16px 12px;box-shadow:6px 6px 0 var(--acc);animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+.tour-tip b{display:block;font:400 18px/1.1 var(--disp);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
+.tour-tip p{margin:0;font-size:14.5px;line-height:1.45}
+.tour-tip .row{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.tour-tip .row span{display:flex;gap:4px;align-items:center}.tour-tip small{color:#6b6672;font-weight:700}
+.tour-tip button{border:0;border-radius:999px;padding:9px 16px;font-weight:800;cursor:pointer}.tour-tip .nx{background:var(--acc);color:#fff}.tour-tip .sk{background:none;color:#6b6672}
+#undo{position:fixed;left:14px;right:14px;bottom:calc(var(--nav) + 24px + env(safe-area-inset-bottom));max-width:532px;margin:0 auto;z-index:62;display:flex;align-items:center;gap:12px;background:#f6f3ee;color:#0b0a0d;border-radius:16px;padding:12px 12px 12px 16px;font-weight:700;font-size:14.5px;box-shadow:0 12px 30px rgba(0,0,0,.5);animation:up .25s cubic-bezier(.2,.8,.2,1)}
+#undo span{flex:1}#undo button{border:0;background:var(--acc);color:#fff;font-weight:800;border-radius:11px;padding:9px 14px;cursor:pointer}
+#undo i{position:absolute;left:12px;right:12px;bottom:5px;height:3px;border-radius:3px;background:rgba(0,0,0,.12);overflow:hidden}#undo i::after{content:"";position:absolute;inset:0;background:var(--acc);animation:undo 5s linear forwards}
+@keyframes undo{to{transform:translateX(-100%)}}
+body.focus #undo{bottom:calc(16px + env(safe-area-inset-bottom))}
+#off{position:fixed;left:0;right:0;top:0;z-index:58;padding:calc(env(safe-area-inset-top) + 6px) 14px 6px;text-align:center;font-size:12.5px;font-weight:750;background:#2a2630;color:#f6f3ee;display:none}
+body.offline #off{display:block}
+.favb{background:none;border:0;color:var(--yel);font-size:20px;line-height:1;cursor:pointer;padding:4px 6px}
+.sw{position:relative;width:48px;height:28px;border-radius:99px;background:var(--line);flex:none;transition:background .2s}.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s}.sw.on{background:var(--acc)}.sw.on::after{transform:translateX(20px)}
+.setrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);cursor:pointer}.setrow:first-of-type{border-top:0}.setrow div{flex:1}.setrow small{display:block;color:var(--mute);font-size:12.5px}
+.invite{border-color:rgba(255,200,61,.4);background:radial-gradient(120% 100% at 100% 0%,rgba(255,200,61,.15),transparent 60%),var(--card)}
 .podium{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:end;margin:14px 0 6px}.podium div{text-align:center;background:var(--card2);border:1px solid var(--line);border-radius:16px 16px 6px 6px;padding:12px 6px}
 .podium b{display:block;font-family:var(--disp);font-weight:400;font-size:26px}.podium span{display:block;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.podium small{color:var(--mute);font-size:11px}
 @media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
@@ -394,6 +415,7 @@ input[type=range]{padding:0;height:34px;background:none;border:0;-webkit-appeara
 <nav class="nav" id="nav"></nav>
 <div id="sheet" class="sheet" hidden><div class="sheet-bg" data-act="closesheet"></div><div class="sheet-p" id="sheetp" role="dialog" aria-modal="true"></div></div>
 <div id="toast" role="status"></div>
+<div id="off" role="status">Hors ligne · tout est sauvegardé sur ce téléphone</div>
 <input type="file" id="bkfile" accept=".json,application/json,text/plain" hidden>
 
 <script>
@@ -1181,7 +1203,7 @@ function calCard(){calM=calM||todayStr().slice(0,7);const [y,m]=calM.split('-').
 // Exercices proposés : même groupe que la séance, ou résultat de recherche (muscle principal d’abord, sauts à la fin)
 function candFor(){const s=curSes(),ids=exOf(s),gs=[...new Set(ids.map(id=>EX[id].g))],q=edQ.trim().toLowerCase(),rt=s.rt&&!s.legs?ROUTINES[s.rt].ex.map(x=>x[0]):[];
   const txt=e=>(e.name+' '+GROUPS.find(g=>g.id===e.g).name).toLowerCase(),inM=(l,e)=>l.some(m=>MUS[m].toLowerCase().includes(q));
-  const sc=e=>!q?0:(inM(e.mp,e)||txt(e).includes(q)?0:inM(e.ms,e)?1:9)+(e.g==='plyo'?.5:0);
+  const sc=e=>(!q?0:(inM(e.mp,e)||txt(e).includes(q)?0:inM(e.ms,e)?1:9)+(e.g==='plyo'?.5:0))-(isFav(e.id)?.8:0);
   return Object.values(EX).filter(e=>!ids.includes(e.id)&&!rt.includes(e.id)&&(q?sc(e)<9:gs.includes(e.g)&&e.g!=='plyo')).sort((a,b)=>sc(a)-sc(b))}
 function editBody(){const s=curSes();if(!s)return '';const ids=exOf(s),q=edQ.trim(),[P,S]=sesMus(ids),cand=candFor();
   return `${bodyMap(P,S)}
@@ -1262,7 +1284,8 @@ function card(ex,orig,ov){
   const nS=ov&&ov.sets,reps=(ov&&ov.reps)||ex.reps;
   const [dn,tot]=exCount(ex.id,nS),open=openEx.has(ex.id),fin=dn>=tot&&dn>0;
   const st=fin?`<span class="st done">${ic('check')}</span>`:dn?`<span class="st part">${dn}/${tot}</span>`:`<span class="st">${ic('chev')}</span>`;
-  let h=`<div class="ex ${open?'open':''} ${fin&&!open?'fin':''}" id="ex-${ex.id}"><div class="hd" data-act="tog" data-id="${ex.id}" data-n="${nS||''}">${thumb(ex.g)}<div class="mid"><div class="nm">${esc(ex.name)}</div><div class="meta">${nS||ex.sets} × ${reps} · ${esc(musTxt(ex))}${orig&&orig!==ex.id?' · remplace '+esc(shortName(orig))+(ov&&ov.inj?' (douleur)':''):''}${ov&&ov.warn?' · <span style="color:var(--ora)">vas-y léger (douleur)</span>':''}</div></div>${st}</div>`;
+  const fv=isFav(ex.id),pv0=!open?prev(ex.id):null;
+  let h=`<div class="ex ${open?'open':''} ${fin&&!open?'fin':''}" id="ex-${ex.id}"><div class="hd" data-act="tog" data-id="${ex.id}" data-n="${nS||''}">${thumb(ex.g)}<div class="mid"><div class="nm">${fv?'<span style="color:var(--yel)">★</span> ':''}${esc(ex.name)}</div>${pv0&&!fin?`<div class="meta" style="color:var(--ink);opacity:.8">Dernière fois : ${lastTxt(pv0)}</div>`:''}<div class="meta">${nS||ex.sets} × ${reps} · ${esc(musTxt(ex))}${orig&&orig!==ex.id?' · remplace '+esc(shortName(orig))+(ov&&ov.inj?' (douleur)':''):''}${ov&&ov.warn?' · <span style="color:var(--ora)">vas-y léger (douleur)</span>':''}</div></div>${st}</div>`;
   if(!open)return h+'</div>';
   const en=getEntry(ex.id,nS),pv=prev(ex.id),nw=ex.wl===null;
   const wlab={kg:'kg',lest:'lest kg',cm:'cm'}[ex.wl];
@@ -1286,7 +1309,7 @@ function card(ex,orig,ov){
   <div class="goal">${ic('target')}<span>${esc(goal(ex,nS,reps))}</span></div>
   ${whyLine(ex)}
   ${pv?`<div class="last">Dernière fois : <b>${lastTxt(pv)}</b></div>`:''}
-  <div class="more"><details><summary><span class="vchip" ${pv?'':'style="color:var(--acc)"'}>${ic(ANIM[ex.id]?'play':'info')} ${pv?(ANIM[ex.id]?'Démo et conseils':'Comment bien le faire'):'1re fois ? Regarde la démo'}</span>${ic('chev')}</summary><div class="det">${howTo(ex)}</div></details>
+  <div class="more"><button class="linkbtn" data-act="fav" data-v="${ex.id}" style="color:var(--yel)">${isFav(ex.id)?'★ Dans mes favoris':'☆ Ajouter à mes favoris'}</button><details><summary><span class="vchip" ${pv?'':'style="color:var(--acc)"'}>${ic(ANIM[ex.id]?'play':'info')} ${pv?(ANIM[ex.id]?'Démo et conseils':'Comment bien le faire'):'1re fois ? Regarde la démo'}</span>${ic('chev')}</summary><div class="det">${howTo(ex)}</div></details>
   <details><summary><span class="vchip">${ic('body')} Muscles travaillés</span>${ic('chev')}</summary><div class="det">${musChips(ex)}${bodyMap(ex.mp,ex.ms)}</div></details>
   ${sp.pts.length>1?`<details><summary><span class="vchip">${ic('chart')} Ma progression</span>${ic('chev')}</summary><div class="det">${line(sp.pts,'var(--acc)',sp.unit)}</div></details>`:''}
   <details ${en.note?'open':''}><summary><span class="vchip">${ic('note')} Note</span>${ic('chev')}</summary><div class="det"><input data-note="${ex.id}" placeholder="Réglage machine, sensation…" value="${esc(en.note||'')}"></div></details>
@@ -1297,8 +1320,10 @@ const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigat
 const isIOS=()=>/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 function installBox(){
   if(isStandalone()||LS.get('gym_hideinstall',false))return '';
-  const how=isIOS()?'Dans Safari : <b>Partager</b> → <b>Sur l’écran d’accueil</b>.':'Menu <b>⋮</b> → <b>Installer l’application</b>.';
-  return `<div class="card ok-box"><span class="t">${ic('phone')} Mets l’appli sur ton écran d’accueil</span><div class="small">Elle s’ouvrira en plein écran, même sans réseau. ${deferredPrompt?'':how}</div><div class="btnrow">${deferredPrompt?`<button class="btn acc sm" data-act="install">Installer</button>`:`<a class="btn sm" href="guide.html">Voir comment</a>`}<button class="btn sm" data-act="hideinstall">Plus tard</button></div></div>`}
+  const ua=navigator.userAgent,sam=/SamsungBrowser/.test(ua),ff=/Firefox|FxiOS/.test(ua),iosOther=isIOS()&&/CriOS|FxiOS|EdgiOS|FBAN|FBAV|Instagram/.test(ua);
+  const how=isIOS()?(iosOther?'Ouvre cette page dans <b>Safari</b> (obligatoire sur iPhone), puis <b>Partager</b> → <b>Sur l’écran d’accueil</b>.':'Touche <b>Partager</b> (carré avec une flèche), puis <b>Sur l’écran d’accueil</b> → <b>Ajouter</b>.')
+    :sam?'Samsung Internet : menu <b>≡</b> en bas → <b>Ajouter page à</b> → <b>Écran d’accueil</b>.':ff?'Firefox : menu <b>⋮</b> → <b>Installer</b> (ou « Ajouter à l’écran d’accueil »).':'Chrome : menu <b>⋮</b> en haut à droite → <b>Installer l’application</b> (ou « Ajouter à l’écran d’accueil »).';
+  return `<div class="card ok-box"><span class="t">${ic('phone')} Mets l’appli sur ton écran d’accueil</span><div class="small">Elle s’ouvre en plein écran, même sans réseau, comme une vraie appli. ${deferredPrompt?'':how}</div><div class="btnrow">${deferredPrompt?`<button class="btn acc sm" data-act="install">${ic('down')} Installer</button>`:`<a class="btn sm" href="installer.html">Voir en images</a>`}<button class="btn sm" data-act="hideinstall">Plus tard</button></div></div>`}
 function bkBox(){if(sessionDates().length+volley.length<4)return '';const lb=LS.get('gym_lastbk',0);if(Date.now()-lb<14*864e5)return '';
   return `<div class="card warn"><span class="t">${ic('down')} Pense à sauvegarder</span><div class="small">Tes séances ne sont que sur ce téléphone. Une copie prend 5 secondes.</div><div class="btnrow"><button class="btn sm" data-act="dl">Sauvegarder</button></div></div>`}
 function matchBanner(plyoCtx){const n=matchIn();if(n===null||n>3)return '';
@@ -1320,6 +1345,7 @@ function renderHome(){
   const phx=list.find(x=>!x.rt&&PHOTO.has(x.id));
   $('#view').innerHTML=`<header class="hdr"><div><div class="hello"><span class="jp">${KJ.home}</span>${new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</div><h1>Salut${nm?' '+nm:''}</h1></div>${avatarBtn()}</header>
   <div class="motto"><span>${SP().kj}</span>${esc(sayL('hello'))}</div>
+  ${inviteCard()}
   ${matchBanner()}
   <section class="hero" data-k="今日の修行">${phx?`<div class="ph" style="background-image:url(${phx.id}-1.jpg)"></div>`:''}<span class="tag">${ic('dumbbell')} Séance du jour</span><h2>${esc(ses.name)}</h2><p>${esc(ses.sub)}</p>
    <div class="meta-row"><span>${ic('list')} ${nMain} exercices${hasRt?' + détente':''}</span><span>${ic('clock')} ~${estDur(list)} min</span>${hm.why.length?`<span style="color:var(--ora)">${ic('shield')} adaptée</span>`:''}</div>
@@ -1378,12 +1404,12 @@ function renderWorkout(){
   ${endCard}`;
 }
 function libList(){const q=libQ.trim().toLowerCase();
-  const exs=q?Object.values(EX).filter(e=>(e.name+' '+GROUPS.find(g=>g.id===e.g).name+' '+e.mp.concat(e.ms).map(m=>MUS[m]).join(' ')).toLowerCase().includes(q)):GROUPS.find(g=>g.id===grp).exos;
-  return exs.length?exs.map(e=>card(e)).join(''):'<div class="empty">Aucun exercice trouvé.</div>'}
+  const exs=q?Object.values(EX).filter(e=>(e.name+' '+GROUPS.find(g=>g.id===e.g).name+' '+e.mp.concat(e.ms).map(m=>MUS[m]).join(' ')).toLowerCase().includes(q)):grp==='fav'?(profile.fav||[]).filter(id=>EX[id]).map(id=>EX[id]):GROUPS.find(g=>g.id===grp).exos;
+  return exs.length?exs.map(e=>card(e)).join(''):grp==='fav'&&!q?'<div class="empty">Pas encore de favoris.<br>Ouvre un exercice et touche « ☆ Ajouter à mes favoris ».</div>':'<div class="empty">Aucun exercice trouvé.</div>'}
 function renderLib(){
   $('#view').innerHTML=`<header class="hdr"><button class="iconbtn" data-act="go" data-go="workout" aria-label="Retour">${ic('back')}</button><div style="flex:1"><div class="hello">${Object.keys(EX).length} exercices avec conseils</div><h1>Exercices</h1></div></header>
   <div class="search" style="margin-top:16px">${ic('search')}<input id="libq" type="search" placeholder="Exercice ou muscle (ex. fessiers)"value="${esc(libQ)}" autocomplete="off"></div>
-  <div class="chips">${GROUPS.map(x=>`<button class="chip ${x.id===grp&&!libQ?'on':''}" data-act="grp" data-v="${x.id}">${x.name}</button>`).join('')}</div>
+  <div class="chips"><button class="chip ${grp==='fav'&&!libQ?'on':''}" data-act="grp" data-v="fav">★ Favoris${(profile.fav||[]).length?' · '+profile.fav.length:''}</button>${GROUPS.map(x=>`<button class="chip ${x.id===grp&&!libQ?'on':''}" data-act="grp" data-v="${x.id}">${x.name}</button>`).join('')}</div>
   <div id="libl">${libList()}</div>`;
 }
 function jumpTile(kd,cls){const l=jumpsOf(kd),b=bestJ(kd),last=l[l.length-1],first=l[0],J=JK[kd];
@@ -1602,6 +1628,10 @@ function renderProfile(){
    ${(p.sport||'volley')==='volley'?`<label class="field" style="margin-bottom:4px"><span>Hauteur du filet</span><select data-pf="net">${opt([[243,'2,43 m (hommes)'],[235,'2,35 m (jeunes / mixte)'],[224,'2,24 m (femmes)'],[215,'2,15 m (jeunes)']],p.net)}</select></label>`:''}</div>
   ${acctCard()}
   ${notifCard()}
+  <div class="card"><span class="t">${ic('info')} Affichage et aide</span>
+   <div class="setrow" data-act="bigtxt" role="switch" aria-checked="${!!p.big}"><div><b>Texte plus grand</b><small>Plus lisible avec le téléphone posé au sol</small></div><span class="sw ${p.big?'on':''}"></span></div>
+   <div class="setrow" data-act="tourreset"><div><b>Revoir la visite guidée</b><small>Les bulles d’explication des écrans</small></div>${ic('chev')}</div>
+   <div class="setrow" data-act="fbsheet"><div><b>Une idée ou un bug ?</b><small>Ton message arrive directement, chaque retour est lu</small></div>${ic('chev')}</div></div>
   <div class="card ${injs().length?'warn':''}"><span class="t">🩹 Douleurs et blessures</span><div class="small muted">${injs().length?'Déclaré : '+esc(injs().map(z=>INJ[z].n).join(', '))+'. Tes séances sont adaptées.':'Une douleur ? Déclare-la : l’appli remplace les exercices qui la sollicitent.'}</div><div class="btnrow"><button class="btn sm" data-act="injsheet">${injs().length?'Modifier':'Déclarer une douleur'}</button></div></div>
   <div class="card"><span class="t">${ic('target')} Mes objectifs par semaine</span><div class="small muted" style="margin-bottom:10px">Séances de salle</div>${goals('goalGym',5,1)}<div class="small muted" style="margin:18px 0 10px">Séances de ${spLow()} (club, matchs)</div>${goals('goalVb',5,0)}</div>
   <div class="card"><span class="t">${ic('cal')} Rappels</span><div class="small muted">Choisis tes jours de salle : l’appli crée un événement qui se répète chaque semaine dans ton calendrier, avec une alerte 15 min avant.</div>
@@ -1614,14 +1644,14 @@ function renderProfile(){
    <div class="btnrow"><button class="btn acc" data-act="dl">${ic('down')} Sauvegarder</button><button class="btn" data-act="file">${ic('upload')} Restaurer</button></div>
    <details style="margin-top:16px"><summary class="small">Copier / coller en texte ${ic('chev')}</summary><div class="det"><div class="btnrow" style="margin-top:0"><button class="btn sm" data-act="copy">Copier</button><button class="btn sm" data-act="paste">Importer</button></div><textarea id="bk" style="margin-top:10px" placeholder="Colle ici une sauvegarde"></textarea></div></details>
    <div class="small" id="bkmsg" style="margin-top:8px;color:var(--acc)"></div></div>
-  <div class="card"><span class="t">${ic('phone')} Installation</span><div class="small muted">${isStandalone()?'L’appli est installée ✓ Ouvre-la toujours depuis son icône.':isIOS()?'Dans Safari : Partager → Sur l’écran d’accueil.':'Menu ⋮ du navigateur → Installer l’application.'}</div><div class="btnrow"><a class="btn sm" href="guide.html">Guide complet</a>${deferredPrompt?`<button class="btn sm acc" data-act="install">Installer</button>`:''}</div></div>
-  <div class="center small muted" style="margin:24px 0"><span style="font-family:var(--jp);color:var(--acc);font-weight:800;letter-spacing:.2em">気合</span> ${APP} — Salle & Sport · v11</div>`;
+  <div class="card"><span class="t">${ic('phone')} Installation</span><div class="small muted">${isStandalone()?'L’appli est installée ✓ Ouvre-la toujours depuis son icône.':isIOS()?'Dans Safari : Partager → Sur l’écran d’accueil.':'Menu ⋮ du navigateur → Installer l’application.'}</div><div class="btnrow"><a class="btn sm" href="installer.html">Page d’installation</a><a class="btn sm" href="guide.html">Guide complet</a>${deferredPrompt?`<button class="btn sm acc" data-act="install">Installer</button>`:''}</div></div>
+  <div class="center small muted" style="margin:24px 0"><span style="font-family:var(--jp);color:var(--acc);font-weight:800;letter-spacing:.2em">気合</span> ${APP} — Salle & Sport · v12</div>`;
 }
 const NAV=()=>[['home','home','Accueil'],['volley',SP().ic,SP().n],['workout','dumbbell','Séance'],['nutri','apple','Nutrition'],['progress','chart','Progrès']];
 function renderNav(){const cur=tab==='lib'?'workout':tab;$('#nav').innerHTML=NAV().map(([t,i,l])=>t==='workout'?`<button class="ctr ${t===cur?'on':''}" data-act="go" data-go="${t}" aria-label="${l}"><span class="ctrb">${ic(i)}</span></button>`:`<button class="${t===cur?'on':''}" data-act="go" data-go="${t}">${ic(i)}${l}</button>`).join('')}
-function render(){gid=0;gC=null;document.body.dataset.tab=tab==='lib'?'workout':tab;renderNav();({home:renderHome,workout:renderWorkout,lib:renderLib,volley:renderVolley,nutri:renderNutri,progress:renderProgress,profile:renderProfile})[tab]();if(focusOn)renderFocus()}
+function render(){gid=0;gC=null;document.body.classList.toggle('big',!!profile.big);document.body.dataset.tab=tab==='lib'?'workout':tab;renderNav();({home:renderHome,workout:renderWorkout,lib:renderLib,volley:renderVolley,nutri:renderNutri,progress:renderProgress,profile:renderProfile})[tab]();if(focusOn)renderFocus()}
 const typing=()=>{const a=document.activeElement;return a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)};
-function go(t){tab=t;if(t!=='workout'&&focusOn)closeFocus();closeSheet();const v=$('#view');v.classList.remove('anim');render();void v.offsetWidth;v.classList.add('anim');clearTimeout(go.h);go.h=setTimeout(()=>v.classList.remove('anim'),1200);window.scrollTo(0,0)}
+function go(t){tab=t;if(t!=='workout'&&focusOn)closeFocus();closeSheet();const v=$('#view');v.classList.remove('anim');render();void v.offsetWidth;v.classList.add('anim');clearTimeout(go.h);go.h=setTimeout(()=>v.classList.remove('anim'),1200);window.scrollTo(0,0);if(typeof tourMaybe==='function')tourMaybe(t)}
 const relist=()=>tab==='lib'?($('#libl').innerHTML=libList()):render();
 
 // ===================== FEUILLES (formulaires) =====================
@@ -1876,7 +1906,8 @@ function fbErr(e){const c=(e&&e.code)||(e&&e.message)||'';return({'auth/email-al
   'permission-denied':'Accès refusé : vérifie les règles de sécurité Firestore.','unavailable':'Serveur injoignable : vérifie ton réseau.'})[c]||('Erreur : '+c)}
 const hasLocal=()=>sessionDates().length+volley.length+jumps.length+weights.length>0;
 function onUser(u){cUser=u;if(!u){cState='off';refreshAcct();return}
-  if(pendingLogin||sync.uid!==u.uid){pendingLogin=false;firstSync(u)}else startSync(u)}
+  if(pendingLogin||sync.uid!==u.uid){pendingLogin=false;firstSync(u)}else startSync(u);
+  setTimeout(()=>{if(typeof tryInvite==='function')tryInvite()},2500)}
 async function fetchRemote(uid){const ur=fbDb.collection('users').doc(uid),s=await ur.get();if(!s.exists)return null;const d=s.data(),n=d.n||0;if(!n)return null;
   const cs=await Promise.all(Array.from({length:n},(_,i)=>ur.collection('data').doc('c'+i).get()));return{stamp:d.stamp||0,n,o:JSON.parse(cs.map(c=>c.exists?c.data().t:'').join(''))}}
 // Remplace les données du téléphone par celles du compte
@@ -2102,7 +2133,8 @@ document.addEventListener('click',ev=>{
     nut.f[t0]=foodOf(t0).concat({id:uid(),n:scanCur.n,kc,pr:g,q:scanQty});saveNut();
     closeSheet();nseg='besoins';if(tab!=='nutri')go('nutri');else render();toast(nd&&g&&before<nd.P&&before+g>=nd.P?'Objectif protéines atteint ✓ +20 XP':'+'+kc+' kcal'+(g?' · +'+g+' g de protéines':''),2600);break}
   case 'jdel':{const t0=todayStr(),x=foodOf(t0).find(y=>y.id===d.id);if(!x)break;nut.f[t0]=foodOf(t0).filter(y=>y.id!==d.id);if(!nut.f[t0].length)delete nut.f[t0];
-    if(x.pr&&prot[t0]){const j=prot[t0].lastIndexOf(x.pr);if(j>=0)prot[t0].splice(j,1);if(!prot[t0].length)delete prot[t0];LS.set('gym_prot',prot)}saveNut();render();toast('Retiré du journal');break}
+    if(x.pr&&prot[t0]){const j=prot[t0].lastIndexOf(x.pr);if(j>=0)prot[t0].splice(j,1);if(!prot[t0].length)delete prot[t0];LS.set('gym_prot',prot)}saveNut();render();
+    undoBar('Retiré du journal',()=>{nut.f[t0]=foodOf(t0).concat(x);saveNut();if(x.pr){prot[t0]=(prot[t0]||[]).concat(x.pr);LS.set('gym_prot',prot)}});break}
   case 'jadd':{const v=Math.round(num($('#jkc').value)||0);if(v<=0||v>5000){toast('Entre un nombre de kcal');break}const t0=todayStr();nut.f[t0]=foodOf(t0).concat({id:uid(),n:'Ajout manuel',kc:v,pr:0});saveNut();render();toast('+'+v+' kcal');break}
   case 'wat':{const t0=todayStr(),v=Math.max(0,Math.min(30,(nut.w[t0]||0)+(+d.v)));if(v)nut.w[t0]=v;else delete nut.w[t0];saveNut();render();if(+d.v>0)toast('+25 cl 💧');break}
   case 'acct':acctSheet(d.v);break;
@@ -2122,7 +2154,7 @@ document.addEventListener('click',ev=>{
   case 'tpass':passSheet();break;
   case 'tcoach':passCoach(d.v);break;
   case 'tleave':if(teamCache&&cUser&&teamCache.owner===cUser.uid&&teamCache.list.length>1){toast('Tu es le coach : cède d’abord ta place.',3000);passSheet();break}if(confirm('Quitter l’équipe '+(profile.teamName||'')+' ?')){leaveTeam();if(ptab==='equipe')ptab='trophees';render();toast('Tu as quitté l’équipe')}break;
-  case 'tshare':{const txt=`Rejoins mon équipe « ${profile.teamName} » sur ${APP} !\n1. Ouvre ${location.origin+location.pathname} dans Safari et ajoute-la à l’écran d’accueil\n2. Profil → Créer un compte\n3. Rejoindre avec le code : ${profile.team}`;
+  case 'tshare':{const txt=`Rejoins mon équipe « ${profile.teamName} » sur ${APP} 気合\n${inviteLink(profile.team)}\nInstalle l’appli, crée ton compte et tu rejoins l’équipe automatiquement. Code : ${profile.team}`;
     if(navigator.share)navigator.share({text:txt}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('Invitation copiée ✓')).catch(()=>toast('Code : '+profile.team));break}
   case 'vid':{if(navigator.onLine===false){toast('Pas de réseau : la vidéo a besoin d’internet. Regarde les photos en attendant.',3200);break}
     const box=t.previousElementSibling;if(box&&box.classList.contains('exmedia')){box.innerHTML=`<div class="vidbox"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(d.v)}?autoplay=1&playsinline=1&rel=0&modestbranding=1" title="Vidéo explicative" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`;t.remove()}break}
@@ -2163,7 +2195,7 @@ document.addEventListener('click',ev=>{
   case 'grp':grp=d.v;libQ='';render();break;
   case 'tog':if(openEx.has(d.id))openEx.delete(d.id);else{openEx.add(d.id);if(d.n)getEntry(d.id,+d.n)}relist();break;
   case 'ck':checkSet(d.id,+d.i);break;
-  case 'rm':getEntry(d.id).sets.splice(+d.i,1);saveLogs();relist();break;
+  case 'rm':{const e=getEntry(d.id),i=+d.i,x=e.sets.splice(i,1)[0];saveLogs();relist();if(x)undoBar('Série '+(i+1)+' supprimée',()=>{getEntry(d.id).sets.splice(i,0,x);saveLogs()});break}
   case 'addset':getEntry(d.id).sets.push({w:null,r:null,d:false});saveLogs();relist();break;
   case 'rest':startTimer(EX[d.id].rest,'Repos · '+shortName(d.id));break;
   case 'rpe':rpe[date]=+d.v;LS.set('gym_rpe',rpe);toast('Merci, c’est noté');render();break;
@@ -2174,8 +2206,8 @@ document.addEventListener('click',ev=>{
   case 'setprog':progId=d.v;saveProg();sid=null;render();toast('Programme : '+PROGS[progId].name);break;
   case 'editmatch':{const box=$('#matchedit'),inp=$('#matchd');box.hidden=false;try{inp.showPicker?inp.showPicker():inp.focus()}catch(e){inp.focus()}break}
   case 'clearmatch':match='';LS.set('gym_match',match);render();break;
-  case 'delvb':if(confirm('Supprimer cette séance ?')){volley=volley.filter(v=>v.id!==d.id);saveVolley();render()}break;
-  case 'deljump':if(confirm('Supprimer ce test ?')){jumps=jumps.filter(j=>j.id!==d.id);saveJumps();render()}break;
+  case 'delvb':{const x=volley.find(v=>v.id===d.id);volley=volley.filter(v=>v.id!==d.id);saveVolley();render();if(x)undoBar('Séance supprimée',()=>{volley.push(x);saveVolley()});break}
+  case 'deljump':{const x=jumps.find(j=>j.id===d.id);jumps=jumps.filter(j=>j.id!==d.id);saveJumps();render();if(x)undoBar('Test supprimé',()=>{jumps.push(x);saveJumps()});break}
   case 'sheet-test':tk=d.tk||(tab==='progress'&&ptab==='detente'?jkind:'cmj');testSheet();break;
   case 'sheet-vb':vbSheet();break;
   case 'sheet-sensor':sensorSheet();break;
@@ -2184,7 +2216,14 @@ document.addEventListener('click',ev=>{
   case 'wprog':t.parentNode.querySelectorAll('.choice').forEach(b=>b.classList.toggle('on',b===t));draft.prog=d.v;break;
   case 'wsport':t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));draft.sport=d.v;break;
   case 'setsport':if(d.v===(profile.sport||'volley'))break;profile.sport=d.v;profile.poste='';saveProfile();applySport();progId=SPORTS[d.v].prog;saveProg();sid=null;render();toast(SPORTS[d.v].n+' · programme adapté');break;
-  case 'wdone':profile.name=$('#w-name').value.trim();profile.goalVb=draft.goalVb;profile.goalGym=draft.goalGym;profile.sport=draft.sport||'volley';profile.onb=1;saveProfile();applySport();progId=SPORTS[profile.sport].prog;saveProg();sid=null;closeSheet();render();toast(profile.name?'Bienvenue '+profile.name+' !':'C’est parti !');break;
+  case 'wdone':profile.name=$('#w-name').value.trim();profile.goalVb=draft.goalVb;profile.goalGym=draft.goalGym;profile.sport=draft.sport||'volley';profile.onb=1;saveProfile();applySport();progId=SPORTS[profile.sport].prog;saveProg();sid=null;closeSheet();render();toast(profile.name?'Bienvenue '+profile.name+' !':'C’est parti !');setTimeout(()=>{if(inviteCode()&&!cUser)acctSheet('signup');else tourMaybe('home')},1200);break;
+  case 'tournx':if(tourS){tourS.i++;if(tourS.i>=tourS.steps.length)tourEnd();else tourShow()}break;
+  case 'tourend':tourEnd();break;
+  case 'tourreset':LS.set('gym_tour',{});go('home');break;
+  case 'fbsheet':fbSheet();break;
+  case 'fbsend':fbSend();break;
+  case 'bigtxt':profile.big=!profile.big;saveProfile();render();break;
+  case 'fav':{const f=(profile.fav||[]).slice(),j=f.indexOf(d.v);if(j<0)f.push(d.v);else f.splice(j,1);profile.fav=f;saveProfile();relist();toast(j<0?'★ Ajouté aux favoris':'Retiré des favoris');break}
   case 'tk':tk=d.v;testSheet();break;
   case 'savetest':{const v=num($('#t-val').value),dt=($('#t-date')&&$('#t-date').value)||todayStr();if(!v||v<=0){toast('Entre ta mesure');$('#t-val').focus();return}
     if(JK[tk].low&&v>60){toast('Temps en secondes (ex. 1,85)');return}
@@ -2210,7 +2249,7 @@ document.addEventListener('click',ev=>{
   case 'nrefresh':if(!needs())toast('Il manque une info');render();break;
   case 'addw':{const v=num($('#wkg').value);if(!v||v<25||v>250){toast('Entre ton poids en kg');$('#wkg').focus();return}
     const t0=todayStr();weights=weights.filter(x=>x.date!==t0);weights.push({id:uid(),date:t0,kg:v});saveWeights();profile.poids=v;saveProfile();toast('Pesée enregistrée ✓');render();break}
-  case 'delw':weights=weights.filter(x=>x.id!==d.id);saveWeights();render();break;
+  case 'delw':{const x=weights.find(y=>y.id===d.id);weights=weights.filter(y=>y.id!==d.id);saveWeights();render();if(x)undoBar('Pesée supprimée',()=>{weights.push(x);saveWeights()});break}
   case 'dl':download();break;
   case 'file':$('#bkfile').click();break;
   case 'copy':{const txt=exportTxt(),m=$('#bkmsg'),ta=$('#bk');ta.value=txt;
@@ -2253,7 +2292,67 @@ window.addEventListener('appinstalled',()=>{deferredPrompt=null;LS.set('gym_hide
  F.addEventListener('touchstart',e=>{if(e.target.closest('input')||F.classList.contains('resting')||fList){fx=null;return}const t=e.touches[0];fx=t.clientX;fy=t.clientY},{passive:true});
  F.addEventListener('touchend',e=>{if(fx===null)return;const t=e.changedTouches[0],dx=t.clientX-fx,dy=t.clientY-fy;fx=null;
    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){const j=fIdx+(dx<0?1:-1);if(j>=0&&j<curList().length){fDir=dx<0?1:-1;fIdx=j;renderFocus();F.scrollTop=0}}},{passive:true})}
-render();checkGame();
+// ===================== v12 : expérience utilisateur =====================
+// Invitation : un lien ?team=CODE ouvre l’appli et rejoint l’équipe après connexion
+{const q=new URLSearchParams(location.search).get('team');if(q&&/^[A-Z0-9]{6}$/i.test(q)){LS.set('gym_invite',q.toUpperCase());try{history.replaceState(null,'',location.pathname)}catch(e){}}}
+const inviteCode=()=>LS.get('gym_invite','');
+const inviteLink=code=>location.origin+location.pathname.replace(/[^/]*$/,'')+'installer.html?team='+code;
+let inviteBusy=false;
+async function tryInvite(){const code=inviteCode();if(!code||!cUser||!fbDb||inviteBusy)return;if(profile.team===code){LS.set('gym_invite','');return}
+  if(profile.team&&!confirm('Tu as été invité dans l’équipe '+code+'. Quitter « '+(profile.teamName||profile.team)+' » pour la rejoindre ?')){LS.set('gym_invite','');return}
+  inviteBusy=true;try{if(profile.team)await leaveTeam();const ok=await joinTeam(code);LS.set('gym_invite','');
+    if(ok){toast('Bienvenue dans '+profile.teamName+' ! 🙌',3200);mangaFx('仲間!','Nouvelle équipe');render()}else toast('Le code d’invitation '+code+' n’existe plus.',3500)}
+  catch(e){toast(fbErr(e),3500)}inviteBusy=false}
+function inviteCard(){const code=inviteCode();if(!code||profile.team===code)return '';
+  return `<div class="card invite"><span class="t" style="color:var(--yel)">🙌 Tu es invité dans une équipe</span><div class="small">Code <b style="letter-spacing:.12em;color:var(--ink)">${esc(code)}</b>. ${cUser?'Connexion à l’équipe…':'Crée ton compte (30 secondes) et tu la rejoins automatiquement.'}</div>
+   ${cUser?'':`<div class="btnrow"><button class="btn acc sm" data-act="acct" data-v="signup">Créer mon compte</button><button class="btn sm" data-act="acct" data-v="login">J’ai un compte</button></div>`}</div>`}
+
+// Visite guidée : quelques bulles la première fois qu’on ouvre un écran
+const TOURS={
+ home:[['.hero [data-act=start]','Ta séance du jour','Touche ici pour commencer. L’appli propose les charges d’après tes dernières séances.'],
+  ['.arc','Ton arc d’entraînement','Chaque bloc de 4 semaines actives débloque un nouveau chapitre.'],
+  ['.minis','Ta semaine en un coup d’œil','Tes séances, ton niveau et tes protéines du jour.'],
+  ['.nav .ctr','Le bouton tampon','Il t’emmène à ta séance depuis n’importe quel écran.']],
+ workout:[['[data-act=focus]','Le mode plein écran','Un exercice à la fois, de gros boutons + et −, et le chrono de repos qui se lance tout seul.'],
+  ['.ex .hd','Un exercice','Touche-le pour noter tes séries, voir la démo, la vidéo et les muscles travaillés.'],
+  ['[data-act=edit]','Ta séance, à ta façon','Ajoute, retire ou réordonne les exercices.'],
+  ['[data-act=injsheet]','Une douleur ?','Déclare-la : l’appli remplace les exercices qui la sollicitent.']]};
+let tourS=null;
+function tourMaybe(t){if(!TOURS[t]||LS.get('gym_tour',{})[t]||!profile.onb||!$('#sheet').hidden||focusOn||tourS)return;setTimeout(()=>{if(tab===t&&$('#sheet').hidden&&!focusOn)tourStart(t)},900)}
+function tourStart(t){const steps=TOURS[t].filter(s=>document.querySelector(s[0]));if(!steps.length)return;tourS={t,steps,i:0};
+  const o=document.createElement('div');o.className='tour';o.id='tour';o.innerHTML='<div class="tour-hole"></div><div class="tour-tip"></div>';document.body.appendChild(o);tourShow()}
+function tourShow(){const S=tourS,[sel,ti,tx]=S.steps[S.i],el=document.querySelector(sel),o=$('#tour');if(!el||!o){tourEnd();return}
+  el.scrollIntoView({block:'center',behavior:'smooth'});
+  setTimeout(()=>{const r=el.getBoundingClientRect(),h=o.querySelector('.tour-hole'),tip=o.querySelector('.tour-tip'),pad=6;
+    Object.assign(h.style,{left:(r.left-pad)+'px',top:(r.top-pad)+'px',width:(r.width+pad*2)+'px',height:(r.height+pad*2)+'px'});
+    tip.innerHTML=`<b>${esc(ti)}</b><p>${esc(tx)}</p><div class="row"><small>${S.i+1} / ${S.steps.length}</small><span><button class="sk" data-act="tourend">Passer</button><button class="nx" data-act="tournx">${S.i<S.steps.length-1?'Suivant':'C’est parti'}</button></span></div>`;
+    const below=r.bottom+180<innerHeight;tip.style.top=below?(r.bottom+16)+'px':'auto';tip.style.bottom=below?'auto':(innerHeight-r.top+16)+'px'},380)}
+function tourEnd(){if(tourS){const d=LS.get('gym_tour',{});d[tourS.t]=1;LS.set('gym_tour',d)}tourS=null;const o=$('#tour');if(o)o.remove()}
+
+// Annuler : la suppression est faite tout de suite, avec 5 secondes pour revenir en arrière
+let undoT=null;
+function undoBar(msg,fn){clearTimeout(undoT);let b=$('#undo');if(b)b.remove();b=document.createElement('div');b.id='undo';b.setAttribute('role','status');
+  b.innerHTML=`<span>${esc(msg)}</span><button>Annuler</button><i></i>`;b.querySelector('button').onclick=()=>{clearTimeout(undoT);b.remove();fn();render();toast('Annulé ✓')};
+  document.body.appendChild(b);undoT=setTimeout(()=>b.remove(),5000)}
+
+// Une idée ou un bug : envoyé dans Firebase (collection « feedback »)
+function fbSheet(){draft={ft:'idee'};openSheet('Une idée ou un bug ?',`<p class="lead">Dis ce qui te plaît, ce qui bloque ou ce qui manque. Chaque message est lu.</p>
+  <div class="field">${optsHtml('ft',[['idee','💡 Idée'],['bug','🐞 Bug'],['autre','💬 Autre']],'idee',3)}</div>
+  <label class="field"><span>Ton message</span><textarea id="fbtxt" maxlength="1500" placeholder="Ex. : « Le chrono de repos ne sonne pas quand… »"></textarea></label>
+  <button class="btn acc block" data-act="fbsend">${ic('upload')} Envoyer</button>
+  <div class="small muted" style="margin-top:10px">${cUser?'Envoyé avec ton prénom et le modèle de téléphone, rien d’autre.':'Sans compte, le message s’ouvre dans le partage : envoie-le à la personne qui t’a fait découvrir l’appli.'}</div>`)}
+async function fbSend(){const txt=($('#fbtxt').value||'').trim();if(txt.length<3){toast('Écris quelques mots');return}
+  const o={type:draft.ft||'idee',txt:txt.slice(0,1500),name:profile.name||'',sport:profile.sport||'volley',v:'v12',ua:navigator.userAgent.slice(0,140),at:Date.now()};
+  if(cUser&&fbDb){try{await fbDb.collection('feedback').add(Object.assign({uid:cUser.uid},o));closeSheet();toast('Merci ! Message envoyé ✓',2600);return}catch(e){console.warn(e)}}
+  const t2=`KIAI · ${o.type} : ${o.txt}`;if(navigator.share)navigator.share({text:t2}).then(()=>{closeSheet();toast('Merci !')}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(t2).then(()=>toast('Message copié : colle-le dans un SMS ✓',3000))}
+
+// Bandeau hors ligne
+const setOff=()=>document.body.classList.toggle('offline',navigator.onLine===false);
+window.addEventListener('offline',setOff);window.addEventListener('online',setOff);setOff();
+// Favoris
+const isFav=id=>(profile.fav||[]).includes(id);
+
+render();checkGame();tourMaybe(tab);
 // Compte : on se reconnecte automatiquement si on l’était, et on envoie avant que l’appli passe en arrière-plan
 if(sync.uid)loadFb().catch(()=>{cState='offline'});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&cUser&&sync.dirty){clearTimeout(cT);pushCloud()}});
