@@ -278,6 +278,10 @@ body.focus #focus{display:block}body.focus{overflow:hidden}body.focus #timer,bod
 .exph .ph1{opacity:0;animation:phx 3.2s ease-in-out infinite;background:var(--acc);color:var(--acc-ink)}.exph .ph0{animation:phy 3.2s ease-in-out infinite}@keyframes phy{0%,35%{opacity:1}50%,85%{opacity:0}100%{opacity:1}}
 .vidbox{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000}.vidbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .bmcard{display:grid;grid-template-columns:1fr;gap:10px}
+.scanbox{position:relative;margin-top:14px;border-radius:20px;overflow:hidden;background:#000;aspect-ratio:4/3}.scanbox video{width:100%;height:100%;object-fit:cover;display:block}
+.scanframe{position:absolute;left:12%;right:12%;top:30%;bottom:30%;border:3px solid var(--acc);border-radius:14px;box-shadow:0 0 0 999px rgba(0,0,0,.35)}
+.scanframe::after{content:"";position:absolute;left:6%;right:6%;top:50%;height:2px;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d;animation:scl 1.6s ease-in-out infinite}
+@keyframes scl{0%,100%{transform:translateY(-30px)}50%{transform:translateY(30px)}}
 .ing{margin:6px 0;padding-left:18px}.ing li{margin:4px 0}
 /* ---- Calendrier ---- */
 .calh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.calh h3{text-transform:capitalize}
@@ -621,7 +625,7 @@ const ICONS={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1
  list:'M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01',note:'M4 20h4l10-10-4-4L4 16zM13 7l4 4',trophy:'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6',
  apple:'<path d="M12 7.5c-1.6-1.4-5.2-1.6-6.6 1.1-1.5 2.9-.4 7 1.6 9.6 1.4 1.8 3 2.4 5 1.5 2 .9 3.6.3 5-1.5 2-2.6 3.1-6.7 1.6-9.6-1.4-2.7-5-2.5-6.6-1.1z"/><path d="M12 7.5c0-2 1-3.6 3.2-4.3"/>',
  scale:'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8.5 9.5a5 5 0 0 1 7 0M12 12l1.5-2.5"/>',drop:'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z',
- up:'M6 15l6-6 6 6',dn:'M6 9l6 6 6-6',edit:'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',expand:'M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5',share:'M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6',body:'<circle cx="12" cy="4.5" r="2.5"/><path d="M5 9h14M12 9v6M9 22l3-7 3 7"/>'};
+ scan:'M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 8v8M11 8v8M14 8v8M17 8v8',up:'M6 15l6-6 6 6',dn:'M6 9l6 6 6-6',edit:'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',expand:'M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5',share:'M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6',body:'<circle cx="12" cy="4.5" r="2.5"/><path d="M5 9h14M12 9v6M9 22l3-7 3 7"/>'};
 const ic=(n,c='')=>{const p=ICONS[n]||'';return `<svg class="i ${c}" viewBox="0 0 24 24" aria-hidden="true">${p.startsWith('<')?p:`<path d="${p}"/>`}</svg>`};
 
 // ===================== STOCKAGE =====================
@@ -1173,7 +1177,7 @@ function bodyForm(){const p=profile;return `<div class="card warn"><span class="
   <button class="btn acc block" data-act="nrefresh" style="margin-top:18px">Calculer</button></div>`}
 function renderNutri(){
   const nd=needs(),g=profile.ngoal||'maintien';
-  let h=`<header class="hdr"><div><div class="hello">Assiette & corps</div><h1>Nutrition</h1></div>${avatarBtn()}</header>
+  let h=`<header class="hdr"><div><div class="hello">Assiette & corps</div><h1>Nutrition</h1></div><div class="hbtns"><button class="iconbtn" data-act="scan" aria-label="Scanner un produit" style="border-color:var(--yel);color:var(--yel)">${ic('scan')}</button>${avatarBtn()}</div></header>
   <div class="seg">${[['besoins','Besoins'],['repas','Repas'],['recettes','Recettes'],['courses','Courses'],['corps','Analyse']].map(([v,l])=>`<button class="${nseg===v?'on':''}" data-act="nseg" data-v="${v}">${l}</button>`).join('')}</div>`;
   if(nseg==='besoins'){
     h+=`<div class="opts" style="grid-template-columns:repeat(3,1fr)">${Object.entries(NGOALS).map(([v,o])=>`<button class="${g===v?'on':''}" data-act="ngoal" data-v="${v}">${o.n}<small>${o.s}</small></button>`).join('')}</div>`;
@@ -1184,7 +1188,7 @@ function renderNutri(){
       <div class="macro"><div class="mr"><b>Glucides</b><span>${nd.C} g</span></div><div class="pbar"><i style="width:${pct(nd.C*4)}%;background:var(--yel)"></i></div></div>
       <div class="macro"><div class="mr"><b>Lipides</b><span>${nd.F} g</span></div><div class="pbar"><i style="width:${pct(nd.F*9)}%;background:var(--vio)"></i></div></div><div class="big">${ic('apple')}</div></section>
       <div class="kpis"><div class="kpi"><small>Eau</small><b>${fr(nd.water)}</b><em>L / jour</em></div><div class="kpi"><small>Protéines / repas</small><b>${Math.round(nd.P/4)}</b><em>g × 4 repas</em></div></div>
-      ${(()=>{const cur=protSum(todayStr());return `<div class="card"><div class="lvrow" style="justify-content:space-between"><div><span class="t" style="margin:0">${ic('target')} Protéines aujourd’hui</span><div style="font-size:28px;font-weight:800;margin-top:4px">${cur}<span class="muted" style="font-size:15px;font-weight:650"> / ${nd.P} g</span></div></div><button class="btn acc sm" data-act="prot">${ic('plus')} Ajouter</button></div><div class="pbar"><i style="width:${Math.min(100,Math.round(cur/nd.P*100))}%"></i></div><div class="small muted" style="margin-top:8px">${cur>=nd.P?'Objectif atteint ✓ (+20 XP)':'Touche « Ajouter » à chaque repas : 2 secondes, pas besoin de peser.'}</div></div>`})()}
+      ${(()=>{const cur=protSum(todayStr());return `<div class="card"><div class="lvrow" style="justify-content:space-between"><div><span class="t" style="margin:0">${ic('target')} Protéines aujourd’hui</span><div style="font-size:28px;font-weight:800;margin-top:4px">${cur}<span class="muted" style="font-size:15px;font-weight:650"> / ${nd.P} g</span></div></div><button class="btn acc sm" data-act="prot">${ic('plus')} Ajouter</button></div><button class="btn block" data-act="scan" style="margin-top:14px">${ic('scan')} Scanner un produit (calories, protéines)</button><div class="pbar"><i style="width:${Math.min(100,Math.round(cur/nd.P*100))}%"></i></div><div class="small muted" style="margin-top:8px">${cur>=nd.P?'Objectif atteint ✓ (+20 XP)':'Touche « Ajouter » à chaque repas : 2 secondes, pas besoin de peser.'}</div></div>`})()}
       <div class="card"><span class="t">${ic('info')} Ce que ça veut dire</span><div class="small muted">${g==='masse'?`Mange un peu plus que ce que tu dépenses pour construire du muscle. ${nd.P} g de protéines, c’est par exemple 200 g de poulet + 3 œufs + 2 yaourts + 1 shake.`:g==='seche'?`Mange un peu moins que ce que tu dépenses pour perdre du gras. Beaucoup de protéines (${nd.P} g) pour garder ton muscle et ta détente.`:`Mange autant que ce que tu dépenses pour rester stable et performant.`} Les jours de match ou de gros entraînement, ajoute 200-300 kcal de féculents.</div>
       <details style="margin-top:12px"><summary class="small muted">Détail du calcul ${ic('chev')}</summary><div class="det small">Métabolisme de base (formule de Mifflin-St Jeor) : ${nd.bmr.toLocaleString('fr-FR')} kcal × activité ${fr(nd.f,2)} (${nd.ses} séances/semaine) = ${nd.tdee.toLocaleString('fr-FR')} kcal d’entretien. Estimation : ajuste selon l’évolution de ton poids.</div></details></div>`;
       h+=weightCard(g);
@@ -1338,7 +1342,7 @@ const relist=()=>tab==='lib'?($('#libl').innerHTML=libList()):render();
 
 // ===================== FEUILLES (formulaires) =====================
 function openSheet(title,body){$('#sheetp').innerHTML=`<div class="grab"></div><div class="sheet-h"><h2 style="font-size:23px">${title}</h2><button class="iconbtn" data-act="closesheet" aria-label="Fermer">${ic('x')}</button></div>${body}`;$('#sheet').hidden=false;document.body.style.overflow='hidden'}
-function closeSheet(){sensStop();$('#sheet').hidden=true;document.body.style.overflow=''}
+function closeSheet(){sensStop();scanStop();$('#sheet').hidden=true;document.body.style.overflow=''}
 const optsHtml=(k,arr,cur,cols)=>`<div class="opts" style="grid-template-columns:repeat(${cols||arr.length},1fr)">${arr.map(([v,l,s])=>`<button type="button" class="${String(v)===String(cur)?'on':''}" data-act="opt" data-k="${k}" data-v="${v}">${l}${s?`<small>${s}</small>`:''}</button>`).join('')}</div>`;
 function welcomeSheet(){draft={prog:progId,goalVb:profile.goalVb,goalGym:profile.goalGym};
   openSheet('Bienvenue 👋',`<p class="lead">Trois réglages et c’est parti. Tout reste sur ton téléphone.</p>
@@ -1380,7 +1384,61 @@ function protBody(){const nd=needs(),cur=protSum(todayStr()),P=nd?nd.P:0;
   <div class="small muted center" style="margin-bottom:10px">${P&&cur>=P?'Objectif atteint ✓':'Touche ce que tu viens de manger'}</div>
   <div class="pgrid">${PROTF.map(([n,gr])=>`<button data-act="padd" data-v="${gr}"><b>+${gr} g</b><small>${esc(n)}</small></button>`).join('')}</div>
   ${(prot[todayStr()]||[]).length?`<div class="btnrow"><button class="btn sm" data-act="pundo">Annuler le dernier</button></div>`:''}`}
-function protSheet(){openSheet('Protéines du jour',`<div id="protbody">${protBody()}</div>`)}
+function protSheet(){openSheet('Protéines du jour',`<button class="btn acc block" data-act="scan" style="margin-top:12px">${ic('scan')} Scanner un code-barres</button><div id="protbody">${protBody()}</div>`)}
+// ----- Scanner de code-barres (Open Food Facts) -----
+let scanStream=null,scanReader=null,scanRaf=0,scanBusy=false,scanCur=null,scanQty=100;
+let scans=LS.get('gym_scans',[]);
+function scanStop(){cancelAnimationFrame(scanRaf);scanRaf=0;try{scanReader&&scanReader.reset()}catch(e){}scanReader=null;if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null}}
+function scanSheet(){scanBusy=false;openSheet('Scanner un produit',`<div class="scanbox"><video id="scv" playsinline muted autoplay></video><div class="scanframe"></div></div>
+  <div id="scmsg" class="small muted center" style="margin-top:10px;min-height:20px">Ouverture de la caméra…</div>
+  <div class="row" style="margin-top:12px"><input id="scode" inputmode="numeric" placeholder="ou tape le code sous les barres" autocomplete="off"><button class="btn acc" data-act="scgo" style="flex:none">OK</button></div>
+  ${scans.length?`<div class="sect-h" style="margin-top:22px"><h3 style="font-size:16px">Déjà scannés</h3></div><div>${scans.slice(0,8).map((p,i)=>`<button class="choice" data-act="scre" data-v="${i}" style="padding:10px 12px">${p.img?`<img src="${esc(p.img)}" alt="" style="width:40px;height:40px;object-fit:contain;border-radius:8px;background:#fff;flex:none">`:`<span class="thumb" style="width:40px;height:40px;background:var(--yeld);color:var(--yel)">${ic('apple')}</span>`}<span><b style="font-size:14.5px">${esc(p.n)}</b><small>${p.kc!=null?Math.round(p.kc)+' kcal':'? kcal'} · ${p.pr!=null?fr(p.pr):'?'} g prot. pour 100 g</small></span></button>`).join('')}</div>`:''}
+  <div class="small muted" style="margin-top:14px">Données : Open Food Facts, base collaborative et gratuite. Seul le code-barres est envoyé.</div>`);
+  scanStart()}
+async function scanStart(){const msg=$('#scmsg'),v=$('#scv');
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){msg.textContent='Caméra indisponible ici : tape le code à la main.';return}
+  try{scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false})}
+  catch(e){msg.textContent='Accès à la caméra refusé. Autorise-le dans Réglages, ou tape le code à la main.';return}
+  if(!$('#scv')){scanStop();return}v.srcObject=scanStream;try{await v.play()}catch(e){}msg.textContent='Vise le code-barres, bien à plat et éclairé.';
+  // 1) Détecteur intégré au navigateur (Android, Chrome) ; 2) sinon bibliothèque ZXing (iPhone)
+  try{if('BarcodeDetector' in window){const fm=await BarcodeDetector.getSupportedFormats();if(fm.includes('ean_13')){const det=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});
+    const loop=async()=>{if(!scanStream)return;try{const r=await det.detect(v);if(r.length){scanFound(r[0].rawValue);return}}catch(e){}scanRaf=requestAnimationFrame(loop)};loop();return}}}catch(e){}
+  try{if(!window.ZXing)await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s)});
+    if(!scanStream)return;const hints=new Map();hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS,[ZXing.BarcodeFormat.EAN_13,ZXing.BarcodeFormat.EAN_8,ZXing.BarcodeFormat.UPC_A,ZXing.BarcodeFormat.UPC_E]);
+    scanReader=new ZXing.BrowserMultiFormatReader(hints,300);scanReader.decodeFromStream(scanStream,v,(res)=>{if(res)scanFound(res.getText())})}
+  catch(e){msg.textContent='Lecteur indisponible (pas de réseau ?) : tape le code à la main.'}}
+function scanFound(code){if(scanBusy)return;scanBusy=true;try{navigator.vibrate&&navigator.vibrate(60)}catch(e){}beep(1);scanStop();scanLookup(code)}
+async function scanLookup(code){code=String(code).replace(/\D/g,'');const msg=$('#scmsg');if(code.length<8){if(msg)msg.textContent='Code incomplet : 8 à 13 chiffres.';scanBusy=false;return}
+  if(msg)msg.textContent='Recherche du produit '+code+'…';
+  try{const r=await fetch('https://world.openfoodfacts.org/api/v2/product/'+code+'.json?fields=product_name,product_name_fr,generic_name_fr,brands,nutriments,serving_quantity,serving_size,nutriscore_grade,image_front_small_url,quantity');
+    const j=await r.json();if(!j||j.status!==1||!j.product){productSheet(null,code);return}
+    const p=j.product,n=p.nutriments||{},num2=v=>v==null||v===''?null:+v;
+    const prod={code,n:p.product_name_fr||p.product_name||p.generic_name_fr||'Produit sans nom',b:(p.brands||'').split(',')[0].trim(),q:p.quantity||'',img:p.image_front_small_url||'',
+      kc:num2(n['energy-kcal_100g'])??(n.energy_100g!=null?Math.round(n.energy_100g/4.184):null),pr:num2(n.proteins_100g),gl:num2(n.carbohydrates_100g),su:num2(n.sugars_100g),li:num2(n.fat_100g),
+      sv:num2(p.serving_quantity),svt:p.serving_size||'',ns:(p.nutriscore_grade||'').toLowerCase()};
+    scans=[prod].concat(scans.filter(x=>x.code!==code)).slice(0,20);LS.set('gym_scans',scans);productSheet(prod)}
+  catch(e){if(msg)msg.textContent='Pas de réseau : la recherche du produit a besoin d’internet.';scanBusy=false}}
+const NSCOL={a:'#038141',b:'#85bb2f',c:'#fecb02',d:'#ee8100',e:'#e63e11'};
+function prodCalc(p,q){const f=x=>x==null?null:x*q/100;return{kc:f(p.kc),pr:f(p.pr),gl:f(p.gl),li:f(p.li)}}
+function productSheet(p,code){scanCur=p;
+  if(!p){openSheet('Produit inconnu',`<p class="lead">Le code ${esc(code||'')} n’est pas dans Open Food Facts.</p><div class="small muted" style="margin-top:8px">Regarde le tableau nutritionnel sur l’emballage, ou ajoute tes protéines avec les portions rapides.</div>
+    <div class="btnrow"><button class="btn acc" data-act="scan">Scanner un autre produit</button><button class="btn" data-act="prot">Portions rapides</button></div>`);return}
+  scanQty=p.sv&&p.sv>0&&p.sv<1000?Math.round(p.sv):100;
+  openSheet('Produit scanné',`<div class="lvrow" style="margin-top:12px;align-items:flex-start">${p.img?`<img src="${esc(p.img)}" alt="" style="width:76px;height:76px;object-fit:contain;border-radius:14px;background:#fff;flex:none">`:''}
+    <div style="flex:1;min-width:0"><h3>${esc(p.n)}</h3><div class="small muted">${esc([p.b,p.q].filter(Boolean).join(' · '))}</div>
+    ${p.ns&&NSCOL[p.ns]?`<span class="badge" style="background:${NSCOL[p.ns]};color:#fff;margin-top:8px">Nutri-Score ${p.ns.toUpperCase()}</span>`:''}</div></div>
+   <div class="card" style="margin:16px 0 0;padding:16px"><div class="small muted" style="margin-bottom:6px">Pour 100 g</div><div class="stats3" style="margin-top:0;grid-template-columns:repeat(4,1fr)">
+    <div><b>${p.kc!=null?Math.round(p.kc):'?'}</b><small>kcal</small></div><div><b style="color:var(--acc)">${p.pr!=null?fr(p.pr):'?'}</b><small>prot. (g)</small></div><div><b>${p.gl!=null?fr(p.gl):'?'}</b><small>glucides</small></div><div><b>${p.li!=null?fr(p.li):'?'}</b><small>lipides</small></div></div>
+    ${p.su!=null?`<div class="small muted" style="margin-top:8px">dont sucres : ${fr(p.su)} g</div>`:''}</div>
+   <div class="field" style="margin-bottom:8px"><span>Quantité mangée</span><div class="chips" style="margin:0 -20px">${[p.sv&&p.sv<1000?[Math.round(p.sv),'1 portion ('+Math.round(p.sv)+' g)']:null,[50,'50 g'],[100,'100 g'],[150,'150 g'],[200,'200 g'],[250,'250 g']].filter(Boolean).map(([v,l])=>`<button class="chip ${v===scanQty?'on':''}" data-act="scq" data-v="${v}">${l}</button>`).join('')}</div>
+    <div class="row" style="margin-top:10px"><input id="scqty" inputmode="numeric" value="${scanQty}" aria-label="Quantité en grammes"><span class="muted" style="flex:none">grammes</span></div></div>
+   <div id="scres">${prodRes()}</div>
+   <button class="btn block" data-act="scan" style="margin-top:10px">${ic('scan')} Scanner un autre produit</button>`)}
+function prodRes(){const p=scanCur,c=prodCalc(p,scanQty),nd=needs(),pr=c.pr!=null?Math.round(c.pr):null;
+  return `<div class="card ok-box" style="margin:8px 0 0;padding:16px"><div class="stats3" style="margin-top:0;grid-template-columns:1fr 1fr"><div><b>${c.kc!=null?Math.round(c.kc):'?'}</b><small>kcal pour ${scanQty} g</small></div><div><b style="color:var(--acc)">${c.pr!=null?fr(c.pr):'?'} g</b><small>protéines</small></div></div>
+   ${nd&&c.kc!=null?`<div class="small muted center" style="margin-top:8px">${Math.round(c.kc/nd.kcal*100)} % de tes calories du jour${pr!=null?' · '+Math.round(c.pr/nd.P*100)+' % de tes protéines':''}</div>`:''}</div>
+   ${pr?`<button class="btn acc block" data-act="scadd" style="margin-top:12px">${ic('plus')} Ajouter ${pr} g à mes protéines du jour</button>`:''}`}
+function scanQtySet(v){scanQty=Math.max(1,Math.min(2000,Math.round(+v||0)));const r=$('#scres');if(r)r.innerHTML=prodRes()}
 function shareFile(txt,name,type,done){let file=null;try{file=new File([txt],name,{type})}catch(e){}
   if(file&&navigator.canShare&&navigator.canShare({files:[file]}))navigator.share({files:[file],title:name}).then(done).catch(()=>{});
   else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove();done()}}
@@ -1629,6 +1687,12 @@ document.addEventListener('click',ev=>{
   case 'go':if(d.ptab)ptab=d.ptab;if(d.jk)jkind=d.jk;if(d.go==='workout'&&tab!=='lib'){date=todayStr();sid=null;showDate=false}go(d.go);break;
   case 'start':date=todayStr();sid=d.sid;showDate=false;autoKey='';openEx.clear();go('workout');openFocus();askReady();break;
   case 'rtgo':{const ss=PROGS[progId].sessions.filter(s=>s.rt===d.v&&!s.legs),n=nextSid();date=todayStr();sid=(ss.find(s=>s.id===n)||ss[0]||{}).id||null;showDate=false;autoKey='';openEx.clear();go('workout');openFocus();askReady();break}
+  case 'scan':scanStop();scanSheet();break;
+  case 'scgo':{scanStop();scanBusy=true;scanLookup($('#scode').value);break}
+  case 'scre':{scanStop();const p=scans[+d.v];if(p){scans=[p].concat(scans.filter(x=>x!==p));LS.set('gym_scans',scans);productSheet(p)}break}
+  case 'scq':t.parentNode.querySelectorAll('.chip').forEach(b=>b.classList.toggle('on',b===t));$('#scqty').value=d.v;scanQtySet(d.v);break;
+  case 'scadd':{const c=prodCalc(scanCur,scanQty),g=Math.round(c.pr||0);if(!g)break;const t0=todayStr(),nd=needs(),before=protSum(t0);prot[t0]=prot[t0]||[];prot[t0].push(g);LS.set('gym_prot',prot);
+    closeSheet();render();toast(nd&&before<nd.P&&before+g>=nd.P?'Objectif protéines atteint ✓ +20 XP':'+'+g+' g de protéines ('+Math.round(c.kc||0)+' kcal)',2600);break}
   case 'acct':acctSheet(d.v);break;
   case 'asubmit':acctSubmit();break;
   case 'csync':if(cUser){toast('Synchronisation…');startSync(cUser).then(()=>{if(cState==='ok')toast('Synchronisé ✓')})}break;
@@ -1733,6 +1797,7 @@ document.addEventListener('input',ev=>{
   if(d.f){getEntry(d.ex).sets[+d.i][d.f]=num(t.value);saveLogs()}
   else if(d.note){getEntry(d.note).note=t.value;saveLogs()}
   else if(d.pf){const v=t.value;profile[d.pf]=['taille','poids','reach','net','age'].includes(d.pf)?(num(v)??''):v;saveProfile()}
+  else if(t.id==='scqty'){scanQtySet(t.value);document.querySelectorAll('[data-act=scq]').forEach(b=>b.classList.toggle('on',+b.dataset.v===scanQty))}
   else if(t.id==='edq'){edQ=t.value;$('#edcand').innerHTML=editCand(candFor())}
   else if(t.id==='libq'){libQ=t.value;$('#libl').innerHTML=libList();document.querySelectorAll('.chip[data-act=grp]').forEach(c=>c.classList.toggle('on',!libQ&&c.dataset.v===grp))}
   else if(t.id==='t-rj'){const r=reach(),v=num(t.value);if(r&&v)$('#t-val').value=Math.round((v-r)*10)/10}
