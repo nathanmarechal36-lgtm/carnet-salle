@@ -1601,6 +1601,7 @@ function renderProfile(){
    <label class="field"><span>Atteinte debout (cm)</span><input data-pf="reach" inputmode="numeric" placeholder="${num(p.taille)?'≈ '+Math.round(num(p.taille)*1.33)+' (estimé)':'ex. 235'}" value="${esc(p.reach)}"><div class="help">Debout, pieds à plat, bras tendu contre un mur : hauteur du bout des doigts. Sert à calculer ta détente.</div></label>
    ${(p.sport||'volley')==='volley'?`<label class="field" style="margin-bottom:4px"><span>Hauteur du filet</span><select data-pf="net">${opt([[243,'2,43 m (hommes)'],[235,'2,35 m (jeunes / mixte)'],[224,'2,24 m (femmes)'],[215,'2,15 m (jeunes)']],p.net)}</select></label>`:''}</div>
   ${acctCard()}
+  ${notifCard()}
   <div class="card ${injs().length?'warn':''}"><span class="t">🩹 Douleurs et blessures</span><div class="small muted">${injs().length?'Déclaré : '+esc(injs().map(z=>INJ[z].n).join(', '))+'. Tes séances sont adaptées.':'Une douleur ? Déclare-la : l’appli remplace les exercices qui la sollicitent.'}</div><div class="btnrow"><button class="btn sm" data-act="injsheet">${injs().length?'Modifier':'Déclarer une douleur'}</button></div></div>
   <div class="card"><span class="t">${ic('target')} Mes objectifs par semaine</span><div class="small muted" style="margin-bottom:10px">Séances de salle</div>${goals('goalGym',5,1)}<div class="small muted" style="margin:18px 0 10px">Séances de ${spLow()} (club, matchs)</div>${goals('goalVb',5,0)}</div>
   <div class="card"><span class="t">${ic('cal')} Rappels</span><div class="small muted">Choisis tes jours de salle : l’appli crée un événement qui se répète chaque semaine dans ton calendrier, avec une alerte 15 min avant.</div>
@@ -1614,7 +1615,7 @@ function renderProfile(){
    <details style="margin-top:16px"><summary class="small">Copier / coller en texte ${ic('chev')}</summary><div class="det"><div class="btnrow" style="margin-top:0"><button class="btn sm" data-act="copy">Copier</button><button class="btn sm" data-act="paste">Importer</button></div><textarea id="bk" style="margin-top:10px" placeholder="Colle ici une sauvegarde"></textarea></div></details>
    <div class="small" id="bkmsg" style="margin-top:8px;color:var(--acc)"></div></div>
   <div class="card"><span class="t">${ic('phone')} Installation</span><div class="small muted">${isStandalone()?'L’appli est installée ✓ Ouvre-la toujours depuis son icône.':isIOS()?'Dans Safari : Partager → Sur l’écran d’accueil.':'Menu ⋮ du navigateur → Installer l’application.'}</div><div class="btnrow"><a class="btn sm" href="guide.html">Guide complet</a>${deferredPrompt?`<button class="btn sm acc" data-act="install">Installer</button>`:''}</div></div>
-  <div class="center small muted" style="margin:24px 0"><span style="font-family:var(--jp);color:var(--acc);font-weight:800;letter-spacing:.2em">気合</span> ${APP} — Salle & Sport · v10</div>`;
+  <div class="center small muted" style="margin:24px 0"><span style="font-family:var(--jp);color:var(--acc);font-weight:800;letter-spacing:.2em">気合</span> ${APP} — Salle & Sport · v11</div>`;
 }
 const NAV=()=>[['home','home','Accueil'],['volley',SP().ic,SP().n],['workout','dumbbell','Séance'],['nutri','apple','Nutrition'],['progress','chart','Progrès']];
 function renderNav(){const cur=tab==='lib'?'workout':tab;$('#nav').innerHTML=NAV().map(([t,i,l])=>t==='workout'?`<button class="ctr ${t===cur?'on':''}" data-act="go" data-go="${t}" aria-label="${l}"><span class="ctrb">${ic(i)}</span></button>`:`<button class="${t===cur?'on':''}" data-act="go" data-go="${t}">${ic(i)}${l}</button>`).join('')}
@@ -1906,6 +1907,7 @@ async function pushCloud(){if(!cUser||!fbDb)return;if(cBusy){clearTimeout(cT);cT
     b.set(ur,{name:profile.name||'',team:profile.team||'',n:parts.length,stamp:now,v:7},{merge:true});
     if(profile.team)b.set(fbDb.collection('teams').doc(profile.team).collection('members').doc(uid),teamSummary());
     await b.commit();
+    if(notif.on)pushNotifCfg();
     // Séances pour le coach : à part, pour ne jamais bloquer la synchro si les règles ne sont pas encore à jour
     if(profile.team)fbDb.collection('teams').doc(profile.team).collection('sessions').doc(uid).set(teamSessions()).catch(e=>console.warn('séances coach',e));sync={uid,stamp:now,dirty:false,n:parts.length};LS.set('gym_sync',sync);cState='ok';cLast=now}
   catch(e){console.warn(e);cState=navigator.onLine?'err':'offline'}cBusy=false;refreshAcct()}
@@ -1934,6 +1936,37 @@ async function createTeam(name){for(let i=0;i<5;i++){const code=newCode(),ref=fb
 async function joinTeam(code){const t=await fbDb.collection('teams').doc(code).get();if(!t.exists)return false;profile.team=code;profile.teamName=t.data().name||'Équipe';saveProfile();await pushCloud();teamCache=null;return true}
 async function leaveTeam(){const code=profile.team;try{const tr=fbDb.collection('teams').doc(code);tr.collection('sessions').doc(cUser.uid).delete().catch(()=>{});await tr.collection('members').doc(cUser.uid).delete()}catch(e){}profile.team='';profile.teamName='';saveProfile();teamCache=null;pushCloud()}
 function clearLocal(){try{Object.keys(localStorage).filter(k=>k.startsWith('gym_')).forEach(k=>localStorage.removeItem(k))}catch(e){}}
+// ----- Notifications (Firebase Cloud Messaging, envoyées gratuitement par GitHub Actions) -----
+const VAPID='BJnXC9a-64UpoGX-J5lus3cEIavchVv123EV8h9iz0sRHOZ-w2fxjAJ3j5LHTbHZ6VVKjkq3v6Q02FPENl_ScXU';
+const NTYPES=[['rappel','Rappel de séance','30 min avant, tes jours de salle'],['veille','Veille de match','La veille à 20 h'],['defi','Défi d’équipe','Le dimanche à 18 h'],['bilan','Bilan de la semaine','Le lundi à 9 h']];
+let notif=Object.assign({on:false,token:'',t:{rappel:true,veille:true,defi:true,bilan:true}},LS.get('gym_notif',{}));
+const saveNotif=()=>LS.set('gym_notif',notif);
+const pushOk=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+let fbMsgP=null;
+function loadMsg(){if(fbMsgP)return fbMsgP;fbMsgP=loadFb().then(()=>new Promise((res,rej)=>{if(firebase.messaging)return res();const s=document.createElement('script');s.src='fb-messaging.js';s.onload=res;s.onerror=()=>rej(new Error('load'));document.head.appendChild(s)})).catch(e=>{fbMsgP=null;throw e});return fbMsgP}
+// Réglages lus par le programme d’envoi (rangés dans le compte : seul toi et le programme y ont accès)
+function notifCfg(){return{on:!!notif.on,t:notif.t,rdays:profile.rdays||[],rtime:profile.rtime||'18:00',tz:(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone}catch(e){return 'Europe/Paris'}})(),
+  match:match||'',team:profile.team||'',sport:profile.sport||'volley',name:profile.name||'',updated:Date.now()}}
+async function pushNotifCfg(){if(!cUser||!fbDb||!notif.token)return;
+  try{await fbDb.collection('users').doc(cUser.uid).collection('push').doc('cfg').set(Object.assign(notifCfg(),{tokens:firebase.firestore.FieldValue.arrayUnion(notif.token)}),{merge:true})}catch(e){console.warn('notif cfg',e)}}
+async function notifEnable(){
+  if(!cUser){toast('Crée un compte (ou connecte-toi) pour recevoir des notifications',3500);acctSheet('signup');return}
+  if(!pushOk()){toast(isIOS()&&!isStandalone()?'Ouvre l’appli depuis son icône sur l’écran d’accueil (iOS 16.4 minimum).':'Les notifications ne sont pas disponibles sur ce téléphone.',4500);return}
+  let p;try{p=await Notification.requestPermission()}catch(e){p='denied'}
+  if(p!=='granted'){toast('Notifications refusées. Réactive-les dans Réglages → Notifications → KIAI.',4500);return}
+  toast('Activation…');
+  try{await loadMsg();const reg=await navigator.serviceWorker.ready;const tok=await firebase.messaging().getToken({vapidKey:VAPID,serviceWorkerRegistration:reg});
+    if(!tok)throw new Error('pas de jeton');notif.on=true;notif.token=tok;saveNotif();await pushNotifCfg();render();toast('Notifications activées ✓');
+    reg.showNotification('KIAI 気合',{body:'C’est prêt : tu recevras tes rappels ici.',icon:'icon-192.png',tag:'kiai-test'})}
+  catch(e){console.warn(e);toast('Impossible d’activer : '+(e.code==='load'||e.message==='load'?'pas de réseau':(e.message||e)),4500)}}
+async function notifOff(){notif.on=false;saveNotif();render();if(cUser&&fbDb)try{await fbDb.collection('users').doc(cUser.uid).collection('push').doc('cfg').set({on:false,updated:Date.now()},{merge:true})}catch(e){}toast('Notifications désactivées')}
+async function notifTest(){try{const reg=await navigator.serviceWorker.ready;await reg.showNotification('KIAI 気合',{body:sayL('hello')||'Les notifications marchent ✓',icon:'icon-192.png',tag:'kiai-test'});toast('Notification de test envoyée')}catch(e){toast('Test impossible ici : '+(e.message||e),3500)}}
+function notifCard(){const ok=pushOk(),perm=ok?Notification.permission:'';
+  if(!notif.on)return `<div class="card"><span class="t">🔔 Notifications</span><div class="small muted">Rappels de séance, veille de match, défi d’équipe et bilan du lundi, même quand l’appli est fermée. Gratuit.${!cUser?' Il faut un compte.':''}${isIOS()&&!isStandalone()?' Sur iPhone : ouvre l’appli depuis son icône (iOS 16.4 minimum).':''}${perm==='denied'?' Tu les as refusées : réactive-les dans Réglages → Notifications → KIAI.':''}</div>
+    <div class="btnrow"><button class="btn acc sm" data-act="notifon">🔔 Activer les notifications</button></div></div>`;
+  return `<div class="card ok-box"><span class="t">🔔 Notifications activées</span>${NTYPES.map(([k2,n,s])=>`<div class="chl" data-act="ntog" data-v="${k2}" role="checkbox" aria-checked="${!!notif.t[k2]}" style="cursor:pointer"><span class="cc ${notif.t[k2]?'ok':''}">${ic(notif.t[k2]?'check':'x')}</span><div style="flex:1;min-width:0"><div class="lb" style="${notif.t[k2]?'':'color:var(--mute)'}">${n}</div><div class="small muted">${s}</div></div></div>`).join('')}
+   <div class="small muted" style="margin-top:8px">Le rappel de séance utilise tes jours et ton heure de la carte « Rappels » ci-dessous. Les envois peuvent avoir quelques minutes de retard.</div>
+   <div class="btnrow"><button class="btn sm" data-act="ntest">Tester</button><button class="btn sm" data-act="notifoff">Désactiver</button></div></div>`}
 // ----- Écrans des comptes -----
 function acctSheet(m){draft={m};openSheet(m==='signup'?'Créer un compte':m==='login'?'Se connecter':'Mot de passe oublié',`
   <p class="lead">${m==='signup'?'Ta progression est sauvegardée en ligne : tu la retrouves sur n’importe quel téléphone, et tu peux rejoindre une équipe.':m==='login'?'Retrouve ta progression sur ce téléphone.':'Tu vas recevoir un e-mail pour choisir un nouveau mot de passe.'}</p>
@@ -2081,6 +2114,10 @@ document.addEventListener('click',ev=>{
   case 'team':if(!cUser){acctSheet('signup');break}teamSheet(d.v);break;
   case 'tsubmit':teamSubmit();break;
   case 'treload':teamCache=null;render();break;
+  case 'notifon':notifEnable();break;
+  case 'notifoff':notifOff();break;
+  case 'ntest':notifTest();break;
+  case 'ntog':notif.t[d.v]=!notif.t[d.v];saveNotif();render();pushNotifCfg();break;
   case 'tses':coachSheet(d.v);break;
   case 'tpass':passSheet();break;
   case 'tcoach':passCoach(d.v);break;
