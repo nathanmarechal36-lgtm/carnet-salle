@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Installer KIAI</title>
-<meta name="description" content="Installe KIAI, ton coach de salle pour le volley, le basket, le foot et le rugby. Gratuit, sans store.">
-<meta property="og:title" content="KIAI 気合 — Salle & Sport">
+<title>Installer Yosha</title>
+<meta name="description" content="Installe Yosha, ton coach de salle pour le volley, le basket, le foot et le rugby. Gratuit, sans store.">
+<meta property="og:title" content="Yosha よっしゃ — Salle & Sport">
 <meta property="og:description" content="Ton coach de salle gratuit. Installe-le en 30 secondes.">
 <meta property="og:image" content="icon-512.png">
 <meta name="theme-color" content="#0b0a0d">
@@ -32,7 +32,7 @@ h1{font:400 44px/0.95 var(--disp);text-transform:uppercase;margin:0;letter-spaci
 .team b.code{font:400 30px/1 var(--disp);letter-spacing:.18em;color:var(--yel);display:block;margin:8px 0 4px}
 .step{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--line)}.step:first-of-type{border-top:0;padding-top:4px}
 .num{width:34px;height:34px;border-radius:10px;background:var(--acc);color:#fff;display:grid;place-items:center;font:400 18px/1 var(--disp);flex:none;transform:rotate(-6deg)}
-.step b{display:block;font-size:16px}.step span{color:var(--mute);font-size:14.5px}
+.step b{display:block;font-size:16px}.step span{color:var(--mute);font-size:14.5px}.step .num{color:#fff;font-size:18px}.step .ico{color:#0b7aff}.step .ico.dk{color:#fff}
 .ico{display:inline-grid;place-items:center;vertical-align:middle;width:30px;height:30px;border-radius:9px;background:#fff;color:#0b7aff;margin:0 3px}
 .ico svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ico.dk{background:#2b2b2f;color:#fff}
@@ -50,36 +50,36 @@ details{border-top:1px solid var(--line);padding:12px 0}details:first-of-type{bo
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><img src="icon-192.png" alt=""><div><div class="jp">気合</div><h1>KIAI</h1><div class="small">Salle & sport · gratuit · sans store</div></div></div>
+  <div class="top"><img src="icon-192.png" alt=""><div><div class="jp">よっしゃ</div><h1>Yosha</h1><div class="small">Salle & sport · gratuit · sans store</div></div></div>
   <p class="lead">Ton coach de salle pour le <b>volley, le basket, le foot et le rugby</b>. Il s’installe en 30 secondes sur ton écran d’accueil et marche même sans réseau.</p>
 
   <div class="card team" id="team" hidden><div class="small" style="color:var(--yel);font-weight:800;text-transform:uppercase;letter-spacing:.08em">🙌 Tu es invité dans une équipe</div>
     <b class="code" id="tcode"></b><div class="small">Après l’installation : <b style="color:var(--ink)">Profil → Créer un compte</b>. Sur Android, tu rejoins l’équipe automatiquement. Sur iPhone, si l’appli ne te la propose pas : <b style="color:var(--ink)">Profil → Rejoindre avec un code</b> et tape ce code.</div></div>
 
-  <div class="card ok" id="already" hidden><b>✓ KIAI est déjà installée</b><p class="small" style="margin:4px 0 12px">Ouvre-la depuis son icône sur ton écran d’accueil.</p><a class="btn" id="open1" href="./">Ouvrir KIAI</a></div>
+  <div class="card ok" id="already" hidden><b>✓ Yosha est déjà installée</b><p class="small" style="margin:4px 0 12px">Ouvre-la depuis son icône sur ton écran d’accueil.</p><a class="btn" id="open1" href="./">Ouvrir Yosha</a></div>
 
   <div class="tabs" role="tablist"><button data-t="ios">iPhone</button><button data-t="android">Android</button><button data-t="pc">Ordinateur</button></div>
 
   <!-- iPhone -->
   <section data-s="ios" hidden>
-    <div class="card warn" id="notSafari" hidden><b>⚠️ Ouvre cette page dans Safari</b><p class="small" style="margin:4px 0 12px">Sur iPhone, seule l’app Safari peut installer KIAI (pas Instagram, Chrome ou Messenger).</p><button class="btn alt" id="copy">📋 Copier le lien, puis colle-le dans Safari</button></div>
+    <div class="card warn" id="notSafari" hidden><b>⚠️ Ouvre cette page dans Safari</b><p class="small" style="margin:4px 0 12px">Sur iPhone, seule l’app Safari peut installer Yosha (pas Instagram, Chrome ou Messenger).</p><button class="btn alt" id="copy">📋 Copier le lien, puis colle-le dans Safari</button></div>
     <div class="card">
       <div class="step"><span class="num">1</span><div><b>Touche Partager <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></span></b><span>Le carré avec une flèche, en bas de Safari (en haut sur iPad).</span></div></div>
       <div class="step"><span class="num">2</span><div><b>« Sur l’écran d’accueil » <span class="ico dk"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg></span></b><span>Fais défiler la liste vers le bas si tu ne le vois pas.</span></div></div>
-      <div class="step"><span class="num">3</span><div><b>Touche « Ajouter »</b><span>En haut à droite. L’icône rouge 気 apparaît sur ton écran.</span></div></div>
-      <div class="step"><span class="num">4</span><div><b>Ouvre KIAI depuis son icône</b><span>Toujours depuis l’icône : c’est là que tes séances sont enregistrées.</span></div></div>
+      <div class="step"><span class="num">3</span><div><b>Touche « Ajouter »</b><span>En haut à droite. L’icône rouge よっしゃ apparaît sur ton écran.</span></div></div>
+      <div class="step"><span class="num">4</span><div><b>Ouvre Yosha depuis son icône</b><span>Toujours depuis l’icône : c’est là que tes séances sont enregistrées.</span></div></div>
     </div>
     <p class="small">iPhone avec iOS 16.4 ou plus récent pour les notifications (Réglages → Général → Informations).</p>
   </section>
 
   <!-- Android -->
   <section data-s="android" hidden>
-    <div id="promptBox" hidden><button class="btn" id="install">⬇ Installer KIAI</button><p class="small" style="text-align:center;margin:8px 0 0">Un seul bouton, puis « Installer ».</p></div>
+    <div id="promptBox" hidden><button class="btn" id="install">⬇ Installer Yosha</button><p class="small" style="text-align:center;margin:8px 0 0">Un seul bouton, puis « Installer ».</p></div>
     <div class="card">
       <div class="small" style="font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Avec Chrome (recommandé)</div>
       <div class="step"><span class="num">1</span><div><b>Touche le menu <span class="ico dk"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></svg></span></b><span>Les 3 points en haut à droite de Chrome.</span></div></div>
       <div class="step"><span class="num">2</span><div><b>« Installer l’application »</b><span>Ou « Ajouter à l’écran d’accueil » selon ta version.</span></div></div>
-      <div class="step"><span class="num">3</span><div><b>Confirme avec « Installer »</b><span>KIAI apparaît avec tes autres applis.</span></div></div>
+      <div class="step"><span class="num">3</span><div><b>Confirme avec « Installer »</b><span>Yosha apparaît avec tes autres applis.</span></div></div>
     </div>
     <div class="card">
       <details><summary>Samsung Internet</summary><p class="small">Menu <b style="color:var(--ink)">≡</b> en bas à droite → <b style="color:var(--ink)">Ajouter page à</b> → <b style="color:var(--ink)">Écran d’accueil</b>.</p></details>
@@ -92,7 +92,7 @@ details{border-top:1px solid var(--line);padding:12px 0}details:first-of-type{bo
       <details><summary>L’icône n’apparaît pas</summary><ul class="small" style="padding-left:18px;margin:6px 0">
         <li>Regarde dans le <b style="color:var(--ink)">tiroir d’applications</b> (glisse vers le haut sur l’écran d’accueil).</li>
         <li>Xiaomi, Huawei, Oppo : Réglages → Applis → Chrome → Autorisations → autorise <b style="color:var(--ink)">« Raccourcis sur l’écran d’accueil »</b>, puis recommence.</li></ul></details>
-      <details><summary>Est-ce que c’est sûr ?</summary><p class="small">Oui : KIAI n’est pas un fichier à télécharger. C’est une appli web installée par ton navigateur : pas d’accès à tes photos ou tes contacts, et tu la supprimes comme n’importe quelle appli.</p></details>
+      <details><summary>Est-ce que c’est sûr ?</summary><p class="small">Oui : Yosha n’est pas un fichier à télécharger. C’est une appli web installée par ton navigateur : pas d’accès à tes photos ou tes contacts, et tu la supprimes comme n’importe quelle appli.</p></details>
     </div>
   </section>
 
@@ -100,10 +100,10 @@ details{border-top:1px solid var(--line);padding:12px 0}details:first-of-type{bo
   <section data-s="pc" hidden>
     <div class="card" style="text-align:center"><b style="font-size:18px">Scanne avec ton téléphone</b><p class="small" style="margin:4px 0 12px">Ouvre l’appareil photo et vise le code.</p>
       <div class="qr" id="qr"></div><div class="small" id="url" style="word-break:break-all"></div></div>
-    <p class="small">KIAI est pensée pour le téléphone. Sur ordinateur, tu peux quand même l’essayer avec le bouton ci-dessous.</p>
+    <p class="small">Yosha est pensée pour le téléphone. Sur ordinateur, tu peux quand même l’essayer avec le bouton ci-dessous.</p>
   </section>
 
-  <a class="btn alt" id="open2" href="./" style="margin-top:18px">Ouvrir KIAI sans l’installer</a>
+  <a class="btn alt" id="open2" href="./" style="margin-top:18px">Ouvrir Yosha sans l’installer</a>
   <p class="small" style="text-align:center;margin-top:18px">Gratuit · sans publicité · tes données restent sur ton téléphone (ou dans ton compte si tu en crées un).</p>
 </div>
 <div class="arrow" id="arrow">↓</div>
