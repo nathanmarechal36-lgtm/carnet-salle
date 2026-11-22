@@ -403,6 +403,13 @@ body.offline #off{display:block}
 .sw{position:relative;width:48px;height:28px;border-radius:99px;background:var(--line);flex:none;transition:background .2s}.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s}.sw.on{background:var(--acc)}.sw.on::after{transform:translateX(20px)}
 .setrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);cursor:pointer}.setrow:first-of-type{border-top:0}.setrow div{flex:1}.setrow small{display:block;color:var(--mute);font-size:12.5px}
 .invite{border-color:rgba(255,200,61,.4);background:radial-gradient(120% 100% at 100% 0%,rgba(255,200,61,.15),transparent 60%),var(--card)}
+/* ---- v13 : consentements, mise à jour ---- */
+.cons{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;margin:10px 0;border:1.5px solid var(--line);border-radius:14px;background:var(--card2);font-size:13.5px;line-height:1.45;cursor:pointer}
+.cons input{width:22px;height:22px;flex:none;margin:1px 0 0;accent-color:var(--acc);-webkit-appearance:checkbox;appearance:auto;padding:0}
+.cons a{color:var(--acc);font-weight:700}.cons.need{border-color:var(--acc);animation:pop .35s}
+#upd{position:fixed;left:14px;right:14px;top:calc(env(safe-area-inset-top) + 10px);max-width:532px;margin:0 auto;z-index:64;display:flex;align-items:center;gap:12px;background:var(--acc);color:#fff;border-radius:16px;padding:12px 12px 12px 16px;font-weight:750;font-size:14.5px;box-shadow:0 12px 30px rgba(0,0,0,.5);animation:rise .35s cubic-bezier(.2,.8,.2,1)}
+#upd span{flex:1}#upd button{border:0;background:#fff;color:#0b0a0d;font-weight:850;border-radius:11px;padding:9px 14px;cursor:pointer}#upd .x{background:none;color:#fff;padding:6px}
+.news li{margin:8px 0}
 .podium{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-items:end;margin:14px 0 6px}.podium div{text-align:center;background:var(--card2);border:1px solid var(--line);border-radius:16px 16px 6px 6px;padding:12px 6px}
 .podium b{display:block;font-family:var(--disp);font-weight:400;font-size:26px}.podium span{display:block;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.podium small{color:var(--mute);font-size:11px}
 @media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
@@ -679,7 +686,9 @@ const INTENS=[[3,'Tranquille'],[5,'Normal'],[7,'Intense'],[9,'À fond']];
 const POSTES=['','Réceptionneur-attaquant','Pointu','Central','Passeur','Libéro'];
 
 // ----- Sports : programme, postes, stats de match, tests et explications -----
-const APP='KIAI';
+const APP='KIAI',APP_V='13',TERMS_V=1;
+// Nouveautés montrées une fois après la mise à jour
+const NEWS={'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
 const SPORTS={
  volley:{n:'Volley',ic:'ball',prog:'volley',de:'de volleyeur',bar:'filet',postes:POSTES.slice(),
   types:{entr:'Entraînement',match:'Match',beach:'Beach'},stk:[['att','Attaques tentées'],['kill','Attaques gagnantes'],['blk','Contres gagnants'],['ace','Aces'],['err','Fautes de service']],
@@ -1003,10 +1012,13 @@ function sidFor(d){const prog=PROGS[progId],e=Object.values(logs).find(x=>x.date
 // Liste d’une séance : routine détente d’abord (sauf jambes), puis les exercices
 function sessList(s,d=date){const sw=swaps[s.id]||{},m=mods(s,d),inj=injs().length;
   const rt=s.rt&&!s.legs&&m.rt!=='skip'&&!(inj&&noPlyo())?ROUTINES[s.rt].ex.map(([id,n,rp])=>({id,orig:null,rt:true,sets:m.rt==='half'?Math.ceil(n/2):n,reps:rp})):[];
-  const used=exOf(s).slice();
+  const used=exOf(s).slice(),lv=lvl0();let big=0;
   return rt.concat(exOf(s).map(id=>{let r=EX[sw[id]]?sw[id]:id,flag={};
+    // Débutant : version plus simple de l’exercice (sauf si tu l’as choisi toi-même)
+    if(lv==='deb'&&!sw[id]&&DEB[r]&&EX[DEB[r]]&&!used.includes(DEB[r])){used.push(DEB[r]);r=DEB[r];flag={lv:true}}
     if(inj&&risky(r)){const a=injAlt(r,used);if(a){used.push(a);r=a;flag={inj:true}}else flag={warn:true}}
-    const n=EX[r].sets;return Object.assign({orig:id,id:r,sets:m.f<1?Math.max(2,Math.round(n*m.f)):n,reps:EX[r].reps},flag)}).filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i))}
+    let n=EX[r].sets;if(lv==='deb')n=Math.max(2,n-1);else if(lv==='conf'&&EX[r].wl==='kg'&&big<2){n+=1;big++}
+    return Object.assign({orig:id,id:r,sets:m.f<1?Math.max(2,Math.round(n*m.f)):n,reps:EX[r].reps},flag)}).filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i))}
 // Exercices d’une séance : ceux du programme, ou ta version modifiée
 const exOf=s=>(custom[s.id]||s.ex).filter(id=>EX[id]);
 const curSes=()=>PROGS[progId].sessions.find(x=>x.id===sid);
@@ -1285,7 +1297,7 @@ function card(ex,orig,ov){
   const [dn,tot]=exCount(ex.id,nS),open=openEx.has(ex.id),fin=dn>=tot&&dn>0;
   const st=fin?`<span class="st done">${ic('check')}</span>`:dn?`<span class="st part">${dn}/${tot}</span>`:`<span class="st">${ic('chev')}</span>`;
   const fv=isFav(ex.id),pv0=!open?prev(ex.id):null;
-  let h=`<div class="ex ${open?'open':''} ${fin&&!open?'fin':''}" id="ex-${ex.id}"><div class="hd" data-act="tog" data-id="${ex.id}" data-n="${nS||''}">${thumb(ex.g)}<div class="mid"><div class="nm">${fv?'<span style="color:var(--yel)">★</span> ':''}${esc(ex.name)}</div>${pv0&&!fin?`<div class="meta" style="color:var(--ink);opacity:.8">Dernière fois : ${lastTxt(pv0)}</div>`:''}<div class="meta">${nS||ex.sets} × ${reps} · ${esc(musTxt(ex))}${orig&&orig!==ex.id?' · remplace '+esc(shortName(orig))+(ov&&ov.inj?' (douleur)':''):''}${ov&&ov.warn?' · <span style="color:var(--ora)">vas-y léger (douleur)</span>':''}</div></div>${st}</div>`;
+  let h=`<div class="ex ${open?'open':''} ${fin&&!open?'fin':''}" id="ex-${ex.id}"><div class="hd" data-act="tog" data-id="${ex.id}" data-n="${nS||''}">${thumb(ex.g)}<div class="mid"><div class="nm">${fv?'<span style="color:var(--yel)">★</span> ':''}${esc(ex.name)}</div>${pv0&&!fin?`<div class="meta" style="color:var(--ink);opacity:.8">Dernière fois : ${lastTxt(pv0)}</div>`:''}<div class="meta">${nS||ex.sets} × ${reps} · ${esc(musTxt(ex))}${orig&&orig!==ex.id?' · remplace '+esc(shortName(orig))+(ov&&ov.inj?' (douleur)':ov&&ov.lv?' (débutant)':''):''}${ov&&ov.warn?' · <span style="color:var(--ora)">vas-y léger (douleur)</span>':''}</div></div>${st}</div>`;
   if(!open)return h+'</div>';
   const en=getEntry(ex.id,nS),pv=prev(ex.id),nw=ex.wl===null;
   const wlab={kg:'kg',lest:'lest kg',cm:'cm'}[ex.wl];
@@ -1623,6 +1635,7 @@ function renderProfile(){
    <div class="row"><label class="field"><span>Taille (cm)</span><input data-pf="taille" inputmode="numeric" value="${esc(p.taille)}"></label><label class="field"><span>Poids (kg)</span><input data-pf="poids" inputmode="decimal" value="${esc(p.poids)}"></label></div>
    <div class="row"><label class="field" style="margin-top:0"><span>Âge</span><input data-pf="age" inputmode="numeric" value="${esc(p.age)}"></label><div class="field" style="margin-top:0"><span>Sexe</span><div class="opts" style="grid-template-columns:1fr 1fr">${[['h','Homme'],['f','Femme']].map(([v,l])=>`<button class="${p.sexe===v?'on':''}" data-act="psexe" data-v="${v}">${l}</button>`).join('')}</div></div></div>
    <div class="field"><span>Mon sport</span><div class="sports">${Object.entries(SPORTS).map(([k2,s])=>`<button class="${k2===(p.sport||'volley')?'on':''}" data-act="setsport" data-v="${k2}" aria-pressed="${k2===(p.sport||'volley')}">${ic(s.ic)}${s.n}</button>`).join('')}</div><div class="help">Change le programme de salle, les exercices conseillés et les explications.</div></div>
+   <div class="field"><span>Mon niveau en salle</span><div class="opts" style="grid-template-columns:repeat(3,1fr)">${LVLS.map(([v,l,s])=>`<button class="${lvl0()===v?'on':''}" data-act="setlvl" data-v="${v}">${l}<small>${s}</small></button>`).join('')}</div><div class="help">${lvl0()==='deb'?'Débutant : exercices plus simples à apprendre (goblet squat, tirage vertical…) et une série de moins.':lvl0()==='conf'?'Confirmé : une série de plus sur les deux premiers gros exercices de chaque séance.':'Intermédiaire : le programme tel qu’il est conçu.'}</div></div>
    <label class="field"><span>Poste (${SP().n.toLowerCase()})</span><select data-pf="poste">${opt(POSTES.map(x=>[x,x||'—']),p.poste)}</select></label>
    <label class="field"><span>Atteinte debout (cm)</span><input data-pf="reach" inputmode="numeric" placeholder="${num(p.taille)?'≈ '+Math.round(num(p.taille)*1.33)+' (estimé)':'ex. 235'}" value="${esc(p.reach)}"><div class="help">Debout, pieds à plat, bras tendu contre un mur : hauteur du bout des doigts. Sert à calculer ta détente.</div></label>
    ${(p.sport||'volley')==='volley'?`<label class="field" style="margin-bottom:4px"><span>Hauteur du filet</span><select data-pf="net">${opt([[243,'2,43 m (hommes)'],[235,'2,35 m (jeunes / mixte)'],[224,'2,24 m (femmes)'],[215,'2,15 m (jeunes)']],p.net)}</select></label>`:''}</div>
@@ -1631,7 +1644,9 @@ function renderProfile(){
   <div class="card"><span class="t">${ic('info')} Affichage et aide</span>
    <div class="setrow" data-act="bigtxt" role="switch" aria-checked="${!!p.big}"><div><b>Texte plus grand</b><small>Plus lisible avec le téléphone posé au sol</small></div><span class="sw ${p.big?'on':''}"></span></div>
    <div class="setrow" data-act="tourreset"><div><b>Revoir la visite guidée</b><small>Les bulles d’explication des écrans</small></div>${ic('chev')}</div>
-   <div class="setrow" data-act="fbsheet"><div><b>Une idée ou un bug ?</b><small>Ton message arrive directement, chaque retour est lu</small></div>${ic('chev')}</div></div>
+   <div class="setrow" data-act="fbsheet"><div><b>Une idée ou un bug ?</b><small>Ton message arrive directement, chaque retour est lu</small></div>${ic('chev')}</div>
+   <a class="setrow" href="legal.html#donnees" style="text-decoration:none;color:inherit"><div><b>Confidentialité et mentions légales</b><small>Tes données, tes droits, comment tout supprimer</small></div>${ic('chev')}</a>
+   <a class="setrow" href="legal.html#sante" style="text-decoration:none;color:inherit"><div><b>Avertissement santé</b><small>L’appli ne remplace pas un avis médical</small></div>${ic('chev')}</a></div>
   <div class="card ${injs().length?'warn':''}"><span class="t">🩹 Douleurs et blessures</span><div class="small muted">${injs().length?'Déclaré : '+esc(injs().map(z=>INJ[z].n).join(', '))+'. Tes séances sont adaptées.':'Une douleur ? Déclare-la : l’appli remplace les exercices qui la sollicitent.'}</div><div class="btnrow"><button class="btn sm" data-act="injsheet">${injs().length?'Modifier':'Déclarer une douleur'}</button></div></div>
   <div class="card"><span class="t">${ic('target')} Mes objectifs par semaine</span><div class="small muted" style="margin-bottom:10px">Séances de salle</div>${goals('goalGym',5,1)}<div class="small muted" style="margin:18px 0 10px">Séances de ${spLow()} (club, matchs)</div>${goals('goalVb',5,0)}</div>
   <div class="card"><span class="t">${ic('cal')} Rappels</span><div class="small muted">Choisis tes jours de salle : l’appli crée un événement qui se répète chaque semaine dans ton calendrier, avec une alerte 15 min avant.</div>
@@ -1645,7 +1660,7 @@ function renderProfile(){
    <details style="margin-top:16px"><summary class="small">Copier / coller en texte ${ic('chev')}</summary><div class="det"><div class="btnrow" style="margin-top:0"><button class="btn sm" data-act="copy">Copier</button><button class="btn sm" data-act="paste">Importer</button></div><textarea id="bk" style="margin-top:10px" placeholder="Colle ici une sauvegarde"></textarea></div></details>
    <div class="small" id="bkmsg" style="margin-top:8px;color:var(--acc)"></div></div>
   <div class="card"><span class="t">${ic('phone')} Installation</span><div class="small muted">${isStandalone()?'L’appli est installée ✓ Ouvre-la toujours depuis son icône.':isIOS()?'Dans Safari : Partager → Sur l’écran d’accueil.':'Menu ⋮ du navigateur → Installer l’application.'}</div><div class="btnrow"><a class="btn sm" href="installer.html">Page d’installation</a><a class="btn sm" href="guide.html">Guide complet</a>${deferredPrompt?`<button class="btn sm acc" data-act="install">Installer</button>`:''}</div></div>
-  <div class="center small muted" style="margin:24px 0"><span style="font-family:var(--jp);color:var(--acc);font-weight:800;letter-spacing:.2em">気合</span> ${APP} — Salle & Sport · v12</div>`;
+  <div class="center small muted" style="margin:24px 0"><span style="font-family:var(--jp);color:var(--acc);font-weight:800;letter-spacing:.2em">気合</span> ${APP} — Salle & Sport · v${APP_V} · <a href="legal.html" style="color:inherit">Confidentialité</a></div>`;
 }
 const NAV=()=>[['home','home','Accueil'],['volley',SP().ic,SP().n],['workout','dumbbell','Séance'],['nutri','apple','Nutrition'],['progress','chart','Progrès']];
 function renderNav(){const cur=tab==='lib'?'workout':tab;$('#nav').innerHTML=NAV().map(([t,i,l])=>t==='workout'?`<button class="ctr ${t===cur?'on':''}" data-act="go" data-go="${t}" aria-label="${l}"><span class="ctrb">${ic(i)}</span></button>`:`<button class="${t===cur?'on':''}" data-act="go" data-go="${t}">${ic(i)}${l}</button>`).join('')}
@@ -1664,12 +1679,19 @@ function chrToggle(){const el=$('#chr'),b=$('#chrb');if(!el)return;
   else{const v=Math.round((performance.now()-chrT0)/10)/100;chrStop();el.textContent=f2(v);$('#t-val').value=f2(v);b.innerHTML=ic('play')+' Recommencer';beep(1)}}
 function closeSheet(){sensStop();scanStop();chrStop();if(typeof vjFree==='function'&&vj.url){const v=$('#vjv');if(v){v.removeAttribute('src');v.load()}vjFree()}$('#sheet').hidden=true;document.body.style.overflow=''}
 const optsHtml=(k,arr,cur,cols)=>`<div class="opts" style="grid-template-columns:repeat(${cols||arr.length},1fr)">${arr.map(([v,l,s])=>`<button type="button" class="${String(v)===String(cur)?'on':''}" data-act="opt" data-k="${k}" data-v="${v}">${l}${s?`<small>${s}</small>`:''}</button>`).join('')}</div>`;
-function welcomeSheet(){draft={sport:profile.sport||'volley',goalVb:profile.goalVb,goalGym:profile.goalGym};
+// Niveau de départ : adapte le programme (débutant : exercices plus simples et une série de moins ; confirmé : une série de plus sur les gros exercices)
+const LVLS=[['deb','Débutant','moins de 6 mois'],['int','Intermédiaire','6 mois à 2 ans'],['conf','Confirmé','plus de 2 ans']];
+const DEB={squat:'gobletsq',frontsq:'gobletsq',powerclean:'trapdl',pushpress:'dm',trac:'tirv',rowb:'rowc',dips:'pompes',dipst:'tpoulie',dc:'dch',dib:'dih',skull:'tpoulie',dropj:'boxj',nordic:'lcurl',sdtu:'sdt'};
+const lvl0=()=>profile.lvl0||'int';
+const consentBox=(id,html)=>`<label class="cons"><input type="checkbox" id="${id}"><span>${html}</span></label>`;
+function welcomeSheet(){draft={sport:profile.sport||'volley',goalVb:profile.goalVb,goalGym:profile.goalGym,lvl0:profile.lvl0||'int'};
   openSheet('<span style="font-family:var(--jp);color:var(--acc);margin-right:8px">気合</span>Bienvenue',`<p class="lead">${APP}, c’est le cri qui libère ta force. Trois réglages et c’est parti : tout reste sur ton téléphone.</p>
   <label class="field"><span>Ton prénom</span><input id="w-name" value="${esc(profile.name)}" autocomplete="given-name" placeholder="Prénom"></label>
   <div class="field"><span>Ton sport</span><div class="sports">${Object.entries(SPORTS).map(([k2,s])=>`<button type="button" class="${k2===draft.sport?'on':''}" data-act="wsport" data-v="${k2}">${ic(s.ic)}${s.n}</button>`).join('')}</div><div class="help">L’appli choisit un programme de salle adapté à ton sport, avec l’explication de chaque exercice. Tu pourras le changer dans Profil.</div></div>
   <div class="field"><span>Séances de salle par semaine</span>${optsHtml('goalGym',[[1,'1'],[2,'2'],[3,'3'],[4,'4']],draft.goalGym)}</div>
   <div class="field"><span>Entraînements et matchs de ton sport par semaine</span>${optsHtml('goalVb',[[0,'0'],[1,'1'],[2,'2'],[3,'3'],[4,'4+']],draft.goalVb)}</div>
+  <div class="field"><span>Ton niveau en salle</span>${optsHtml('lvl0',LVLS,draft.lvl0,3)}<div class="help">Débutant : exercices plus simples à apprendre et une série de moins. Tu pourras changer dans Profil.</div></div>
+  ${consentBox('w-ok',`J’ai lu l’<a href="legal.html#sante" target="_blank">avertissement santé</a> : l’appli ne remplace pas un avis médical, et je m’entraîne sous ma responsabilité.`)}
   <button class="btn acc block" data-act="wdone" style="margin-top:8px">C’est parti</button>
   <div class="center" style="margin-top:12px"><button class="linkbtn" data-act="acct" data-v="login">J’ai déjà un compte : me connecter</button></div>`)}
 let tk='cmj';
@@ -2004,14 +2026,17 @@ function acctSheet(m){draft={m};openSheet(m==='signup'?'Créer un compte':m==='l
   ${m==='signup'?`<label class="field"><span>Prénom</span><input id="a-name" value="${esc(profile.name)}" autocomplete="given-name"></label>`:''}
   <label class="field"><span>E-mail</span><input id="a-mail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false"></label>
   ${m!=='reset'?`<label class="field"><span>Mot de passe</span><input id="a-pw" type="password" autocomplete="${m==='signup'?'new-password':'current-password'}" placeholder="${m==='signup'?'8 caractères minimum':''}"></label>`:''}
-  <div class="small" id="a-msg" style="color:var(--ora);min-height:20px;margin:-6px 2px 10px"></div>
+  ${m==='signup'?consentBox('a-ok1',`J’accepte la <a href="legal.html#donnees" target="_blank">politique de confidentialité</a> et que mes données, y compris mon poids et mes douleurs déclarées, soient sauvegardées en ligne (Google Firebase, Europe).`)+consentBox('a-ok2','J’ai 15 ans ou plus, ou l’accord d’un parent pour créer ce compte.'):''}
+  <div class="small" id="a-msg" style="color:var(--ora);min-height:20px;margin:${m==='signup'?'4px':'-6px'} 2px 10px"></div>
   <button class="btn acc block" data-act="asubmit">${m==='signup'?'Créer mon compte':m==='login'?'Se connecter':'Envoyer l’e-mail'}</button>
   <div class="center" style="margin-top:14px">${m==='login'?`<button class="linkbtn" data-act="acct" data-v="reset">Mot de passe oublié ?</button><br><button class="linkbtn" data-act="acct" data-v="signup">Pas encore de compte ? Créer un compte</button>`:`<button class="linkbtn" data-act="acct" data-v="login">J’ai déjà un compte</button>`}</div>
-  ${m==='signup'?`<div class="small muted" style="margin-top:16px">Tes données sont stockées chez Google Firebase, en Europe. Ton équipe ne voit qu’un résumé (niveau, séances, tests, squat), jamais ton poids. Seul le coach de ton équipe voit le détail de tes séances. Tu peux supprimer ton compte à tout moment.</div>`:''}`)}
+  ${m==='signup'?`<div class="small muted" style="margin-top:16px">Ton équipe ne voit qu’un résumé (niveau, séances, tests, squat), jamais ton poids. Seul le coach voit le détail de tes séances de salle. Tu peux supprimer ton compte à tout moment.</div>`:''}`)}
 async function acctSubmit(){const m=draft.m,mail=$('#a-mail').value.trim(),pw=$('#a-pw')?$('#a-pw').value:'',msg=$('#a-msg'),btn=$('[data-act=asubmit]');
   const say=(t,c)=>{msg.style.color=c||'var(--ora)';msg.textContent=t};
   if(!/^\S+@\S+\.\S+$/.test(mail))return say('Entre une adresse e-mail valide.');
   if(m!=='reset'&&pw.length<(m==='signup'?8:1))return say(m==='signup'?'Mot de passe : 8 caractères minimum.':'Entre ton mot de passe.');
+  if(m==='signup'&&!($('#a-ok1').checked&&$('#a-ok2').checked))return say('Coche les deux cases pour créer ton compte.');
+  if(m==='signup'){profile.consent={v:TERMS_V,at:Date.now(),health:true,age15:true};saveProfile()}
   say('Un instant…','var(--mute)');btn.disabled=true;
   try{await loadFb();
     if(m==='reset'){await fbAuth.sendPasswordResetEmail(mail);closeSheet();toast('E-mail envoyé ✓ Regarde aussi dans tes spams.',3500);return}
@@ -2216,7 +2241,11 @@ document.addEventListener('click',ev=>{
   case 'wprog':t.parentNode.querySelectorAll('.choice').forEach(b=>b.classList.toggle('on',b===t));draft.prog=d.v;break;
   case 'wsport':t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));draft.sport=d.v;break;
   case 'setsport':if(d.v===(profile.sport||'volley'))break;profile.sport=d.v;profile.poste='';saveProfile();applySport();progId=SPORTS[d.v].prog;saveProg();sid=null;render();toast(SPORTS[d.v].n+' · programme adapté');break;
-  case 'wdone':profile.name=$('#w-name').value.trim();profile.goalVb=draft.goalVb;profile.goalGym=draft.goalGym;profile.sport=draft.sport||'volley';profile.onb=1;saveProfile();applySport();progId=SPORTS[profile.sport].prog;saveProg();sid=null;closeSheet();render();toast(profile.name?'Bienvenue '+profile.name+' !':'C’est parti !');setTimeout(()=>{if(inviteCode()&&!cUser)acctSheet('signup');else tourMaybe('home')},1200);break;
+  case 'wdone':if(!$('#w-ok').checked){toast('Coche l’avertissement santé pour continuer',2600);$('#w-ok').closest('.cons').classList.add('need');break}
+    profile.terms={v:TERMS_V,at:Date.now()};profile.lvl0=draft.lvl0||'int';profile.name=$('#w-name').value.trim();profile.goalVb=draft.goalVb;profile.goalGym=draft.goalGym;profile.sport=draft.sport||'volley';profile.onb=1;saveProfile();applySport();progId=SPORTS[profile.sport].prog;saveProg();sid=null;closeSheet();render();toast(profile.name?'Bienvenue '+profile.name+' !':'C’est parti !');setTimeout(()=>{if(inviteCode()&&!cUser)acctSheet('signup');else tourMaybe('home')},1200);break;
+  case 'setlvl':profile.lvl0=d.v;saveProfile();openEx.clear();autoKey='';render();toast('Niveau : '+LVLS.find(x=>x[0]===d.v)[1]+' · séances adaptées');break;
+  case 'tok':{const acc=!!$('#t-ok2');if(!$('#t-ok1').checked||(acc&&!($('#t-ok2').checked&&$('#t-ok3').checked))){toast('Coche les cases pour continuer',2400);document.querySelectorAll('.cons').forEach(c=>{if(!c.querySelector('input').checked)c.classList.add('need')});break}
+    profile.terms={v:TERMS_V,at:Date.now()};if(acc)profile.consent={v:TERMS_V,at:Date.now(),health:true,age15:true};saveProfile();closeSheet();setTimeout(whatsNew,400);break}
   case 'tournx':if(tourS){tourS.i++;if(tourS.i>=tourS.steps.length)tourEnd();else tourShow()}break;
   case 'tourend':tourEnd();break;
   case 'tourreset':LS.set('gym_tour',{});go('home');break;
@@ -2357,8 +2386,25 @@ render();checkGame();tourMaybe(tab);
 if(sync.uid)loadFb().catch(()=>{cState='offline'});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&cUser&&sync.dirty){clearTimeout(cT);pushCloud()}});
 window.addEventListener('online',()=>{if(cUser&&sync.dirty)pushCloud()});
-if(!profile.onb){if(sessionDates().length||volley.length){profile.onb=1;saveProfile()}else welcomeSheet()}
-if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
+// ----- v13 : conditions, nouveautés, mise à jour en un bouton -----
+// Les personnes déjà inscrites acceptent une fois l’avertissement santé (et la confidentialité si elles ont un compte)
+function termsSheet(){const acc=!!sync.uid;openSheet('Avant de continuer',`<p class="lead">On a ajouté une page claire sur ta santé, tes données et tes droits.</p>
+  ${consentBox('t-ok1',`J’ai lu l’<a href="legal.html#sante" target="_blank">avertissement santé</a> : l’appli ne remplace pas un avis médical, et je m’entraîne sous ma responsabilité.`)}
+  ${acc?consentBox('t-ok2',`J’accepte la <a href="legal.html#donnees" target="_blank">politique de confidentialité</a> et la sauvegarde en ligne de mes données, y compris mon poids et mes douleurs déclarées.`)+consentBox('t-ok3','J’ai 15 ans ou plus, ou l’accord d’un parent.'):''}
+  <button class="btn acc block" data-act="tok" style="margin-top:6px">J’accepte</button>
+  ${acc?`<div class="center" style="margin-top:12px"><button class="linkbtn" data-act="cdel" style="color:var(--mute)">Je préfère supprimer mon compte</button></div>`:''}`)}
+function whatsNew(){const seen=LS.get('gym_seenv','');if(seen===APP_V)return;LS.set('gym_seenv',APP_V);const l=NEWS[APP_V];if(!profile.onb||!l)return;
+  openSheet('<span style="font-family:var(--jp);color:var(--acc);margin-right:8px">新</span>Quoi de neuf',`<p class="lead">Version ${APP_V} de ${APP}.</p><ul class="news">${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><button class="btn acc block" data-act="closesheet" style="margin-top:10px">C’est noté</button>`)}
+function updBar(){if($('#upd'))return;const b=document.createElement('div');b.id='upd';b.setAttribute('role','status');
+  b.innerHTML='<span>✨ Nouvelle version de KIAI disponible</span><button>Mettre à jour</button><button class="x" aria-label="Plus tard">✕</button>';
+  b.querySelector('button').onclick=()=>{try{saveAll()}catch(e){}location.reload()};b.querySelector('.x').onclick=()=>b.remove();document.body.appendChild(b)}
+if(!profile.onb){if(sessionDates().length||volley.length){profile.onb=1;saveProfile()}else{LS.set('gym_seenv',APP_V);welcomeSheet()}}
+if(profile.onb){if(!profile.terms||profile.terms.v<TERMS_V)setTimeout(termsSheet,600);else setTimeout(whatsNew,800)}
+// Service worker : vérifie les mises à jour au retour dans l’appli, et propose de recharger quand une version est prête
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){const hadCtrl=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register('sw.js').then(reg=>{const chk=()=>reg.update().catch(()=>{});
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')chk()});setInterval(chk,30*60000)}).catch(()=>{});
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadCtrl)updBar()})}
 </script>
 </body>
 </html>
