@@ -425,27 +425,13 @@ body.offline #off{display:block}
 .fmk{width:46px;height:46px;border-radius:13px;background:linear-gradient(180deg,#ff5a4c,#d9231b);color:#fff;display:grid;place-items:center;font:900 24px/1 var(--jp);flex:none;transform:rotate(-6deg)}
 .frk{display:flex;gap:4px}.frk i{font-size:18px}
 /* ---- v17 : personnage, sections ---- */
-.sprite{display:block;image-rendering:pixelated;overflow:visible}
-.sprite .sp-aura{animation:aura 2.4s ease-in-out infinite}@keyframes aura{50%{opacity:.55}}
-.sprite .amU,.sprite .lgB,.sprite .lgK,.sprite .sp-ball{opacity:0}
-.sprite .sp-body{animation:bob 1.6s steps(1) infinite}@keyframes bob{50%{transform:translateY(1px)}}
-.spa-volley .sp-body{animation:spvJ 1.8s steps(1) infinite}@keyframes spvJ{0%,38%{transform:translateY(0)}42%{transform:translateY(-3px)}46%,66%{transform:translateY(-7px)}70%{transform:translateY(-3px)}74%,100%{transform:translateY(0)}}
-.spa-volley .amD{animation:offMid 1.8s steps(1) infinite}.spa-volley .amU{animation:onMid 1.8s steps(1) infinite}
-@keyframes offMid{0%{opacity:1}42%{opacity:0}74%{opacity:1}}@keyframes onMid{0%{opacity:0}42%{opacity:1}74%{opacity:0}}
-.spa-volley .sp-ball{animation:spvB 1.8s steps(1) infinite}@keyframes spvB{0%,52%{opacity:0;transform:translate(23px,-6px)}54%{opacity:1;transform:translate(23px,-6px)}58%{transform:translate(26px,0)}62%{transform:translate(28px,7px)}66%{transform:translate(30px,14px)}70%,100%{opacity:0;transform:translate(31px,20px)}}
-.spa-basket .sp-ball{opacity:1;animation:spbB .9s steps(1) infinite}@keyframes spbB{0%{transform:translate(23px,24px)}20%{transform:translate(23px,28px)}40%{transform:translate(23px,33px)}60%{transform:translate(23px,28px)}80%,100%{transform:translate(23px,25px)}}
-.spa-basket .sp-body{animation:bob .9s steps(1) infinite}
-.spa-foot .sp-ball{opacity:1;animation:spfB 1.2s steps(1) infinite}@keyframes spfB{0%{transform:translate(23px,24px)}15%{transform:translate(23px,18px)}30%{transform:translate(23px,14px)}45%{transform:translate(23px,18px)}60%{transform:translate(23px,23px)}75%,100%{transform:translate(23px,25px)}}
-.spa-foot .lgA{animation:offK 1.2s steps(1) infinite}.spa-foot .lgK{animation:onK 1.2s steps(1) infinite}
-@keyframes offK{0%{opacity:0}12%{opacity:1}82%{opacity:0}}@keyframes onK{0%{opacity:1}12%{opacity:0}82%{opacity:1}}
-.spa-rugby .lgA{animation:offH .7s steps(1) infinite}.spa-rugby .lgB{animation:onH .7s steps(1) infinite}.spa-rugby .sp-body{animation:bob .35s steps(1) infinite}
-@keyframes offH{0%{opacity:1}50%{opacity:0}}@keyframes onH{0%{opacity:0}50%{opacity:1}}
+.spw{display:block;position:relative}.sprite{display:block;image-rendering:pixelated;image-rendering:crisp-edges}
 .perso{display:flex;gap:12px;align-items:center;padding:12px 14px;cursor:pointer;overflow:visible}
-.perso .psp{flex:none;width:92px;margin:-6px 0 -4px}.perso .pmain{flex:1;min-width:0}
+.perso .psp{flex:none;width:112px;margin:-10px -8px -10px -10px}.perso .pmain{flex:1;min-width:0}
 .bubble{position:relative;background:#fff;color:#0b0a0d;font-size:13px;font-weight:700;line-height:1.35;padding:8px 11px;border-radius:12px;margin-bottom:9px}
 .bubble::before{content:"";position:absolute;left:-7px;top:14px;border:7px solid transparent;border-right-color:#fff;border-left:0}
 .parch{display:block;font-family:var(--disp);font-weight:400;font-size:20px;text-transform:uppercase;letter-spacing:.02em}
-.fsp{position:absolute!important;right:10px;top:46px;width:104px}
+.fsp{position:absolute!important;right:4px;top:30px;width:112px}
 .fiche .fhead{padding-right:96px}
 .frow .rk{font-size:17px;letter-spacing:.03em}
 .avedit{display:flex;gap:10px;align-items:center}.avprev{flex:none;width:96px;background:radial-gradient(circle,rgba(255,59,48,.12),transparent 70%);border-radius:16px}
@@ -456,7 +442,6 @@ body.offline #off{display:block}
 .psec>summary .pi{width:36px;height:36px;border-radius:11px;background:var(--accd);color:var(--acc);display:grid;place-items:center;flex:none}
 .psec>summary>.i:last-child{transition:transform .2s;color:var(--mute)}.psec[open]>summary>.i:last-child{transform:rotate(90deg)}
 .psec>.card:first-of-type{margin-top:14px}
-@media (prefers-reduced-motion:reduce){.sprite,.sprite *{animation:none!important}}
 /* ---- v16 : animations ---- */
 #view.wipe{animation:wipe .42s cubic-bezier(.2,.8,.2,1) both}
 @keyframes wipe{from{clip-path:polygon(0 0,0 0,-35% 100%,0 100%)}to{clip-path:polygon(0 0,135% 0,100% 100%,0 100%)}}
@@ -759,9 +744,9 @@ const INTENS=[[3,'Tranquille'],[5,'Normal'],[7,'Intense'],[9,'À fond']];
 const POSTES=['','Réceptionneur-attaquant','Pointu','Central','Passeur','Libéro'];
 
 // ----- Sports : programme, postes, stats de match, tests et explications -----
-const APP='Yosha',APP_V='17',TERMS_V=2;
+const APP='Yosha',APP_V='18',TERMS_V=2;
 // Nouveautés montrées une fois après la mise à jour
-const NEWS={'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
+const NEWS={'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
 const SPORTS={
  volley:{n:'Volley',ic:'ball',prog:'volley',de:'de volleyeur',bar:'filet',barD:'du filet',barL:'le filet',postes:POSTES.slice(),
   types:{entr:'Entraînement',match:'Match',beach:'Beach'},stk:[['att','Attaques tentées'],['kill','Attaques gagnantes'],['blk','Contres gagnants'],['ace','Aces'],['err','Fautes de service']],
@@ -1185,34 +1170,141 @@ function levelUp(kind,o){const d=document.createElement('div');d.className='lvup
 const STATN=[['force','Force','力'],['expl','Explosivité','跳'],['vit','Vitesse','速'],['endu','Endurance','耐'],['reg','Régularité','継']];
 const RANKS=[[90,'S'],[75,'A'],[60,'B'],[40,'C'],[20,'D'],[0,'E']];
 const rankOf=v=>v==null?'?':RANKS.find(r=>v>=r[0])[1];  // lettre interne, sert seulement à la couleur
-// Rangs affichés : propres à chaque sport (du plus bas au plus haut)
-const TIERS={volley:['Plume','Rebond','Envol','Smash','Altitude','Ciel'],basket:['Parquet','Panier','Contre','Dunk','Zone','Mythe'],
- foot:['Crampon','Passe','Frappe','Lucarne','Maestro','Légende'],rugby:['Boue','Maul','Raffut','Percée','Essai','Légende']};
+// Rangs : une échelle de maîtrise (on débute maladroit, on finit maître de son sport)
+const TIERS0=['Premiers pas','Apprenti','Solide','Redoutable','Prodige'];
+const TIERTOP={volley:'Maître du filet',basket:'Maître du parquet',foot:'Maître du terrain',rugby:'Maître de l’ovale'};
+const tiersOf=()=>[...TIERS0,TIERTOP[profile.sport||'volley']||TIERTOP.volley];
 const tierIdx=v=>v==null?-1:[20,40,60,75,90].filter(x=>v>=x).length;
-const tierOf=v=>v==null?'?':(TIERS[profile.sport||'volley']||TIERS.volley)[tierIdx(v)];
-// ----- Personnage en pixel art (dessiné ici, animé selon le sport) -----
+const tierOf=v=>v==null?'?':tiersOf()[tierIdx(v)];
+// Rang global du personnage : moyenne des stats mesurées
+const ovrOf=o=>{const v=STATN.map(([k])=>o[k]).filter(x=>x!=null);return v.length?Math.round(v.reduce((a,b)=>a+b,0)/v.length):null};
+// Stade d’animation : 0 = galère (Premiers pas, Apprenti), 1 = à l’aise (Solide, Redoutable), 2 = maîtrise (Prodige, Maître)
+const stageOf=o=>{const i=tierIdx(ovrOf(o));return i<=1?0:i<=3?1:2};
+const STAGEN=['Il galère encore un peu : chaque séance le fait progresser.','Il est à l’aise : le geste devient propre.','Il maîtrise : le geste est explosif.'];
+// ----- Personnage en pixel art : dessiné sur canvas (48 × 64, contour et ombres), animé selon le sport et le rang -----
 const AV={skin:['#f3cfb0','#dba57f','#a8724c','#6a4430'],hair:['#1c1512','#5a3520','#c8923f','#d9d4cc'],style:['Court','Attaché','Bouclé','Rasé']};
 const AURA=['#5c5763','#8f8a96','#3ad0ff','#3ddc97','#ff3b30','#ffc83d'];
-let spN=0;
-function spriteSvg(o,opt){opt=opt||{};o=o||{};const sp=profile.sport||'volley',av=profile.av||{},sk=AV.skin[av.s|0],hc=AV.hair[av.c|0],hs=av.h|0,id='sp'+(++spN);
-  const s=Math.min(2,Math.round(((o.force||0)+(o.endu||0))/90)),best=Math.max(-1,...STATN.map(([k])=>tierIdx(o[k]))),au=AURA[Math.max(0,best)];
-  const R=(x,y,w,h,c)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`;
-  const J='#ff3b30',JD='#b3241c',SH='#24202a',SO='#f6f3ee',EY='#1b1418';
-  const torso=sp==='basket'?R(12-s,15,8+2*s,11,J)+R(12-s,15,8+2*s,1,JD)+R(15,18,2,4,SO):sp==='rugby'?R(11-s,15,10+2*s,11,J)+R(11-s,18,10+2*s,2,SO)+R(11-s,22,10+2*s,2,SO)+R(14,15,4,1,JD):R(11-s,15,10+2*s,11,J)+R(14,15,4,1,JD)+R(11-s,24,10+2*s,1,JD);
-  const sleeve=sp==='basket'?sk:J;
-  const legs=(a,b)=>R(12,27,3,a,sk)+R(17,27,3,b,sk)+R(11,27+a-1,4,2,SO)+R(17,27+b-1,4,2,SO)+(sp==='volley'?R(12,30,3,2,SO)+R(17,30,3,2,SO):'')+(sp==='foot'?R(12,31,3,4,J)+R(17,31,3,4,J):'');
-  const legsA=`<g class="lgA">${legs(10,10)}</g>`,legsB=`<g class="lgB">${R(12,27,3,10,sk)+R(11,36,4,2,SO)+R(17,27,3,7,sk)+R(18,33,4,2,SO)+(sp==='foot'?R(12,31,3,4,J)+R(17,30,3,3,J):'')+(sp==='volley'?R(12,30,3,2,SO)+R(17,29,3,2,SO):'')}</g>`;
-  const kick=sp==='foot'?`<g class="lgK">${R(12,27,3,10,sk)+R(11,36,4,2,SO)+R(12,31,3,4,J)+R(17,27,7,3,sk)+R(17,27,4,3,J)+R(23,26,3,3,SO)}</g>`:'';
-  const armD=`<g class="amD">${R(8-s,15,3,8,sleeve)+R(8-s,23,3,2,sk)+R(21+s,15,3,8,sleeve)+R(21+s,23,3,2,sk)}</g>`;
-  const armU=`<g class="amU">${R(8-s,15,3,8,sleeve)+R(8-s,23,3,2,sk)+R(21+s,7,3,9,sleeve)+R(21+s,5,3,2,sk)}</g>`;
-  const hair=[R(12,4,8,2,hc)+R(11,5,1,3,hc)+R(20,5,1,3,hc),R(12,4,8,2,hc)+R(11,5,1,3,hc)+R(20,5,1,2,hc)+R(20,6,2,6,hc),R(11,3,10,3,hc)+R(10,5,2,3,hc)+R(20,5,2,3,hc)+R(12,2,2,1,hc)+R(17,2,2,1,hc),R(12,4,8,1,hc)][hs];
-  const head=R(14,13,4,2,sk)+R(12,5,8,8,sk)+hair+R(14,8,1,2,EY)+R(17,8,1,2,EY)+R(15,11,2,1,'#8a3a30')+(sp==='rugby'?R(11,7,1,4,SH)+R(20,7,1,4,SH):'');
-  const ball={volley:R(0,0,3,3,'#f6f3ee')+R(1,0,1,3,'#ffc83d')+R(0,1,3,1,'#3a6fd8'),basket:R(0,0,3,3,'#ff8a3d')+R(1,0,1,3,'#7a3410')+R(0,1,3,1,'#7a3410'),foot:R(0,0,3,3,'#f6f3ee')+R(1,1,1,1,'#1b1418')+R(0,0,1,1,'#1b1418'),rugby:''}[sp];
-  const held=sp==='rugby'?R(9-s,18,6,3,'#8a5a2b')+R(11-s,19,2,1,SO):'';
-  return `<svg class="sprite spa-${opt.still?'none':sp}" viewBox="0 0 32 40" width="${opt.size||96}" height="${Math.round((opt.size||96)*1.25)}" shape-rendering="crispEdges" role="img" aria-label="Ton personnage">
-   <defs><radialGradient id="${id}"><stop offset="0" stop-color="${au}" stop-opacity=".55"/><stop offset="1" stop-color="${au}" stop-opacity="0"/></radialGradient></defs>
-   <ellipse class="sp-aura" cx="16" cy="21" rx="15" ry="19" fill="url(#${id})"/>${R(9,38,14,2,'rgba(0,0,0,.45)')}
-   <g class="sp-body">${legsA}${legsB}${kick}${R(11,25,10,4,SH)}${torso}${armD}${armU}${head}${held}</g>${ball?`<g class="sp-ball">${ball}</g>`:''}</svg>`}
+const SPW=56,SPH=74,SPOX=4,SPOY=10;
+const mixC=(a,b,t)=>{const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)),A=p(a),B=p(b);return '#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')};
+const KIT={volley:{j:'#ff3b30',sh:'#1d1a22',so:'#f6f3ee',bo:'#f6f3ee',n:'4'},basket:{j:'#ff3b30',sh:'#ff3b30',so:'#f6f3ee',bo:'#24202a',n:'7'},
+ foot:{j:'#ff3b30',sh:'#f6f3ee',so:'#ff3b30',bo:'#24202a',n:'9'},rugby:{j:'#ff3b30',sh:'#1d1a22',so:'#ff3b30',bo:'#24202a',n:''}};
+const DIG={4:['101','101','111','001','001'],7:['111','001','010','010','010'],9:['111','101','111','001','111']};
+function spDraw(cv,P,K){const x=cv.getContext('2d');x.clearRect(0,0,SPW,SPH);
+  const ox=SPOX+(P.x||0),oy=SPOY,dy=P.dy||0,ly=P.ly||0,ln=P.lean||0,s=K.s,sp=K.sp,T=KIT[sp]||KIT.volley,sk=K.sk,skD=mixC(sk,'#3a1c14',.28),jD=mixC(T.j,'#000000',.3),jL=mixC(T.j,'#ffffff',.25);
+  const R=(a,b,w,h,c)=>{x.fillStyle=c;x.fillRect(Math.round(a)+ox,Math.round(b)+oy,w,h)};
+  const L=(a,b,c2,d,t,c)=>{const n=Math.max(Math.abs(c2-a),Math.abs(d-b),1);for(let i=0;i<=n;i++)R(a+(c2-a)*i/n-(t>>1),b+(d-b)*i/n-(t>>1),t,t,c)};
+  // Jambes (genou et pied en coordonnées absolues, ly pour les sauts)
+  const leg=(hx,k,col)=>{const [kx,ky,fx,fy]=[k[0],k[1]+ly,k[2],k[3]+ly],hy=42+dy;L(hx,hy,kx,ky,5,sk);L(kx,ky,fx,fy,5,sk);
+    const sx=kx+(fx-kx)*(sp==='volley'?.7:.35),sy=ky+(fy-ky)*(sp==='volley'?.7:.35);L(sx,sy,fx,fy,5,T.so);if(sp==='rugby')L(sx,sy,sx+(fx-sx)*.25,sy+(fy-sy)*.25,5,'#f6f3ee');
+    if(sp==='volley')R(kx-2,ky-1,5,3,'#f6f3ee');R(fx-3,fy+1,7,2,T.bo);R(fx-3,fy+3,7,1,mixC(T.bo,'#000000',.45));if(sp!=='volley')R(fx-2,fy+1,2,1,mixC(T.bo,'#ffffff',.35))};
+  leg(21,P.ll||[21,50,21,58]);leg(27,P.rl||[27,50,27,58]);
+  // Short
+  if(sp==='basket'){R(16,37+dy,16,10,T.sh);R(16,44+dy,16,1,'#f6f3ee');R(23,42+dy,2,5,mixC(T.sh,'#000000',.35))}else{R(17,37+dy,14,7,T.sh);R(23,41+dy,2,3,mixC(T.sh,'#000000',.3));R(30,37+dy,1,7,mixC(T.sh,'#000000',.25))}
+  // Torse
+  const tx=16-s+ln,tw=16+2*s,ty=24+dy;R(tx,ty,tw,14,T.j);R(tx+tw-2,ty,2,14,jD);R(tx,ty,1,14,jL);R(22+ln,21+dy,4,3,skD);
+  if(sp==='basket'){R(tx,ty,3,5,sk);R(tx+tw-3,ty,3,5,sk);R(21+ln,ty,6,2,sk);R(20+ln,ty,1,2,'#f6f3ee');R(27+ln,ty,1,2,'#f6f3ee');R(21+ln,ty+2,6,1,'#f6f3ee')}
+  else if(sp==='rugby'){R(tx,ty+4,tw,2,'#f6f3ee');R(tx,ty+9,tw,2,'#f6f3ee');R(21+ln,ty,6,2,'#f6f3ee')}
+  else if(sp==='foot'){R(21+ln,ty,6,2,'#f6f3ee');R(23+ln,ty+1,2,2,skD)}
+  else{R(22+ln,ty,4,1,sk);R(23+ln,ty+1,2,1,sk);R(tx+1,ty+2,1,11,'#f6f3ee');R(tx+tw-3,ty+2,1,11,'#f6f3ee')}
+  if(T.n&&DIG[T.n])DIG[T.n].forEach((r,j)=>[...r].forEach((b,i)=>{if(b==='1')R(23+ln+i,ty+4+j,1,1,'#f6f3ee')}));
+  // Bras (coudes et mains relatifs aux épaules)
+  const arm=(sx0,a)=>{const sy0=26+dy,ex=sx0+a[0],ey=sy0+a[1],hx=sx0+a[2],hy=sy0+a[3];L(sx0,sy0,ex,ey,4,sk);L(ex,ey,hx,hy,4,sk);L(ex+1,ey,hx+1,hy,1,skD);
+    if(sp!=='basket')L(sx0,sy0,sx0+a[0]*.55,sy0+a[1]*.55,4,T.j)};
+  arm(15-s+ln,P.la||[-1,6,-1,12]);arm(33+s+ln,P.ra||[1,6,1,12]);
+  // Tête
+  const hx=17+ln,hy=8+dy,hc=K.hc,hL=mixC(hc,'#ffffff',.3);R(hx+1,hy,12,13,sk);R(hx,hy+1,14,11,sk);R(hx-1,hy+6,1,3,sk);R(hx+14,hy+6,1,3,sk);R(hx+1,hy+12,12,1,skD);R(hx+12,hy+2,1,9,skD);
+  const f=P.face||'norm',EY='#1b1418',MO='#8a3a30',e1=hx+3,e2=hx+9,ey0=hy+6;
+  if(f==='dizzy'){[[0,0],[1,1],[0,2]].forEach(([a,b])=>R(e1+a,ey0+b,1,1,EY));[[1,0],[0,1],[1,2]].forEach(([a,b])=>R(e2+a,ey0+b,1,1,EY))}
+  else if(f==='happy'){R(e1,ey0+1,1,1,EY);R(e1+1,ey0,1,1,EY);R(e2,ey0,1,1,EY);R(e2+1,ey0+1,1,1,EY)}
+  else{R(e1,ey0,2,3,EY);R(e2,ey0,2,3,EY);R(e1,ey0,1,1,'#ffffff');R(e2,ey0,1,1,'#ffffff')}
+  if(f==='focus'||f==='shout'||f==='strain'){R(e1-1,ey0-2,2,1,hc);R(e1+1,ey0-1,1,1,hc);R(e2+1,ey0-2,2,1,hc);R(e2,ey0-1,1,1,hc)}
+  if(f==='worried'){R(e1,ey0-2,2,1,hc);R(e1-1,ey0-1,1,1,hc);R(e2,ey0-2,2,1,hc);R(e2+2,ey0-1,1,1,hc)}
+  if(f==='happy'){R(hx+5,hy+10,4,1,MO);R(hx+4,hy+9,1,1,MO);R(hx+9,hy+9,1,1,MO);R(hx+2,hy+9,2,1,'#ff9a8a');R(hx+10,hy+9,2,1,'#ff9a8a')}
+  else if(f==='shout'||f==='strain'||f==='dizzy'){R(hx+6,hy+10,2,2,'#5a1f1a')}
+  else if(f==='worried'){R(hx+5,hy+11,1,1,MO);R(hx+6,hy+10,2,1,MO);R(hx+8,hy+11,1,1,MO)}
+  else R(hx+6,hy+10,2,1,MO);
+  // Cheveux
+  const H=(a,b,w,h)=>R(hx+a,hy+b,w,h,hc),HL=(a,b,w,h)=>R(hx+a,hy+b,w,h,hL);
+  if(K.hs===0){H(0,-2,14,5);H(1,-4,2,2);H(4,-5,2,3);H(7,-4,2,2);H(10,-5,2,3);H(12,-3,2,2);H(0,3,2,3);H(12,3,2,3);H(3,3,2,2);H(8,3,3,1);HL(3,-1,3,1);HL(9,-2,2,1)}
+  else if(K.hs===1){H(0,-2,14,4);H(-1,1,2,5);H(13,1,2,5);H(1,2,4,2);H(9,2,4,1);H(11,-4,4,3);H(14,-2,3,7);H(15,5,2,4);R(hx+13,hy-3,2,2,'#ff3b30');HL(3,-1,4,1)}
+  else if(K.hs===2){H(-2,-3,18,6);for(let i=0;i<5;i++)H(-1+i*4,-5,3,2);H(-2,3,3,6);H(13,3,3,6);H(-3,5,1,3);H(16,5,1,3);H(1,3,2,2);H(5,3,3,1);H(10,3,2,2);HL(1,-4,1,1);HL(6,-2,2,1);HL(11,-4,1,1);HL(-1,4,1,1)}
+  else{R(hx+1,hy-1,12,2,mixC(hc,sk,.45));R(hx,hy+1,14,1,mixC(hc,sk,.45))}
+  // Ballon (contouré avec le personnage)
+  if(P.ball){const [bx,by]=P.ball,B=(a,b,w,h,c)=>R(bx+a,by+b,w,h,c);
+    if(sp==='rugby'){B(1,0,6,5,'#8a5a2b');B(0,1,8,3,'#8a5a2b');B(2,2,4,1,'#f6f3ee');B(1,0,2,1,'#a8733d')}
+    else{const c0={volley:'#f6f3ee',basket:'#ff8a3d',foot:'#f6f3ee'}[sp];B(1,0,4,6,c0);B(0,1,6,4,c0);
+      if(sp==='volley'){B(2,0,1,6,'#ffc83d');B(0,3,6,1,'#3a6fd8')}else if(sp==='basket'){B(2,0,1,6,'#7a3410');B(0,2,6,1,'#7a3410')}else{B(2,2,2,2,'#1b1418');B(0,0,1,1,'#1b1418');B(5,4,1,1,'#1b1418')}}}
+  // Contour sombre (style pixel art)
+  const im=x.getImageData(0,0,SPW,SPH),d=im.data,src=new Uint8ClampedArray(d);
+  for(let yy=0;yy<SPH;yy++)for(let xx=0;xx<SPW;xx++){const i=(yy*SPW+xx)*4;if(src[i+3])continue;
+    const n=(a,b)=>a>=0&&b>=0&&a<SPW&&b<SPH&&src[(b*SPW+a)*4+3];if(n(xx-1,yy)||n(xx+1,yy)||n(xx,yy-1)||n(xx,yy+1)){d[i]=18;d[i+1]=13;d[i+2]=18;d[i+3]=255}}
+  x.putImageData(im,0,0);
+  // Ombre au sol (plus petite quand il saute)
+  x.globalCompositeOperation='destination-over';const w=Math.max(6,18+Math.round(ly/1.5));x.fillStyle='rgba(0,0,0,.4)';x.fillRect(Math.round(24-w/2)+ox,63+oy,w,2);x.globalCompositeOperation='source-over';
+  // Effets (sans contour)
+  (P.fx||[]).forEach(e=>{
+    if(e==='stars')[[hx-3,hy-6],[hx+6,hy-9],[hx+15,hy-5]].forEach(([a,b])=>{R(a+1,b,1,3,'#ffc83d');R(a,b+1,3,1,'#ffc83d')});
+    else if(e==='sweat'){R(hx+16,hy+2,2,3,'#7fd3ff');R(hx+16,hy+1,1,1,'#7fd3ff');R(hx+16,hy+2,1,1,'#ffffff')}
+    else if(e==='hit'&&P.ball){const [bx,by]=P.ball;[[-3,-3],[8,-3],[-3,8],[8,8]].forEach(([a,b])=>R(bx+a,by+b,2,2,'#ffffff'));R(bx+2,by-4,2,2,'#ffc83d');R(bx+2,by+8,2,2,'#ffc83d');R(bx-4,by+2,2,2,'#ffc83d');R(bx+8,by+2,2,2,'#ffc83d')}
+    else if(e==='bonk'&&P.ball){const [bx,by]=P.ball;R(bx-2,by+6,2,1,'#ffffff');R(bx+6,by+6,2,1,'#ffffff');R(bx+2,by-3,2,2,'#ffffff')}
+    else if(e==='speed')[[10,4],[24,8],[16,5],[34,7],[44,4]].forEach(([b,l],i)=>R(-4-ox+((P.x||0)>0?0:0)+(i%2)*2,b+dy,l,1,'rgba(255,255,255,.75)'));
+    else if(e==='trail'&&P.ball){const [bx,by]=P.ball,[tx2,ty2]=P.tr||[-6,-6];for(let i=1;i<=3;i++){x.globalAlpha=.5-i*.13;R(bx+tx2*i+1,by+ty2*i+1,4,4,sp==='basket'?'#ff8a3d':'#f6f3ee')}x.globalAlpha=1}
+    else if(e==='spark'){const a=hx+17,b=hy-6;R(a,b-3,1,7,'#ffffff');R(a-3,b,7,1,'#ffffff');R(a-1,b-1,3,3,'#ffffff');R(a-9,b+8,1,3,'#ffc83d');R(a-10,b+9,3,1,'#ffc83d')}
+  })}
+// Poses : bras [coude x, coude y, main x, main y] relatifs à l’épaule ; jambes [genou x, genou y, pied x, pied y] absolus
+const AD=[-1,6,-1,12],AR=[1,6,1,12],UPL=[-2,-6,-3,-12],UPR=[2,-6,3,-12],OUTL=[-3,4,-5,9],OUTR=[3,4,5,9],FLL=[-5,2,-9,-1],FLR=[5,2,9,-1],
+ CKR=[4,-5,0,-10],HITR=[4,-6,9,-9],FOLR=[5,0,8,6],FISTR=[3,-5,2,-11],
+ CRL=[18,51,20,58],CRR=[30,51,28,58],TKL=[20,48,21,54],TKR=[28,48,27,54],STL=[21,50,23,58],STR=[27,50,32,57],
+ RAL=[21,47,20,54],RAR=[27,51,28,58],RBL=[21,51,20,58],RBR=[27,47,28,54],KR=[29,47,30,54],KL=[19,47,18,54],KNR=[28,44,28,52],VOR=[31,46,37,47],
+ HOLDL=[-1,6,8,10],HOLDR=[1,6,-8,10],DRR=[3,5,4,10],DRR2=[3,6,4,13],DRL=[-3,5,-4,10],DRL2=[-3,6,-4,13],CARRY=[3,6,-3,10],PUMPL=[-2,4,1,9],PUMPL2=[-2,6,-3,11];
+const pz=(t,o)=>Object.assign({t},o);
+const air=(n,o)=>Object.assign({dy:n,ly:n,ll:TKL,rl:TKR},o);
+const SPANIM={
+ volley:[[pz(300,{ball:[36,-10]}),pz(260,{ball:[33,-2]}),pz(170,{dy:3,ll:CRL,rl:CRR,la:OUTL,ra:OUTR,face:'focus',ball:[29,2]}),
+   pz(140,air(-4,{ra:UPR,face:'strain',ball:[25,-4]})),pz(150,air(-4,{ra:FOLR,face:'dizzy',ball:[21,-6],fx:['bonk']})),
+   pz(200,{face:'dizzy',ball:[34,-10],fx:['stars']}),pz(200,{face:'dizzy',la:FLL,ra:FLR,ball:[42,22],fx:['stars']}),pz(700,{face:'worried',ball:[44,53],fx:['sweat']})],
+  [pz(250,{ball:[40,-10]}),pz(160,{dy:3,ll:CRL,rl:CRR,la:OUTL,ra:OUTR,face:'focus',ball:[38,-6]}),pz(120,air(-8,{la:UPL,ra:UPR,face:'focus',ball:[40,-6]})),
+   pz(120,air(-9,{la:UPL,ra:CKR,face:'strain',ball:[41,-4]})),pz(110,air(-9,{la:AD,ra:HITR,face:'shout',ball:[41,-4],fx:['hit']})),
+   pz(110,air(-6,{ra:FOLR,ball:[50,22],fx:['trail'],tr:[-4,-7]})),pz(160,{dy:2,ll:CRL,rl:CRR,face:'happy'}),pz(600,{face:'happy'})],
+  [pz(220,{face:'focus',ball:[42,-12]}),pz(130,{dy:3,ll:CRL,rl:CRR,la:OUTL,ra:OUTR,face:'focus',ball:[41,-8]}),pz(100,air(-12,{la:UPL,ra:UPR,face:'focus',ball:[41,-8]})),
+   pz(100,air(-13,{lean:-1,la:UPL,ra:CKR,face:'strain',ball:[41,-7]})),pz(90,air(-13,{la:AD,ra:HITR,face:'shout',ball:[41,-7],fx:['hit']})),
+   pz(90,air(-11,{ra:FOLR,ball:[54,30],fx:['trail','speed'],tr:[-5,-9]})),pz(140,{dy:2,ll:CRL,rl:CRR,face:'happy'}),pz(700,{ra:FISTR,face:'happy',fx:['spark']})]],
+ basket:[[pz(200,{ra:DRR,ball:[35,37]}),pz(140,{ra:DRR,ball:[35,46]}),pz(140,{ra:DRR,ball:[35,53]}),pz(160,{ra:DRR2,face:'focus',ball:[36,44]}),
+   pz(150,{ra:DRR2,face:'worried',ball:[30,54]}),pz(160,{la:FLL,ra:FLR,face:'worried',ball:[40,50]}),pz(220,{x:2,lean:1,ra:[5,4,10,6],face:'worried',ball:[46,54],fx:['sweat']}),
+   pz(600,{x:2,face:'worried',ball:[52,54],fx:['sweat']})],
+  [pz(120,{dy:1,ll:CRL,rl:CRR,ra:DRR,face:'focus',ball:[35,37]}),pz(110,{dy:1,ll:CRL,rl:CRR,ra:DRR,face:'focus',ball:[35,46]}),pz(110,{dy:1,ll:CRL,rl:CRR,ra:DRR2,face:'focus',ball:[35,53]}),
+   pz(110,{dy:1,ll:CRL,rl:CRR,ra:DRR2,face:'focus',ball:[35,45]})],
+  [pz(90,{dy:2,ll:CRL,rl:CRR,ra:DRR,face:'focus',ball:[35,38]}),pz(80,{dy:2,ll:CRL,rl:CRR,ra:DRR2,face:'focus',ball:[35,53]}),
+   pz(80,{dy:2,ll:CRL,rl:CRR,face:'focus',ball:[21,53],fx:['speed']}),pz(80,{dy:2,ll:CRL,rl:CRR,la:DRL2,face:'focus',ball:[8,53]}),
+   pz(90,{dy:2,ll:CRL,rl:CRR,la:DRL,face:'focus',ball:[8,38]}),pz(80,{dy:2,ll:CRL,rl:CRR,la:DRL2,face:'focus',ball:[8,53]}),
+   pz(80,{dy:2,ll:CRL,rl:CRR,face:'focus',ball:[21,53],fx:['speed']}),pz(80,{dy:2,ll:CRL,rl:CRR,ra:DRR2,face:'focus',ball:[35,53]}),
+   pz(90,{dy:2,ll:CRL,rl:CRR,ra:DRR,face:'focus',ball:[35,38]}),pz(600,{ra:FISTR,face:'happy',ball:[30,52],fx:['spark']})]],
+ foot:[[pz(260,{la:HOLDL,ra:HOLDR,face:'focus',ball:[21,33]}),pz(130,{ball:[24,45]}),pz(120,{rl:KR,face:'strain',ball:[27,47]}),
+   pz(130,{lean:-1,face:'worried',ball:[36,38]}),pz(150,{lean:2,ll:STL,rl:STR,la:FLL,ra:FLR,face:'worried',ball:[44,46]}),pz(700,{face:'worried',ball:[48,53],fx:['sweat']})],
+  [pz(220,{la:HOLDL,ra:HOLDR,face:'focus',ball:[21,33]}),pz(110,{ball:[25,44]}),pz(110,{rl:KR,face:'focus',ball:[27,46]}),pz(130,{ball:[24,34]}),
+   pz(110,{ball:[19,44]}),pz(110,{ll:KL,face:'focus',ball:[15,46]}),pz(130,{ball:[20,34]}),pz(110,{ball:[25,44]}),pz(110,{rl:KR,face:'focus',ball:[27,46]}),pz(140,{ball:[23,32]})],
+  [pz(200,{la:HOLDL,ra:HOLDR,face:'focus',ball:[21,33]}),pz(90,{ball:[25,44]}),pz(90,{rl:KR,face:'focus',ball:[27,46]}),pz(100,{ball:[26,30]}),
+   pz(90,{rl:KNR,face:'focus',ball:[25,36]}),pz(110,{ball:[23,12]}),pz(110,{face:'focus',ball:[21,-4]}),pz(100,{ball:[25,18]}),
+   pz(90,{rl:VOR,lean:-1,la:FLL,face:'shout',ball:[37,41],fx:['hit']}),pz(90,{rl:VOR,lean:-1,la:FLL,ball:[54,38],fx:['trail','speed'],tr:[-6,1]}),pz(700,{ra:FISTR,face:'happy',fx:['spark']})]],
+ rugby:[[pz(220,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,ra:CARRY,face:'focus',ball:[28,34]}),pz(220,{ll:RBL,rl:RBR,la:PUMPL2,ra:CARRY,face:'focus',ball:[28,35]}),
+   pz(170,{lean:2,ll:STL,rl:STR,la:FLL,ra:FLR,face:'worried',ball:[37,22]}),pz(170,{lean:1,la:FLL,ra:FLR,face:'worried',ball:[42,38]}),pz(700,{face:'worried',ball:[44,55],fx:['sweat']})],
+  [pz(150,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,ra:CARRY,face:'focus',ball:[28,34]}),pz(130,{ra:CARRY,la:AD,face:'focus',ball:[28,35]}),
+   pz(150,{dy:-1,ll:RBL,rl:RBR,la:PUMPL2,ra:CARRY,face:'focus',ball:[28,34]}),pz(130,{ra:CARRY,la:AD,face:'focus',ball:[28,35]})],
+  [pz(90,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,ra:CARRY,face:'focus',ball:[28,34],fx:['speed']}),pz(90,{dy:-1,ll:RBL,rl:RBR,la:PUMPL2,ra:CARRY,face:'focus',ball:[28,34],fx:['speed']}),
+   pz(90,{x:-4,lean:-1,dy:-1,ll:RAL,rl:RAR,la:PUMPL,ra:CARRY,face:'shout',ball:[27,34],fx:['speed']}),pz(90,{x:4,lean:1,dy:-1,ll:RBL,rl:RBR,la:PUMPL2,ra:CARRY,face:'shout',ball:[29,34],fx:['speed']}),
+   pz(90,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,ra:CARRY,face:'focus',ball:[28,34],fx:['speed']}),pz(700,{la:UPL,ra:UPR,face:'happy',ball:[20,0],fx:['spark']})]]};
+const SPC={};
+function spFrames(key){if(SPC[key])return SPC[key];const [sp,st,s,a,b,c]=key.split('|'),K={sp,s:+s,sk:AV.skin[+a]||AV.skin[0],hs:+b,hc:AV.hair[+c]||AV.hair[0]};
+  const A=(SPANIM[sp]||SPANIM.volley)[+st]||SPANIM.volley[0];
+  return SPC[key]={fr:A.map(p=>{const cv=document.createElement('canvas');cv.width=SPW;cv.height=SPH;spDraw(cv,p,K);return cv}),d:A.map(p=>p.t),tot:A.reduce((z,p)=>z+p.t,0)}}
+function spTick(){const now=performance.now(),red=reduced();document.querySelectorAll('canvas.sprite').forEach(c=>{const F=spFrames(c.dataset.spk);let i=0;
+  if(!red){let t=now%F.tot;for(i=0;i<F.d.length-1;i++){if(t<F.d[i])break;t-=F.d[i]}}if(c._f!==i){c._f=i;const x=c.getContext('2d');x.clearRect(0,0,SPW,SPH);x.drawImage(F.fr[i],0,0)}})}
+setInterval(()=>{if(!document.hidden)spTick()},50);
+// Garde le nom spriteSvg (appelé à 3 endroits) : renvoie maintenant un canvas animé
+function spriteSvg(o,opt){opt=opt||{};o=o||{};const sp=profile.sport||'volley',av=profile.av||{},w=opt.size||96,h=Math.round(w*SPH/SPW);
+  const s=Math.min(2,Math.round(((o.force||0)+(o.endu||0))/90)),au=AURA[Math.max(0,tierIdx(ovrOf(o)))],key=[sp,stageOf(o),s,av.s|0,av.h|0,av.c|0].join('|');
+  setTimeout(spTick,0);
+  return `<span class="spw" style="width:${w}px;height:${h}px;background:radial-gradient(ellipse 50% 48% at 50% 52%,${au}55,transparent 70%)"><canvas class="sprite" width="${SPW}" height="${SPH}" data-spk="${key}" style="width:${w}px;height:${h}px" role="img" aria-label="Ton personnage"></canvas></span>`}
 function avBody(){const a=profile.av||{},row=(k,arr,lab)=>`<div class="field" style="margin:12px 0 0"><span>${lab}</span><div class="avopts">${arr.map((v,i)=>`<button class="${(a[k]|0)===i?'on':''}" data-act="avset" data-k="${k}" data-v="${i}" aria-label="${lab} ${i+1}">${k==='h'?esc(v):`<i style="background:${v}"></i>`}</button>`).join('')}</div></div>`;
   return `<div class="avedit"><div class="avprev">${spriteSvg(ficheStats().o,{size:96})}</div><div style="flex:1;min-width:0">${row('s',AV.skin,'Teint')}${row('h',AV.style,'Coiffure')}${row('c',AV.hair,'Cheveux')}</div></div>`}
 const lin=(v,a,b)=>Math.max(0,Math.min(100,Math.round((v-a)/(b-a)*100)));  // a = 0 point, b = 100 points (marche aussi à l’envers pour les chronos)
@@ -1266,18 +1358,18 @@ function ficheView(){const {o,d}=ficheStats(),A=archOf(o),G=gameStats(),keys=STA
   const weak=known.length?known.reduce((a,b)=>o[a]<=o[b]?a:b):null,miss=keys.filter(k=>o[k]==null);
   const how={force:['Note ton poids (Profil) et fais du squat','go','profile'],expl:['Fais un test de détente','test','cmj'],vit:['Fais un test de sprint 10 m','test','sp10'],endu:['Valide tes séances','go','workout'],reg:['Tiens ton objectif de la semaine','go','home']};
   const btn=k=>{const [l,a,v]=how[k];return a==='test'?`<button class="btn sm" data-act="sheet-test" data-tk="${v}">${l}</button>`:`<button class="btn sm" data-act="go" data-go="${v}">${l}</button>`};
-  return `<section class="fiche ${A?'':'locked'}"><div class="fk" aria-hidden="true">${A?A.kj:'?'}</div><div class="fsp">${spriteSvg(o,{size:104})}</div>
+  return `<section class="fiche ${A?'':'locked'}"><div class="fk" aria-hidden="true">${A?A.kj:'?'}</div><div class="fsp">${spriteSvg(o,{size:112})}</div>
    <div class="fhead"><div class="small" style="letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--acc)">${esc(SP().n)}${profile.poste?' · '+esc(profile.poste):''}</div>
     <h2>${esc(profile.name||'Ton personnage')}</h2><div class="farch">${A?esc(A.n):'Archétype à découvrir'}</div>
     <div class="small" style="color:#d6d1dc;margin-top:6px;max-width:300px">${A?esc(A.d):'Encore '+(3-known.length)+' stat'+(3-known.length>1?'s':'')+' à mesurer pour révéler ton archétype.'}</div>
-    <div class="ftags"><span>Niv. ${G.lvl} · ${esc(G.title)}</span><span>${esc(arcInfo().kj)} ${esc(arcInfo().name)}</span></div></div>
+    <div class="ftags">${ovrOf(o)!=null?`<span class="rk rk${rankOf(ovrOf(o))}" style="font-size:15px;background:#fff;color:#0b0a0d">Rang : ${esc(tierOf(ovrOf(o)))}</span>`:''}<span>Niv. ${G.lvl} · ${esc(G.title)}</span><span>${esc(arcInfo().kj)} ${esc(arcInfo().name)}</span></div></div>
    ${radarSvg(o)}</section>
   <div class="card" style="padding:8px 18px">${STATN.map(([k,n,kj])=>`<div class="frow"><span class="fkj">${kj}</span><div style="flex:1;min-width:0"><div class="lvrow" style="justify-content:space-between;gap:8px"><b>${n}</b><span class="rk rk${rankOf(o[k])}">${tierOf(o[k])}</span></div>
     <div class="pbar" style="margin-top:6px;height:6px"><i style="width:${o[k]||0}%"></i></div><div class="small muted" style="margin-top:4px">${o[k]!=null?esc(d[k])+' · '+o[k]+'/100':'Pas encore mesuré'}</div></div></div>`).join('')}</div>
   ${miss.length?`<div class="card"><span class="t">${ic('target')} Pour compléter ta fiche</span><div class="btnrow">${miss.map(btn).join('')}</div></div>`:''}
   ${weak&&o[weak]<75?`<div class="card warn"><span class="t">${ic('bolt')} Ton point à travailler : ${STATN.find(s=>s[0]===weak)[1]}</span><div class="small">Rang « ${tierOf(o[weak])} ». C’est là que tu gagneras le plus vite. ${esc(REPERES[weak])}</div><div class="btnrow">${btn(weak)}</div></div>`:''}
   <details class="card"><summary><span class="vchip">${ic('info')} Repères et calcul</span>${ic('chev')}</summary><div class="det"><ul>${STATN.map(([k,n])=>`<li><b>${n}</b> : ${esc(REPERES[k])}</li>`).join('')}</ul>
-   <p class="small muted">Rangs ${esc(SP().n.toLowerCase())} : ${(TIERS[profile.sport||'volley']||TIERS.volley).map((n2,i)=>esc(n2)+' ('+[0,20,40,60,75,90][i]+')').join(' · ')}. Les seuils sont des ordres de grandeur pour un sportif amateur, adaptés pour les femmes en force et en détente. Ce ne sont pas des normes scientifiques.</p></div></details>
+   <p class="small muted">Rangs, du débutant au maître : ${tiersOf().map((n2,i)=>esc(n2)+' ('+[0,20,40,60,75,90][i]+')').join(' · ')}. Les seuils sont des ordres de grandeur pour un sportif amateur, adaptés pour les femmes en force et en détente. Ce ne sont pas des normes scientifiques.</p></div></details>
   <button class="btn acc block" data-act="sharefiche">${ic('share')} Partager ma fiche</button>`}
 // Carte de la fiche à partager (image 1080 × 1350)
 function shareFiche(){const {o}=ficheStats(),A=archOf(o),G=gameStats(),c=document.createElement('canvas'),W=1080,H=1350;c.width=W;c.height=H;const x=c.getContext('2d');
@@ -1298,12 +1390,12 @@ function shareFiche(){const {o}=ficheStats(),A=archOf(o),G=gameStats(),c=documen
 function ficheMini(){const {o}=ficheStats(),A=archOf(o);
   return `<div class="card fmini" data-act="go" data-go="progress" data-ptab="fiche" role="button"><span class="fmk">${A?A.kj:'?'}</span><div style="flex:1;min-width:0"><div class="small muted" style="font-weight:700">Ma fiche</div><b>${A?esc(A.n):'Archétype à découvrir'}</b></div><span class="frk">${STATN.map(([k])=>`<i class="rk rk${rankOf(o[k])}">${rankOf(o[k])}</i>`).join('')}</span>${ic('chev')}</div>`}
 // Accueil : ton personnage, sa réplique, son archétype, son meilleur rang et l’arc en cours (remplace 3 cartes)
-function persoCard(){const {o}=ficheStats(),A=archOf(o),R=arcInfo(),best=STATN.map(([k,n])=>[n,o[k]]).filter(x=>x[1]!=null).sort((a,b)=>b[1]-a[1])[0];
+function persoCard(){const {o}=ficheStats(),A=archOf(o),R=arcInfo(),ov=ovrOf(o);
   return `<div class="card perso" data-act="go" data-go="progress" data-ptab="fiche" role="button" aria-label="Ouvrir ma fiche">
-   <div class="psp">${spriteSvg(o,{size:92})}</div>
+   <div class="psp">${spriteSvg(o,{size:112})}</div>
    <div class="pmain"><div class="bubble">${esc(sayL('hello'))}</div>
     <span class="parch">${A?esc(A.n):'Archétype à découvrir'}</span>
-    <div class="small muted" style="margin-top:2px">${best?`${esc(best[0])} : <b class="rk rk${rankOf(best[1])}" style="font-size:15px">${esc(tierOf(best[1]))}</b> · `:''}${esc(R.kj)} ${esc(R.name)}</div>
+    <div class="small muted" style="margin-top:2px">${ov!=null?`Rang <b class="rk rk${rankOf(ov)}" style="font-size:15px">${esc(tierOf(ov))}</b> · `:'Fais un test pour obtenir ton rang · '}${esc(R.kj)} ${esc(R.name)}</div>
     <div class="arcb" style="margin-top:7px">${[0,1,2,3].map(j=>`<i class="${j<R.into?'on':''}"></i>`).join('')}</div></div></div>`}
 let cgT=null;const queueGame=()=>{clearTimeout(cgT);cgT=setTimeout(checkGame,2400)};
 function chRow(c){return `<div class="chl ${c.ok?'ok':''}"><span class="cc ${c.ok?'ok':''}">${ic(c.ok?'check':'target')}</span><div style="flex:1;min-width:0"><div class="lb">${esc(c.n)}</div>${c.ok?'':`<div class="pbar"><i style="width:${Math.round(Math.min(1,c.cur/c.tgt)*100)}%;background:var(--yel)"></i></div>`}</div><span class="xp">${c.ok?'✓ ':''}${c.ok?'+100':Math.min(c.cur,c.tgt)+'/'+c.tgt}</span></div>`}
@@ -1844,7 +1936,7 @@ function renderProfile(){
    <label class="field"><span>Prénom</span><input data-pf="name" value="${esc(p.name)}" autocomplete="given-name"></label>
    <div class="row"><label class="field"><span>Taille (cm)</span><input data-pf="taille" inputmode="numeric" value="${esc(p.taille)}"></label><label class="field"><span>Poids (kg)</span><input data-pf="poids" inputmode="decimal" value="${esc(p.poids)}"></label></div>
    <div class="row"><label class="field" style="margin-top:0"><span>Âge</span><input data-pf="age" inputmode="numeric" value="${esc(p.age)}"></label><div class="field" style="margin-top:0"><span>Sexe</span><div class="opts" style="grid-template-columns:1fr 1fr">${[['h','Homme'],['f','Femme']].map(([v,l])=>`<button class="${p.sexe===v?'on':''}" data-act="psexe" data-v="${v}">${l}</button>`).join('')}</div></div></div></div>
-  <div class="card"><span class="t">${ic('user')} Mon personnage</span><div class="small muted">Il prend du gabarit avec ta force et ton endurance, et son aura prend la couleur de ton meilleur rang.</div><div id="avbox" style="margin-top:6px">${avBody()}</div></div>
+  <div class="card"><span class="t">${ic('user')} Mon personnage</span><div class="small muted">${esc(STAGEN[stageOf(ficheStats().o)])} Son geste évolue avec ton rang, il prend du gabarit avec ta force et ton endurance.</div><div id="avbox" style="margin-top:6px">${avBody()}</div></div>
   </details>
   ${sec(SP().ic,'Mon sport et ma salle','Sport, niveau, poste, objectifs, programme')}
   <div class="card">
