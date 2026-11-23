@@ -386,7 +386,7 @@ input[type=range]{padding:0;height:34px;background:none;border:0;-webkit-appeara
 :root{--mute:#9d98a5}
 body.big #view,body.big #fmain,body.big .sheet-p{zoom:1.12}
 .tour{position:fixed;inset:0;z-index:85}
-.tour-hole{position:fixed;border-radius:18px;box-shadow:0 0 0 9999px rgba(5,4,7,.78);outline:2px solid var(--acc);outline-offset:3px;transition:all .3s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.tour-hole{position:fixed;border-radius:18px;box-shadow:0 0 0 9999px rgba(5,4,7,.78);outline:2px solid var(--acc);outline-offset:3px;transition:top .3s var(--ease-out),left .3s var(--ease-out),width .3s var(--ease-out),height .3s var(--ease-out);pointer-events:none}
 .tour-tip{position:fixed;left:16px;right:16px;max-width:420px;margin:0 auto;background:#fff;color:#0b0a0d;border-radius:18px;padding:16px 16px 12px;box-shadow:6px 6px 0 var(--acc);animation:pop .35s cubic-bezier(.2,.8,.2,1)}
 .tour-tip b{display:block;font:400 18px/1.1 var(--disp);text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px}
 .tour-tip p{margin:0;font-size:14.5px;line-height:1.45}
@@ -416,7 +416,7 @@ body.offline #off{display:block}
 .fiche.locked .farch{background:var(--card2);color:var(--mute)}
 .ftags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.ftags span{font-size:12px;font-weight:750;padding:4px 10px;border-radius:999px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1)}
 .radar{display:block;width:100%;max-width:330px;margin:6px auto 0;overflow:visible}
-.radp{animation:radIn .9s cubic-bezier(.2,.9,.25,1.2) both .15s}@keyframes radIn{from{transform:scale(0) rotate(-40deg);opacity:0}}
+.radp{animation:radIn .9s cubic-bezier(.2,.9,.25,1.2) both .15s}@keyframes radIn{from{transform:scale(.6) rotate(-25deg);opacity:0}}
 .rk{font-family:var(--disp);font-weight:400;font-style:normal}.radar .rk{fill:var(--mute)}
 .rkS{color:#ffc83d;fill:#ffc83d!important;text-shadow:0 0 12px rgba(255,200,61,.6)}.rkA{color:#ff3b30;fill:#ff3b30!important}.rkB{color:#3ddc97;fill:#3ddc97!important}.rkC{color:#3ad0ff;fill:#3ad0ff!important}.rkD,.rkE{color:var(--ink);fill:var(--ink)!important}
 .frow{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}.frow:first-child{border-top:0}.frow .rk{font-size:24px;line-height:1}
@@ -446,10 +446,23 @@ body.offline #off{display:block}
 /* ---- v19 : rangée compacte de l’accueil ---- */
 .hrow{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:6px}.hrow>button{display:flex;align-items:center;gap:10px;background:none;border:0;color:inherit;text-align:left;padding:8px;border-radius:14px;cursor:pointer;min-width:0}
 .hrow>button+button{border-left:1px solid var(--line);border-radius:0 14px 14px 0}.hrow b{display:block;font-size:14.5px}.hrow small{display:block;font-size:12px;color:var(--mute);font-weight:600;line-height:1.3}.hrow .ring,.hrow svg{flex:none}
+/* ---- v23 : finitions (audit) ---- */
+:root{--ease-out:cubic-bezier(.23,1,.32,1);--ease-drawer:cubic-bezier(.32,.72,0,1)}
+button,.btn,a,[data-act],input,select,label{touch-action:manipulation}
+button:not(:disabled),.btn{transition:transform .16s var(--ease-out),background-color .16s,border-color .16s,color .16s}
+button:not(:disabled):active,.btn:active{transform:scale(.97)}
+.ctr:active{transform:none}.ctr:active .ctrb{transform:scale(.94)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
+:focus{scroll-margin-top:80px;scroll-margin-bottom:110px}
+.sheet-p:focus{outline:none}
+.sheet-out{position:fixed;inset:0;z-index:41;pointer-events:none}
+.sheet-out .sheet-p{animation:sheetDown .22s var(--ease-drawer) forwards}.sheet-out .sheet-bg{animation:fadeOut .22s ease-out forwards}
+@keyframes sheetDown{to{transform:translateY(105%)}}@keyframes fadeOut{to{opacity:0}}
 /* ---- v16 : animations ---- */
-#view.wipe{animation:wipe .42s cubic-bezier(.2,.8,.2,1) both}
+#view.wipe{animation:wipe .26s var(--ease-out) both}
 @keyframes wipe{from{clip-path:polygon(0 0,0 0,-35% 100%,0 100%)}to{clip-path:polygon(0 0,135% 0,100% 100%,0 100%)}}
-.wipebar{position:fixed;top:-20%;bottom:-20%;left:-30%;width:26%;z-index:55;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,59,48,.9) 40%,#fff 50%,rgba(255,59,48,.9) 60%,transparent);transform:skewX(-24deg);animation:wbar .45s cubic-bezier(.2,.8,.2,1) forwards}
+.wipebar{position:fixed;top:-20%;bottom:-20%;left:-30%;width:26%;z-index:55;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,59,48,.9) 40%,#fff 50%,rgba(255,59,48,.9) 60%,transparent);transform:skewX(-24deg);animation:wbar .3s var(--ease-out) forwards}
 @keyframes wbar{to{left:130%}}
 .flash{position:fixed;inset:0;z-index:79;background:#fff;pointer-events:none;animation:flash .45s ease-out forwards}@keyframes flash{from{opacity:.9}to{opacity:0}}
 .shake{animation:shake .45s cubic-bezier(.36,.07,.19,.97)}
@@ -481,7 +494,7 @@ body.offline #off{display:block}
 <div id="focus" aria-label="Mode séance"><div id="fmain"></div><div id="frest" role="timer"></div></div>
 <main id="view" class="wrap"></main>
 <div id="timer" role="timer"><div class="tl"><div class="lab" id="tlabel">Repos</div><div class="tt" id="tt">0:00</div></div><button id="tminus" aria-label="Moins 15 secondes">−15</button><button id="tplus" aria-label="Plus 15 secondes">+15</button><button id="tstop">Passer</button></div>
-<nav class="nav" id="nav"></nav>
+<nav class="nav" id="nav" aria-label="Navigation principale"></nav>
 <div id="sheet" class="sheet" hidden><div class="sheet-bg" data-act="closesheet"></div><div class="sheet-p" id="sheetp" role="dialog" aria-modal="true"></div></div>
 <div id="toast" role="status"></div>
 <div id="off" role="status">Hors ligne · tout est sauvegardé sur ce téléphone</div>
@@ -748,9 +761,9 @@ const INTENS=[[3,'Tranquille'],[5,'Normal'],[7,'Intense'],[9,'À fond']];
 const POSTES=['','Réceptionneur-attaquant','Pointu','Central','Passeur','Libéro'];
 
 // ----- Sports : programme, postes, stats de match, tests et explications -----
-const APP='Yosha',APP_V='22',TERMS_V=2;
+const APP='Yosha',APP_V='23',TERMS_V=2;
 // Nouveautés montrées une fois après la mise à jour
-const NEWS={'22':['Ton personnage vit avec toi : il dort si tu ne viens plus, souffle après une séance et fait la fête quand ton objectif de la semaine est tenu.','Passage de rang : une animation quand une stat monte d’un rang, avec de nouveaux gestes quand ton personnage progresse.','Objets à gagner en t’entraînant : bandeau or (niveau 5), brassard de capitaine (6 semaines d’affilée), maillot or (niveau 8).'],'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
+const NEWS={'23':['Finitions : les boutons s’enfoncent sous le doigt, les feuilles glissent à la fermeture et les changements d’écran sont plus vifs.','Accessibilité : l’appli s’utilise mieux avec VoiceOver et au clavier (repère de focus, tous les éléments activables).','Installation plus légère : les photos d’exercices se téléchargent quand tu les ouvres.'],'22':['Ton personnage vit avec toi : il dort si tu ne viens plus, souffle après une séance et fait la fête quand ton objectif de la semaine est tenu.','Passage de rang : une animation quand une stat monte d’un rang, avec de nouveaux gestes quand ton personnage progresse.','Objets à gagner en t’entraînant : bandeau or (niveau 5), brassard de capitaine (6 semaines d’affilée), maillot or (niveau 8).'],'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
 const SPORTS={
  volley:{n:'Volley',ic:'ball',prog:'volley',de:'de volleyeur',bar:'filet',barD:'du filet',barL:'le filet',postes:POSTES.slice(),
   types:{entr:'Entraînement',match:'Match',beach:'Beach'},stk:[['att','Attaques tentées'],['kill','Attaques gagnantes'],['blk','Contres gagnants'],['ace','Aces'],['err','Fautes de service']],
@@ -2041,21 +2054,25 @@ function renderProfile(){
   <div class="center small muted" style="margin:24px 0"><span style="font-family:var(--jp);color:var(--acc);font-weight:800;letter-spacing:.2em">よっしゃ</span> ${APP} — Salle & Sport · v${APP_V} · <a href="legal.html" style="color:inherit">Confidentialité</a></div>`;
 }
 const NAV=()=>[['home','home','Accueil'],['volley',SP().ic,SP().n],['workout','dumbbell','Séance'],['nutri','apple','Nutrition'],['progress','chart','Progrès']];
-function renderNav(){const cur=tab==='lib'?'workout':tab;$('#nav').innerHTML=NAV().map(([t,i,l])=>t==='workout'?`<button class="ctr ${t===cur?'on':''}" data-act="go" data-go="${t}" aria-label="${l}"><span class="ctrb">${ic(i)}</span></button>`:`<button class="${t===cur?'on':''}" data-act="go" data-go="${t}">${ic(i)}${l}</button>`).join('')}
-function render(){gid=0;gC=null;document.body.classList.toggle('big',!!profile.big);document.body.dataset.tab=tab==='lib'?'workout':tab;renderNav();({home:renderHome,workout:renderWorkout,lib:renderLib,volley:renderVolley,nutri:renderNutri,progress:renderProgress,profile:renderProfile})[tab]();if(focusOn)renderFocus()}
+function renderNav(){const cur=tab==='lib'?'workout':tab;$('#nav').innerHTML=NAV().map(([t,i,l])=>t==='workout'?`<button class="ctr ${t===cur?'on':''}" ${t===cur?'aria-current="page"':''} data-act="go" data-go="${t}" aria-label="${l}"><span class="ctrb">${ic(i)}</span></button>`:`<button class="${t===cur?'on':''}" ${t===cur?'aria-current="page"':''} data-act="go" data-go="${t}">${ic(i)}${l}</button>`).join('')}
+// Les zones cliquables qui ne sont pas des boutons deviennent atteignables au clavier et annoncées comme boutons
+function a11yFix(root){(root||document).querySelectorAll('[data-act]:not(button):not(a):not(input):not(select):not(textarea):not(label):not(option):not(.sheet-bg)').forEach(e=>{if(!e.hasAttribute('tabindex'))e.setAttribute('tabindex','0');if(!e.getAttribute('role'))e.setAttribute('role','button')})}
+function render(){gid=0;gC=null;document.body.classList.toggle('big',!!profile.big);document.body.dataset.tab=tab==='lib'?'workout':tab;renderNav();({home:renderHome,workout:renderWorkout,lib:renderLib,volley:renderVolley,nutri:renderNutri,progress:renderProgress,profile:renderProfile})[tab]();if(focusOn)renderFocus();a11yFix($('#view'))}
 const typing=()=>{const a=document.activeElement;return a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)};
 function go(t){const prevT=tab;tab=t;if(typeof tourS!=='undefined'&&tourS&&tourS.t!==t){const o=$('#tour');if(o)o.remove();tourS=null}if(t!=='workout'&&focusOn)closeFocus();closeSheet();const v=$('#view');v.classList.remove('anim','wipe');render();void v.offsetWidth;v.classList.add('anim');if(prevT!==t&&!reduced()){v.classList.add('wipe');const bar=document.createElement('div');bar.className='wipebar';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);setTimeout(()=>bar.remove(),600)}clearTimeout(go.h);go.h=setTimeout(()=>v.classList.remove('anim','wipe'),1200);window.scrollTo(0,0);if(typeof tourMaybe==='function')tourMaybe(t)}
 const relist=()=>tab==='lib'?($('#libl').innerHTML=libList()):render();
 
 // ===================== FEUILLES (formulaires) =====================
-function openSheet(title,body){$('#sheetp').innerHTML=`<div class="grab"></div><div class="sheet-h"><h2 style="font-size:23px">${title}</h2><button class="iconbtn" data-act="closesheet" aria-label="Fermer">${ic('x')}</button></div>${body}`;$('#sheet').hidden=false;document.body.style.overflow='hidden'}
+function openSheet(title,body){if($('#sheet').hidden)openSheet.prev=document.activeElement;$('#sheetp').innerHTML=`<div class="grab"></div><div class="sheet-h"><h2 style="font-size:23px">${title}</h2><button class="iconbtn" data-act="closesheet" aria-label="Fermer">${ic('x')}</button></div>${body}`;$('#sheet').hidden=false;document.body.style.overflow='hidden';a11yFix($('#sheetp'));const sp=$('#sheetp');sp.setAttribute('tabindex','-1');sp.scrollTop=0;try{sp.focus({preventScroll:true})}catch(e){}}
 // Chrono manuel pour les sprints : départ / stop par un partenaire
 let chrT0=0,chrI=null;
 function chrStop(){clearInterval(chrI);chrI=null}
 function chrToggle(){const el=$('#chr'),b=$('#chrb');if(!el)return;
   if(!chrI){chrT0=performance.now();chrI=setInterval(()=>{const e=$('#chr');if(!e){chrStop();return}e.textContent=f2((performance.now()-chrT0)/1000)},31);b.innerHTML=ic('check')+' Stop';beep(1)}
   else{const v=Math.round((performance.now()-chrT0)/10)/100;chrStop();el.textContent=f2(v);$('#t-val').value=f2(v);b.innerHTML=ic('play')+' Recommencer';beep(1)}}
-function closeSheet(){sensStop();scanStop();chrStop();if(typeof vjFree==='function'&&vj.url){const v=$('#vjv');if(v){v.removeAttribute('src');v.load()}vjFree()}$('#sheet').hidden=true;document.body.style.overflow=''}
+function closeSheet(){sensStop();scanStop();chrStop();if(typeof vjFree==='function'&&vj.url){const v=$('#vjv');if(v){v.removeAttribute('src');v.load()}vjFree()}if(!$('#sheet').hidden){sheetGhost();$('#sheet').hidden=true;const p=openSheet.prev;openSheet.prev=null;if(p&&p.isConnected&&p.focus)try{p.focus({preventScroll:true})}catch(e){}}document.body.style.overflow=''}
+// Copie de la feuille qui glisse vers le bas pendant que la vraie se ferme tout de suite
+function sheetGhost(){if(reduced())return;const s=$('#sheet'),sp=$('#sheetp'),g=s.cloneNode(true);g.removeAttribute('id');g.className='sheet-out';g.setAttribute('aria-hidden','true');g.inert=true;g.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));g.querySelectorAll('[data-act]').forEach(e=>e.removeAttribute('data-act'));document.body.appendChild(g);const gp=g.querySelector('.sheet-p');if(gp)gp.scrollTop=sp.scrollTop;setTimeout(()=>g.remove(),260)}
 const optsHtml=(k,arr,cur,cols)=>`<div class="opts" style="grid-template-columns:repeat(${cols||arr.length},1fr)">${arr.map(([v,l,s])=>`<button type="button" class="${String(v)===String(cur)?'on':''}" data-act="opt" data-k="${k}" data-v="${v}">${l}${s?`<small>${s}</small>`:''}</button>`).join('')}</div>`;
 // Niveau de départ : adapte le programme (débutant : exercices plus simples et une série de moins ; confirmé : une série de plus sur les gros exercices)
 const LVLS=[['deb','Débutant','moins de 6 mois'],['int','Intermédiaire','6 mois à 2 ans'],['conf','Confirmé','plus de 2 ans']];
@@ -2596,6 +2613,9 @@ function checkSet(id,i){
   else if(tab==='workout'&&!curList().some(x=>!exDone(x.id)))setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),60);
   const restLeft=e.sets.some(x=>!x.d)||nextId;if(restLeft)startTimer(ex.rest,nextId&&nextId!==id?'Repos · ensuite '+shortName(nextId):'Repos · '+shortName(id));
 }
+document.addEventListener('keydown',ev=>{
+  if(ev.key==='Escape'){if(!$('#sheet').hidden){closeSheet();ev.preventDefault()}else{const o=document.querySelector('.lvup');if(o)o.click()}return}
+  if(ev.key!=='Enter'&&ev.key!==' ')return;const el=ev.target;if(!el||!el.matches||!el.matches('[data-act][role]:not(button):not(a):not(input):not(select):not(textarea)'))return;ev.preventDefault();el.click()});
 document.addEventListener('click',ev=>{
   const t=ev.target.closest('[data-act]');if(!t)return;const d=t.dataset,a=d.act;
   switch(a){
@@ -2833,7 +2853,7 @@ function fbSheet(){draft={ft:'idee'};openSheet('Une idée ou un bug ?',`<p class
   <button class="btn acc block" data-act="fbsend">${ic('upload')} Envoyer</button>
   <div class="small muted" style="margin-top:10px">${cUser?'Envoyé avec ton prénom, ton sport, l’identifiant de ton compte et le type de téléphone et de navigateur.':'Sans compte, le message s’ouvre dans le partage : envoie-le à la personne qui t’a fait découvrir l’appli.'}</div>`)}
 async function fbSend(){const txt=($('#fbtxt').value||'').trim();if(txt.length<3){toast('Écris quelques mots');return}
-  const o={type:draft.ft||'idee',txt:txt.slice(0,1500),name:profile.name||'',sport:profile.sport||'volley',v:'v12',ua:navigator.userAgent.slice(0,140),at:Date.now()};
+  const o={type:draft.ft||'idee',txt:txt.slice(0,1500),name:profile.name||'',sport:profile.sport||'volley',v:'v'+APP_V,ua:navigator.userAgent.slice(0,140),at:Date.now()};
   if(cUser&&fbDb){try{await fbDb.collection('feedback').add(Object.assign({uid:cUser.uid},o));closeSheet();toast('Merci ! Message envoyé ✓',2600);return}catch(e){console.warn(e)}}
   const t2=`Yosha · ${o.type} : ${o.txt}`;if(navigator.share)navigator.share({text:t2}).then(()=>{closeSheet();toast('Merci !')}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(t2).then(()=>toast('Message copié : colle-le dans un SMS ✓',3000))}
 

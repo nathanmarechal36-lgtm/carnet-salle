@@ -1,0 +1,88 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Données personnelles : seul le propriétaire du compte peut lire et écrire
+    match /users/{uid}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Idées et bugs envoyés depuis l'appli : chacun écrit, relit et efface les siens, pas ceux des autres
+    // (tu les lis dans la console Firebase : Firestore Database > Données > feedback)
+    // Petite aide : le champ f est absent, ou c'est un texte d'au plus n caractères
+    function txtOk(d, f, n) { return !(f in d) || (d[f] is string && d[f].size() <= n); }
+    function numOk(d, f) { return !(f in d) || d[f] == null || d[f] is number; }
+
+    match /feedback/{id} {
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasOnly(['uid', 'type', 'txt', 'name', 'sport', 'v', 'ua', 'at'])
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.txt is string
+                    && request.resource.data.txt.size() <= 1500
+                    && txtOk(request.resource.data, 'type', 20) && txtOk(request.resource.data, 'name', 40)
+                    && txtOk(request.resource.data, 'sport', 20) && txtOk(request.resource.data, 'v', 10)
+                    && txtOk(request.resource.data, 'ua', 200) && numOk(request.resource.data, 'at');
+      // Chacun peut retrouver et effacer ses propres messages (suppression du compte)
+      allow read, delete: if request.auth != null && resource.data.uid == request.auth.uid;
+    }
+
+    // Équipes : il faut connaître le code pour lire une équipe (« get »). Impossible de lister les équipes.
+    // Le champ "owner" désigne le coach (au départ : celui qui a créé l'équipe)
+    match /teams/{code} {
+      allow get: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.keys().hasOnly(['owner', 'name', 'created'])
+                    && request.resource.data.owner == request.auth.uid
+                    && numOk(request.resource.data, 'created')
+                    && request.resource.data.name is string
+                    && request.resource.data.name.size() <= 40;
+      // Seul le coach modifie l'équipe ; il peut céder sa place à un membre de l'équipe
+      allow update: if request.auth != null
+                    && resource.data.owner == request.auth.uid
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['owner'])
+                    && (request.resource.data.owner == request.auth.uid
+                        || exists(/databases/$(database)/documents/teams/$(code)/members/$(request.resource.data.owner)));
+      allow delete: if request.auth != null && resource.data.owner == request.auth.uid;
+
+      // Résumé de chaque membre : visible seulement par les membres de l'équipe
+      match /members/{uid} {
+        allow read: if request.auth != null
+                    && exists(/databases/$(database)/documents/teams/$(code)/members/$(request.auth.uid));
+        // Le résumé ne contient que les champs prévus par l'appli, avec des textes courts
+        allow create, update: if request.auth != null && request.auth.uid == uid
+                      && exists(/databases/$(database)/documents/teams/$(code))
+                      && request.resource.data.keys().hasOnly(['name', 'poste', 'lvl', 'title', 'xp', 'streak', 'nb', 'wk', 'wkOf', 'goal',
+                           'ses', 'cmj', 'att', 'sq', 'last', 'stamp', 'wkKg', 'wkSets', 'sp10', 'sport'])
+                      && txtOk(request.resource.data, 'name', 40) && txtOk(request.resource.data, 'poste', 40)
+                      && txtOk(request.resource.data, 'title', 40) && txtOk(request.resource.data, 'wkOf', 10)
+                      && txtOk(request.resource.data, 'last', 10) && txtOk(request.resource.data, 'sport', 20)
+                      && numOk(request.resource.data, 'lvl') && numOk(request.resource.data, 'xp') && numOk(request.resource.data, 'streak')
+                      && numOk(request.resource.data, 'nb') && numOk(request.resource.data, 'wk') && numOk(request.resource.data, 'goal')
+                      && numOk(request.resource.data, 'ses') && numOk(request.resource.data, 'cmj') && numOk(request.resource.data, 'att')
+                      && numOk(request.resource.data, 'sq') && numOk(request.resource.data, 'stamp') && numOk(request.resource.data, 'wkKg')
+                      && numOk(request.resource.data, 'wkSets') && numOk(request.resource.data, 'sp10');
+        allow delete: if request.auth != null
+                      && (request.auth.uid == uid
+                          || get(/databases/$(database)/documents/teams/$(code)).data.owner == request.auth.uid);
+      }
+
+      // Détail des séances : visible seulement par le joueur lui-même et par le coach
+      match /sessions/{uid} {
+        allow read: if request.auth != null
+                    && (request.auth.uid == uid
+                        || get(/databases/$(database)/documents/teams/$(code)).data.owner == request.auth.uid);
+        // Il faut être membre de l'équipe ; au plus 20 séances de salle et 20 de club (6 dernières semaines)
+        allow create, update: if request.auth != null && request.auth.uid == uid
+                      && exists(/databases/$(database)/documents/teams/$(code)/members/$(request.auth.uid))
+                      && request.resource.data.keys().hasOnly(['name', 'sport', 'gym', 'club', 'stamp'])
+                      && txtOk(request.resource.data, 'name', 40) && txtOk(request.resource.data, 'sport', 20)
+                      && numOk(request.resource.data, 'stamp')
+                      && (!('gym' in request.resource.data) || (request.resource.data.gym is list && request.resource.data.gym.size() <= 20))
+                      && (!('club' in request.resource.data) || (request.resource.data.club is list && request.resource.data.club.size() <= 20));
+        allow delete: if request.auth != null
+                      && (request.auth.uid == uid
+                          || get(/databases/$(database)/documents/teams/$(code)).data.owner == request.auth.uid);
+      }
+    }
+  }
+}

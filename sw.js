@@ -1,9 +1,11 @@
 // Service worker : l'appli fonctionne hors ligne et se met à jour quand le réseau est là.
-const CACHE = 'carnet-salle-v27';
+const CACHE = 'carnet-salle-v28';
+// Les photos d'exercices ont leur propre cache, gardé d'une version à l'autre
+const PHOTO_CACHE = 'yosha-photos-1';
 const FILES = ['./', './index.html', './guide.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './anton.woff2'];
-// Photos des exercices : mises en cache à l'installation (sans bloquer si l'une manque)
-const PHOTOS = 'peck tpoulie arnold russian presse abduct pompes elat extnuque rowc dih curlinc nordic cmj sj tirv lext curlez sdt dc rowu hipthrust mbslam rowb roue deadbug bandpull dm splitj efront dipst curlpup dcs face adduct mollets crunchp frontsq boxj gainlat broadj tuck mbthrow hack stepup curlm oiseau pullo squat dropj pallof skull molassis trac rotext calfsl dips lomb dib planche rdj dch lcurl trapdl shrug gobletsq curlpb fentes hurdle skater slhop'
-  .split(' ').flatMap(id => ['./' + id + '-0.jpg', './' + id + '-1.jpg'])
+// Fichiers utiles hors ligne, sans bloquer l'installation si l'un manque.
+// Les photos ne sont plus téléchargées d'avance : elles se mettent en cache quand on les ouvre.
+const EXTRA = []
   .concat(['./fb-app.js', './fb-auth.js', './fb-firestore.js', './fb-messaging.js', './installer.html', './legal.html']);
 
 // Notifications : le programme d'envoi (Google Apps Script) passe par Firebase Cloud Messaging
@@ -27,13 +29,13 @@ self.addEventListener('notificationclick', e => {
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES).then(() =>
-    Promise.all(PHOTOS.map(p => c.add(p).catch(() => {})))
+    Promise.all(EXTRA.map(p => c.add(p).catch(() => {})))
   )).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== PHOTO_CACHE).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -55,8 +57,9 @@ self.addEventListener('fetch', e => {
     );
   } else {
     // Fichiers : cache d'abord, sinon réseau (et on garde une copie).
+    const box = /.jpg$/i.test(new URL(req.url).pathname) ? PHOTO_CACHE : CACHE;
     e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(r => {
-      if (r.ok) { const c = r.clone(); caches.open(CACHE).then(x => x.put(req, c)); }
+      if (r.ok) { const c = r.clone(); caches.open(box).then(x => x.put(req, c)); }
       return r;
     })));
   }
