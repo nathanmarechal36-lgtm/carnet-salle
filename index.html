@@ -459,6 +459,14 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 .sheet-out{position:fixed;inset:0;z-index:41;pointer-events:none}
 .sheet-out .sheet-p{animation:sheetDown .22s var(--ease-drawer) forwards}.sheet-out .sheet-bg{animation:fadeOut .22s ease-out forwards}
 @keyframes sheetDown{to{transform:translateY(105%)}}@keyframes fadeOut{to{opacity:0}}
+/* ---- v24 : onglet sport ---- */
+.wup{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}.wup:first-child{border-top:0}
+.wup b{display:block;font-size:15px}.wup small{display:block;font-size:12.5px;color:var(--mute);line-height:1.35;margin-top:2px}
+.wup .wn{width:30px;height:30px;border-radius:10px;background:var(--card2);display:grid;place-items:center;font-weight:800;flex:none}.wup.ok .wn{background:var(--good);color:#0b0a0d}.wup .btn{flex:none;padding:9px 12px}
+.form5{display:flex;gap:6px;margin-top:12px}.form5 span{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-weight:850;font-size:13px;color:#0b0a0d}
+.spark{display:flex;align-items:flex-end;gap:5px;height:64px;margin-top:8px}.spark i{flex:1;background:linear-gradient(180deg,var(--vio),rgba(155,124,255,.35));border-radius:5px 5px 2px 2px;min-height:4px}
+.wcard{display:flex;gap:12px;align-items:center;width:100%;color:inherit;font:inherit;cursor:pointer}.wcard .bi{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none}
+.wcard b{display:block;font-size:16px}.wcard small{display:block;font-size:12.5px;color:var(--mute);margin-top:2px}
 /* ---- v16 : animations ---- */
 #view.wipe{animation:wipe .26s var(--ease-out) both}
 @keyframes wipe{from{clip-path:polygon(0 0,0 0,-35% 100%,0 100%)}to{clip-path:polygon(0 0,135% 0,100% 100%,0 100%)}}
@@ -761,9 +769,9 @@ const INTENS=[[3,'Tranquille'],[5,'Normal'],[7,'Intense'],[9,'À fond']];
 const POSTES=['','Réceptionneur-attaquant','Pointu','Central','Passeur','Libéro'];
 
 // ----- Sports : programme, postes, stats de match, tests et explications -----
-const APP='Yosha',APP_V='23',TERMS_V=2;
+const APP='Yosha',APP_V='24',TERMS_V=2;
 // Nouveautés montrées une fois après la mise à jour
-const NEWS={'23':['Finitions : les boutons s’enfoncent sous le doigt, les feuilles glissent à la fermeture et les changements d’écran sont plus vifs.','Accessibilité : l’appli s’utilise mieux avec VoiceOver et au clavier (repère de focus, tous les éléments activables).','Installation plus légère : les photos d’exercices se téléchargent quand tu les ouvres.'],'22':['Ton personnage vit avec toi : il dort si tu ne viens plus, souffle après une séance et fait la fête quand ton objectif de la semaine est tenu.','Passage de rang : une animation quand une stat monte d’un rang, avec de nouveaux gestes quand ton personnage progresse.','Objets à gagner en t’entraînant : bandeau or (niveau 5), brassard de capitaine (6 semaines d’affilée), maillot or (niveau 8).'],'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
+const NEWS={'24':['Onglet sport repensé en 3 parties : Aujourd’hui, Matchs, Progresser.','Note ton entraînement en un appui (même durée que la dernière fois, annulable).','Matchs : résultat et score, bilan de ta saison (victoires, défaites, forme sur 5 matchs) et courbe de tes stats.','Jour de match : échauffement guidé avec chrono, conseils de la veille et du lendemain.'],'23':['Finitions : les boutons s’enfoncent sous le doigt, les feuilles glissent à la fermeture et les changements d’écran sont plus vifs.','Accessibilité : l’appli s’utilise mieux avec VoiceOver et au clavier (repère de focus, tous les éléments activables).','Installation plus légère : les photos d’exercices se téléchargent quand tu les ouvres.'],'22':['Ton personnage vit avec toi : il dort si tu ne viens plus, souffle après une séance et fait la fête quand ton objectif de la semaine est tenu.','Passage de rang : une animation quand une stat monte d’un rang, avec de nouveaux gestes quand ton personnage progresse.','Objets à gagner en t’entraînant : bandeau or (niveau 5), brassard de capitaine (6 semaines d’affilée), maillot or (niveau 8).'],'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
 const SPORTS={
  volley:{n:'Volley',ic:'ball',prog:'volley',de:'de volleyeur',bar:'filet',barD:'du filet',barL:'le filet',postes:POSTES.slice(),
   types:{entr:'Entraînement',match:'Match',beach:'Beach'},stk:[['att','Attaques tentées'],['kill','Attaques gagnantes'],['blk','Contres gagnants'],['ace','Aces'],['err','Fautes de service']],
@@ -1810,45 +1818,95 @@ function routineCard(key){const R=ROUTINES[key],inS=Object.values(PROGS[progId].
   <div class="det" style="margin-top:14px">${R.ex.map(([id,n,rp])=>`<div class="rt-ex"><span>${esc(shortName(id))}</span><span>${n} × ${rp}</span></div>`).join('')}
   <div class="small muted" style="margin-top:12px">${inS.length?'Incluse au début de ta séance : '+esc(inS.join(', ')):''}</div>
   <button class="btn sm" data-act="rtgo" data-v="${key}" style="margin-top:12px">${ic('play')} Faire cette routine</button></div></details>`}
+// ===================== v24 : onglet sport (Aujourd'hui · Matchs · Progresser) =====================
+let vseg='auj';
+const RES={v:['Victoire','var(--good)'],n:['Nul','var(--yel)'],d:['Défaite','var(--ora)']};
+// Échauffement d'avant-match, propre à chaque sport : [étape, secondes, consigne]
+const WARMUP={
+ volley:[['Course légère et talons-fesses',120,'Autour du terrain, sans forcer : le cœur monte doucement.'],['Mobilité des épaules',90,'Moulinets avant et arrière, bras croisés, élastique si tu en as un.'],['Fentes marchées avec rotation',90,'Une fente, une rotation du buste vers la jambe avant. Hanches et dos se réveillent.'],['Gainage dynamique',60,'Planche, puis planche latérale de chaque côté.'],['Sauts progressifs',90,'5 squat jumps à 60 %, puis 5 sauts d’attaque à 80 %. Pas encore à fond.'],['Passes et manchettes à deux',180,'Contrôle d’abord, puis de plus en plus vite.'],['Attaques progressives',180,'Élan complet, frappe de plus en plus forte jusqu’à 100 %.']],
+ basket:[['Footing et pas chassés',120,'Tours de terrain, en alternant course avant et pas chassés.'],['Mobilité chevilles et hanches',90,'Cercles de chevilles, ouvertures de hanches, squats lents.'],['Fentes avec rotation',90,'Une fente, une rotation du buste vers la jambe avant.'],['Gammes',90,'Montées de genoux, talons-fesses, skippings sur la longueur.'],['Sauts progressifs',60,'5 sauts sur place, puis 3 sauts en course vers l’arceau.'],['Dribbles des deux mains',120,'Main forte, main faible, puis changements de main.'],['Tirs progressifs',180,'Sous le panier, puis à mi-distance, puis tes tirs de match.']],
+ foot:[['Footing',180,'Deux tours de terrain, sans forcer.'],['Gammes athlétiques',120,'Talons-fesses, montées de genoux, pas chassés.'],['Mobilité des hanches',90,'Ouvre et ferme la « porte » avec chaque jambe.'],['Étirements dynamiques',90,'Balanciers de jambes, ischios et adducteurs, sans tenir la position.'],['Accélérations',90,'3 × 20 m, à 60 %, 80 % puis 95 %.'],['Passes et contrôles',180,'Passes courtes à deux, contrôle orienté.'],['Changements de direction',60,'Sprints courts avec appuis, comme en match.']],
+ rugby:[['Footing',120,'Sur la largeur du terrain, sans forcer.'],['Mobilité épaules et cou',90,'Moulinets, rotations douces du cou, épaules en arrière.'],['Gammes',90,'Montées de genoux, talons-fesses, pas chassés.'],['Étirements dynamiques',90,'Balanciers de jambes, fentes avec rotation.'],['Accélérations',90,'3 × 20 m, à 60 %, 80 % puis 95 %.'],['Contacts progressifs',120,'Épaule contre bouclier, à 50 % puis 75 %. Gainage avant chaque impact.'],['Passes en mouvement',180,'Passes en course, de plus en plus vite.']]};
+const warmTot=()=>Math.round((WARMUP[profile.sport||'volley']||WARMUP.volley).reduce((a,x)=>a+x[1],0)/60);
+function warmupSheet(){const W=WARMUP[profile.sport||'volley']||WARMUP.volley;draft={wdone:[]};
+  openSheet('Échauffement d’avant-match',`<p class="lead">${warmTot()} minutes pour arriver prêt et limiter les blessures. Touche ▶ pour lancer le chrono de chaque étape.</p>
+  <div id="wuplist">${warmRows()}</div>
+  <div class="small muted" style="margin-top:12px">Finis 10 à 15 minutes avant le coup d’envoi, puis reste au chaud.</div>`)}
+function warmRows(){const W=WARMUP[profile.sport||'volley']||WARMUP.volley,dn=draft.wdone||[];
+  return W.map(([n,s,c],i)=>`<div class="wup ${dn.includes(i)?'ok':''}"><span class="wn">${dn.includes(i)?ic('check'):i+1}</span><div style="flex:1;min-width:0"><b>${esc(n)}</b><small>${esc(c)}</small></div>
+   <button class="btn sm" data-act="wupgo" data-v="${i}" aria-label="Lancer ${esc(n)}, ${Math.round(s/60*10)/10} minutes">▶ ${s>=60?Math.round(s/6)/10+' min':s+' s'}</button></div>`).join('')}
+// Saisie express : un appui note la séance du jour avec la durée et l’intensité de la dernière fois
+function quickVb(type){const sp=profile.sport||'volley',last=[...volley].filter(v=>v.type===type).sort((a,b)=>a.date<b.date?1:-1)[0];
+  const v={id:uid(),sp,date:todayStr(),type,min:last?last.min:(type==='match'?90:120),rpe:last?last.rpe:5,note:''};volley.push(v);saveVolley();render();
+  undoBar(VTYPES[type]+' noté'+(type==='match'?'':'')+' ✓ ('+v.min+' min)',()=>{volley=volley.filter(x=>x.id!==v.id);saveVolley();render()})}
+function seasonOf(sp){const M=volley.filter(v=>v.type==='match'&&(v.sp||'volley')===sp).sort((a,b)=>a.date<b.date?1:-1),R={v:0,n:0,d:0};M.forEach(m=>{if(R[m.res]!=null)R[m.res]++});return{M,R,played:R.v+R.n+R.d}}
+function vbRow(v,S){const r=RES[v.res];return `<div class="li"><span class="thumb" style="background:var(--viod);color:var(--vio)">${ic((SPORTS[v.sp]||S).ic)}</span><div class="mid"><div class="nm">${VTYPES[v.type]||(SPORTS[v.sp]||S).n}${r?` · <span style="color:${r[1]}">${r[0]}${v.score?' '+esc(v.score):''}</span>`:''}</div><div class="sub">${relDay(v.date)} · ${v.min} min · ${(INTENS.find(x=>x[0]===v.rpe)||[0,'RPE '+v.rpe])[1].toLowerCase()}${v.note?' · '+esc(v.note):''}</div></div><button class="xbtn" data-act="delvb" data-id="${v.id}" aria-label="Supprimer">${ic('trash')}</button></div>`}
 function renderVolley(){
-  const S=SP(),sp=profile.sport||'volley',isV=sp==='volley',P=PROGS[S.prog];
-  const t=todayStr(),wk=monday(t),n=matchIn(),cts=plyoContacts(wk,addDays(wk,6));
-  const rec=[...volley].sort((a,b)=>a.date<b.date?1:-1).slice(0,4);
-  const sm=volley.filter(v=>v.st&&(v.sp||'volley')===sp).sort((a,b)=>a.date<b.date?1:-1);let statsCard;
-  if(sm.length&&!isV){const T=sm.reduce((a,v)=>{STATK.forEach(([k2])=>a[k2]=(a[k2]||0)+(+v.st[k2]||0));return a},{}),n2=sm.length;
-    statsCard=`<div class="card"><div class="stats3" style="margin-top:0">${STATK.slice(0,3).map(([k2,l])=>`<div><b>${fr(T[k2]/n2)}</b><small>${l.toLowerCase()} / match</small></div>`).join('')}</div>
-     <div style="margin-top:10px">${sm.slice(0,5).map(v=>`<div class="li"><div class="mid"><div class="nm">${relDay(v.date)}</div><div class="sub">${STATK.filter(([k2])=>+v.st[k2]).map(([k2,l])=>v.st[k2]+' '+l.toLowerCase()).join(' · ')||'—'}</div></div></div>`).join('')}</div></div>`}
-  else if(sm.length){const T=sm.reduce((a,v)=>{STATK.forEach(([k2])=>a[k2]+=+v.st[k2]||0);return a},{att:0,kill:0,blk:0,ace:0,err:0}),n2=sm.length,pc=v=>v.st.att?Math.round(v.st.kill/v.st.att*100):null;
-    const ev=sm.length>1&&pc(sm[0])!=null&&pc(sm[sm.length-1])!=null?pc(sm[0])-pc(sm[sm.length-1]):null;
-    statsCard=`<div class="card"><div class="stats3" style="margin-top:0"><div><b>${T.att?Math.round(T.kill/T.att*100)+' %':'—'}</b><small>attaques gagnantes</small></div><div><b>${fr(T.blk/n2)}</b><small>contres / match</small></div><div><b>${fr(T.ace/n2)}</b><small>aces / match</small></div></div>
-     ${ev!=null?`<div class="goal" style="color:${ev>=0?'var(--good)':'var(--ora)'}">${ic('chart')}<span>${ev>=0?'+':''}${ev} points d’efficacité en attaque depuis ton 1er match noté.</span></div>`:''}
-     <div style="margin-top:10px">${sm.slice(0,5).map(v=>`<div class="li"><div class="mid"><div class="nm">${relDay(v.date)}</div><div class="sub">${v.st.kill}/${v.st.att} attaques · ${v.st.blk} contres · ${v.st.ace} aces${v.st.err?' · '+v.st.err+' fautes':''}</div></div>${pc(v)!=null?`<div class="r">${pc(v)} %</div>`:''}</div>`).join('')}</div></div>`}
-  else statsCard=`<div class="card"><div class="small muted">Après un match, touche « Noter un entraînement ou un match », puis <b style="color:var(--ink)">Mes stats</b> : ${esc(STATK.slice(0,3).map(x=>x[1].toLowerCase()).join(', '))} en quelques touches. Tu verras tes chiffres progresser avec ta forme.</div></div>`;
-  $('#view').innerHTML=`<header class="hdr"><div><div class="hello"><span class="jp">${S.kj||KJ.volley}</span>${S.n}${profile.poste?' · '+esc(profile.poste):''}</div><h1>Terrain & détente</h1></div>${avatarBtn()}</header>
-  <button class="btn acc block" data-act="sheet-vb" style="margin-top:18px">${ic('plus')} Noter une séance</button>
-  ${match&&n!==null?`<section class="hero vb" data-k="試合"><span class="tag" style="background:var(--vio)">${ic('cal')} Prochain match</span><h2>${n===0?'C’est aujourd’hui !':n===1?'Demain':'Dans '+n+' jours'}</h2><p>${fmtDay(match)}</p>
-    <div class="btnrow"><button class="btn sm" data-act="editmatch">Changer</button><button class="btn sm" data-act="clearmatch">Supprimer</button></div><div class="big">${ic(S.ic)}</div></section>`
-   :`<div class="card"><div class="row" style="align-items:center"><div><h3>Prochain match</h3><div class="small muted">L’appli adaptera tes séances autour.</div></div><button class="btn sm" data-act="editmatch" style="flex:none">${ic('cal')} Ajouter</button></div></div>`}
-  <div id="matchedit" hidden><input type="date" id="matchd" value="${esc(match)}" aria-label="Date du prochain match"></div>
-  <div class="sect-h"><h3>Ton programme ${spLow()}</h3></div>
-  <details class="card"><summary><span class="vchip"><span class="thumb" style="width:42px;height:42px;border-radius:13px;background:var(--viod);color:var(--vio)">${ic(S.ic)}</span><span><b style="display:block;font-size:16px">${esc(P.name)}</b><span class="small muted" style="font-weight:500">${progId===S.prog?'Ton programme actuel':'Pas encore activé'}</span></span></span>${ic('chev')}</summary>
-   <div class="det" style="margin-top:12px"><p style="margin:0 0 6px">${esc(S.about)}</p>${P.sessions.map(s=>`<div class="rt-ex"><span><b style="color:var(--ink)">${esc(s.name)}</b> · ${esc(s.sub)}</span><span>${s.ex.length} exos</span></div>`).join('')}
-   <div class="small muted" style="margin-top:10px">Dans chaque exercice, la ligne violette « Pour le ${spLow()} » explique à quoi il te sert.</div>
-   ${progId===S.prog?'':`<button class="btn acc sm" data-act="setprog" data-v="${S.prog}" style="margin-top:12px">${ic('check')} Utiliser ce programme</button>`}</div></details>
-  <div class="sect-h"><h3>Mes tests</h3><button class="linkbtn" data-act="go" data-go="progress" data-ptab="detente">Tous mes tests ${ic('chev')}</button></div>
-  <div class="tiles">${S.tiles.map((k2,i)=>jumpTile(k2,i?'vh':'hl')).join('')}</div>
-  <button class="btn block" data-act="sheet-test" data-tk="${S.tiles[0]}">${ic('arrowup')} Faire un test</button>
-  <div class="sect-h"><h3>Mes stats de match</h3>${sm.length?`<span class="muted small">${sm.length} match${sm.length>1?'s':''}</span>`:''}</div>
-  ${statsCard}
-  <div class="sect-h"><h3>Routines détente</h3></div>
-  <div class="small muted" style="margin-bottom:4px">10 minutes de pliométrie au début de <b style="color:var(--ink)">chaque séance, sauf celle des jambes</b>, quand tu es frais. Elles sont déjà ajoutées dans tes séances.</div>
-  ${S.rts.map(routineCard).join('')}
-  <div class="card"><div class="row" style="justify-content:space-between;align-items:baseline"><h3>Sauts cette semaine</h3><span class="muted small">pliométrie</span></div>
-   <div style="font-size:30px;font-weight:800;margin-top:6px">${cts}</div><div class="pbar" style="margin-top:8px"><i style="width:${Math.min(100,cts/240*100)}%;background:${cts>240?'var(--ora)':'var(--yel)'}"></i></div>
-   <div class="small muted" style="margin-top:10px">Repère : 60 à 120 par séance, ~240 max par semaine. Si tu as beaucoup sauté au ${spLow()}, fais la moitié de la routine.</div></div>
-  <div class="sect-h"><h3>Mes séances</h3></div>
-  <div class="card">${rec.length?rec.map(v=>`<div class="li"><span class="thumb" style="background:var(--viod);color:var(--vio)">${ic((SPORTS[v.sp]||S).ic)}</span><div class="mid"><div class="nm">${VTYPES[v.type]||(SPORTS[v.sp]||S).n}</div><div class="sub">${relDay(v.date)} · ${v.min} min · ${(INTENS.find(x=>x[0]===v.rpe)||[0,'RPE '+v.rpe])[1].toLowerCase()}</div></div><button class="xbtn" data-act="delvb" data-id="${v.id}" aria-label="Supprimer">${ic('trash')}</button></div>`).join(''):'<div class="empty" style="padding:10px">Aucune séance notée.<br>Elles comptent dans ta semaine et ta charge.</div>'}</div>
-  <details class="card"><summary><span class="vchip">${ic('shield')} 5 conseils ${S.de}</span>${ic('chev')}</summary><div class="det"><ul>${S.tips.map(x=>`<li>${x}</li>`).join('')}</ul></div></details>`;
+  const S=SP(),sp=profile.sport||'volley',isV=sp==='volley',P=PROGS[S.prog],t=todayStr(),wk=monday(t),n=matchIn();
+  const segs=[['auj','Aujourd’hui'],['matchs','Matchs'],['prog','Progresser']];
+  let h=`<header class="hdr"><div><div class="hello"><span class="jp">${S.kj||KJ.volley}</span>${S.n}${profile.poste?' · '+esc(profile.poste):''}</div><h1>Terrain</h1></div>${avatarBtn()}</header>
+  <div class="seg">${segs.map(([v,l])=>`<button class="${vseg===v?'on':''}" data-act="vseg" data-v="${v}" aria-pressed="${vseg===v}">${l}</button>`).join('')}</div>
+  <div id="matchedit" hidden><input type="date" id="matchd" value="${esc(match)}" aria-label="Date du prochain match"></div>`;
+  if(vseg==='auj'){
+    const after=match&&diffDays(match,t)===1;
+    // 1. Le moment : jour de match, veille, lendemain, ou prochain match
+    if(n===0)h+=`<section class="hero vb" data-k="試合"><span class="tag" style="background:var(--vio)">${ic('ball')} Jour de match</span><h2>C’est aujourd’hui !</h2><p>${esc(sayL('hello'))}</p>
+      <div class="btnrow"><button class="btn acc sm" data-act="warmup">▶ Échauffement</button><button class="btn sm" data-act="vbmatch">Noter le match</button></div><div class="big">${ic(S.ic)}</div></section>
+      <div class="card"><span class="t">${ic('apple')} Manger aujourd’hui</span><ul class="small" style="margin:6px 0 0;padding-left:18px">${MATCHFOOD.slice(1).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+    else if(n===1)h+=`<section class="hero vb" data-k="前夜"><span class="tag" style="background:var(--vio)">${ic('cal')} Match demain</span><h2>La veille</h2><p>${fmtDay(match)}</p>
+      <ul class="small" style="margin:10px 0 0;padding-left:18px;color:#d6d1dc"><li>${esc(MATCHFOOD[0])}</li><li>Pas de grosse séance de jambes : tes séances de salle sont déjà allégées.</li><li>Couche-toi tôt : le sommeil de la veille compte autant que celui de la nuit du match.</li></ul>
+      <div class="btnrow"><button class="btn sm" data-act="warmup">Voir l’échauffement</button><button class="btn sm" data-act="editmatch">Changer la date</button></div><div class="big">${ic(S.ic)}</div></section>`;
+    else if(after)h+=`<section class="hero vb" data-k="回復"><span class="tag" style="background:var(--vio)">${ic('shield')} Lendemain de match</span><h2>Récupération</h2><p>${volley.some(v=>v.type==='match'&&v.date===match)?'Match noté ✓':'Pense à noter ton match d’hier.'}</p>
+      <ul class="small" style="margin:10px 0 0;padding-left:18px;color:#d6d1dc"><li>20 à 30 min d’activité douce : marche, vélo, piscine.</li><li>Bois bien et mange des protéines à chaque repas.</li><li>Une douleur qui persiste ? Déclare-la dans Profil → Santé.</li></ul>
+      <div class="btnrow">${volley.some(v=>v.type==='match'&&v.date===match)?'':`<button class="btn acc sm" data-act="vbmatch" data-d="${match}">Noter le match d’hier</button>`}<button class="btn sm" data-act="editmatch">Prochain match</button></div><div class="big">${ic(S.ic)}</div></section>`;
+    else if(match&&n!==null)h+=`<div class="card"><div class="row" style="align-items:center"><div><h3>Prochain match</h3><div class="small muted">${n===2?'Après-demain':'Dans '+n+' jours'} · ${fmtDay(match)}</div></div><div class="btnrow" style="margin:0;flex:none"><button class="btn sm" data-act="editmatch" aria-label="Changer la date du match">${ic('cal')}</button><button class="btn sm" data-act="clearmatch" aria-label="Supprimer le match">${ic('x')}</button></div></div></div>`;
+    else h+=`<div class="card"><div class="row" style="align-items:center"><div><h3>Prochain match</h3><div class="small muted">Tes séances de salle s’adaptent autour.</div></div><button class="btn sm" data-act="editmatch" style="flex:none">${ic('cal')} Ajouter</button></div></div>`;
+    // 2. Saisie express
+    const lastE=[...volley].filter(v=>v.type==='entr').sort((a,b)=>a.date<b.date?1:-1)[0],todayV=volley.filter(v=>v.date===t);
+    h+=`<div class="sect-h"><h3>Noter en un appui</h3>${todayV.length?`<span class="muted small">${todayV.length} notée${todayV.length>1?'s':''} aujourd’hui</span>`:''}</div>
+    <div class="bigact">
+     <button data-act="vbquick" data-v="entr"><span class="bi" style="background:var(--viod);color:var(--vio)">${ic(S.ic)}</span><span>Entraînement<small>${lastE?lastE.min+' min, comme la dernière fois':'2 h · modifiable'}</small></span></button>
+     <button data-act="vbmatch"><span class="bi" style="background:var(--yeld);color:var(--yel)">${ic('trophy')}</span><span>Match<small>Résultat et stats</small></span></button></div>
+    <div class="center"><button class="linkbtn" data-act="sheet-vb">Autre séance ou autre jour ${ic('chev')}</button></div>`;
+    // 3. Ma semaine
+    const wv=volley.filter(v=>monday(v.date)===wk),goal=+profile.goalVb||0,cts=plyoContacts(wk,addDays(wk,6));
+    h+=`<div class="sect-h"><h3>Ma semaine</h3><span class="muted small">${wv.length}${goal?' / '+goal:''} séance${wv.length>1?'s':''}</span></div>
+    <div class="card">${wv.length?[...wv].sort((a,b)=>a.date<b.date?1:-1).map(v=>vbRow(v,S)).join(''):`<div class="empty" style="padding:10px">Rien de noté cette semaine.<br>Chaque séance compte pour ta semaine et ta charge.</div>`}
+     <div class="lvrow" style="justify-content:space-between;margin-top:12px"><span class="small muted">Sauts de pliométrie</span><b>${cts} <span class="muted small" style="font-weight:600">/ ~240 max</span></b></div>
+     <div class="pbar" style="margin-top:6px"><i style="width:${Math.min(100,cts/240*100)}%;background:${cts>240?'var(--ora)':'var(--yel)'}"></i></div></div>`;
+  }else if(vseg==='matchs'){
+    const {M,R,played}=seasonOf(sp),last5=M.filter(m=>m.res).slice(0,5);
+    h+=`<section class="hero vb" data-k="戦績"><span class="tag" style="background:var(--vio)">${ic('trophy')} Ma saison</span>
+     ${played?`<div class="bignum">${R.v}<em>V</em> ${R.n?R.n+'<em>N</em> ':''}${R.d}<em>D</em></div><p>${Math.round(R.v/played*100)} % de victoires sur ${played} match${played>1?'s':''} avec résultat</p>
+      <div class="form5" aria-label="5 derniers résultats">${last5.map(m=>`<span style="background:${RES[m.res][1]}">${RES[m.res][0][0]}</span>`).join('')}</div>`
+     :`<h2>${M.length?M.length+' match'+(M.length>1?'s':'')+' noté'+(M.length>1?'s':''):'Aucun match'}</h2><p>Note le résultat de tes matchs pour suivre ta saison.</p>`}
+     <button class="btn acc sm" data-act="vbmatch" style="margin-top:12px">${ic('plus')} Noter un match</button><div class="big">${ic(S.ic)}</div></section>`;
+    // Stats de match (reprend le calcul existant) + tendance
+    const sm=M.filter(v=>v.st&&Object.values(v.st).some(x=>+x>0));
+    if(sm.length){const T=sm.reduce((a,v)=>{STATK.forEach(([k2])=>a[k2]=(a[k2]||0)+(+v.st[k2]||0));return a},{}),n2=sm.length;
+      const key=isV?null:STATK[0][0],val=v=>isV?(v.st.att?Math.round(v.st.kill/v.st.att*100):null):(+v.st[key]||0),series=sm.slice(0,10).reverse().map(val).filter(x=>x!=null),mx=Math.max(1,...series);
+      h+=`<div class="sect-h"><h3>Mes stats</h3><span class="muted small">${n2} match${n2>1?'s':''}</span></div><div class="card">
+       <div class="stats3" style="margin-top:0">${isV?`<div><b>${T.att?Math.round(T.kill/T.att*100)+' %':'—'}</b><small>attaques gagnantes</small></div><div><b>${fr(T.blk/n2)}</b><small>contres / match</small></div><div><b>${fr(T.ace/n2)}</b><small>aces / match</small></div>`
+        :STATK.slice(0,3).map(([k2,l])=>`<div><b>${fr(T[k2]/n2)}</b><small>${l.toLowerCase()} / match</small></div>`).join('')}</div>
+       ${series.length>1?`<div class="small muted" style="margin-top:14px">${isV?'Efficacité en attaque':esc(STATK[0][1])} · ${series.length} derniers matchs</div><div class="spark">${series.map(x=>`<i style="height:${Math.max(6,Math.round(x/mx*100))}%" title="${x}"></i>`).join('')}</div>`:''}</div>`}
+    h+=`<div class="sect-h"><h3>Mes matchs</h3></div><div class="card">${M.length?M.slice(0,12).map(v=>vbRow(v,S)+(v.st?`<div class="small muted" style="margin:-6px 0 8px 56px">${STATK.filter(([k2])=>+v.st[k2]).map(([k2,l])=>v.st[k2]+' '+l.toLowerCase()).join(' · ')}</div>`:'')).join(''):'<div class="empty" style="padding:10px">Aucun match noté.</div>'}</div>
+    <details class="card"><summary><span class="vchip">${ic('apple')} Manger autour d’un match</span>${ic('chev')}</summary><div class="det"><ul>${MATCHFOOD.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></details>`;
+  }else{
+    h+=`<div class="sect-h"><h3>Échauffement d’avant-match</h3><span class="muted small">${warmTot()} min</span></div>
+    <button class="card wcard" data-act="warmup"><span class="bi" style="background:var(--accd);color:var(--acc)">${ic('flame')}</span><span style="flex:1;text-align:left"><b>${(WARMUP[sp]||WARMUP.volley).length} étapes guidées</b><small>Du footing au geste de match, avec chrono</small></span>${ic('chev')}</button>
+    <div class="sect-h"><h3>Mes tests</h3><button class="linkbtn" data-act="go" data-go="progress" data-ptab="detente">Tous ${ic('chev')}</button></div>
+    <div class="tiles">${S.tiles.map((k2,i)=>jumpTile(k2,i?'vh':'hl')).join('')}</div>
+    <button class="btn block" data-act="sheet-test" data-tk="${S.tiles[0]}">${ic('arrowup')} Faire un test</button>
+    <div class="sect-h"><h3>Routines détente</h3></div>
+    <div class="small muted" style="margin-bottom:4px">10 minutes de pliométrie au début de <b style="color:var(--ink)">chaque séance, sauf celle des jambes</b>, quand tu es frais. Elles sont déjà dans tes séances.</div>
+    ${S.rts.map(routineCard).join('')}
+    <div class="sect-h"><h3>Ton programme</h3></div>
+    <details class="card"><summary><span class="vchip"><span class="thumb" style="width:42px;height:42px;border-radius:13px;background:var(--viod);color:var(--vio)">${ic(S.ic)}</span><span><b style="display:block;font-size:16px">${esc(P.name)}</b><span class="small muted" style="font-weight:500">${progId===S.prog?'Ton programme actuel':'Programme conseillé'}</span></span></span>${ic('chev')}</summary>
+     <div class="det" style="margin-top:12px"><p style="margin:0 0 6px">${esc(S.about)}</p>${P.sessions.map(s=>`<div class="rt-ex"><span><b style="color:var(--ink)">${esc(s.name)}</b> · ${esc(s.sub)}</span><span>${s.ex.length} exos</span></div>`).join('')}
+     ${progId===S.prog?'':`<button class="btn acc sm" data-act="setprog" data-v="${S.prog}" style="margin-top:12px">${ic('check')} Utiliser ce programme</button>`}</div></details>
+    <details class="card"><summary><span class="vchip">${ic('shield')} 5 conseils ${S.de}</span>${ic('chev')}</summary><div class="det"><ul>${S.tips.map(x=>`<li>${x}</li>`).join('')}</ul></div></details>`;
+  }
+  $('#view').innerHTML=h;
 }
 function bodyForm(){const p=profile;return `<div class="card warn"><span class="t">${ic('user')} Pour calculer, il me faut 4 infos</span>
   <div class="row"><label class="field" style="margin:12px 0"><span>Taille (cm)</span><input data-pf="taille" inputmode="numeric" value="${esc(p.taille)}" placeholder="180"></label><label class="field" style="margin:12px 0"><span>Poids (kg)</span><input data-pf="poids" inputmode="decimal" value="${esc(p.poids)}" placeholder="75"></label></div>
@@ -2133,13 +2191,16 @@ function testSheet(){
   ${J.reach?`<div class="small" id="t-calc" style="color:var(--acc);min-height:20px;margin-top:-8px"></div>`:''}
   <details style="margin:4px 0 18px"><summary class="small muted">Date, note ${ic('chev')}</summary><div class="det"><input type="date" id="t-date" value="${todayStr()}"><input id="t-note" placeholder="Note (fatigue, chaussures…)" style="margin-top:10px"></div></details>
   <button class="btn acc block" data-act="savetest">${ic('check')} Enregistrer</button>`)}
-function vbSheet(){
-  draft={type:'entr',min:120,rpe:5,date:todayStr(),st:Object.fromEntries(STATK.map(([k2])=>[k2,0]))};
-  openSheet('Séance de '+spLow(),`<div class="field" style="margin-top:14px"><span>Quoi ?</span>${optsHtml('type',Object.entries(VTYPES).map(([k2,l])=>[k2,l]),draft.type,3)}</div>
-  <div class="field"><span>Quand ?</span>${optsHtml('date',[[todayStr(),'Aujourd’hui'],[addDays(todayStr(),-1),'Hier'],[addDays(todayStr(),-2),'Avant-hier']],draft.date,3)}</div>
-  <div class="field"><span>Combien de temps ?</span>${optsHtml('min',[[60,'1 h'],[90,'1 h 30'],[120,'2 h'],[150,'2 h 30']],draft.min)}</div>
+function vbSheet(type,date){const ty=type||'entr',last=[...volley].filter(v=>v.type===ty).sort((a,b)=>a.date<b.date?1:-1)[0];
+  draft={type:ty,min:last?last.min:(ty==='match'?90:120),rpe:last?last.rpe:5,date:date||todayStr(),res:'',st:Object.fromEntries(STATK.map(([k2])=>[k2,0]))};
+  const days=[[todayStr(),'Aujourd’hui'],[addDays(todayStr(),-1),'Hier'],[addDays(todayStr(),-2),'Avant-hier']];
+  openSheet(ty==='match'?'Ton match':'Séance de '+spLow(),`<div class="field" style="margin-top:14px"><span>Quoi ?</span>${optsHtml('type',Object.entries(VTYPES).map(([k2,l])=>[k2,l]),draft.type,3)}</div>
+  <div id="vb-res" ${ty==='match'?'':'hidden'}><div class="field"><span>Résultat</span>${optsHtml('res',[['v','Victoire'],['n','Nul'],['d','Défaite']],'',3)}</div>
+   <label class="field"><span>Score (facultatif)</span><input id="v-score" maxlength="15" placeholder="ex. 3-1 ou 78-65…" autocomplete="off"></label></div>
+  <div class="field"><span>Quand ?</span>${optsHtml('date',days.some(x=>x[0]===draft.date)?days:[[draft.date,fmtD(draft.date)],...days.slice(0,2)],draft.date,3)}</div>
+  <div class="field"><span>Combien de temps ?</span>${optsHtml('min',[[60,'1 h'],[90,'1 h 30'],[120,'2 h'],[150,'2 h 30']].concat([60,90,120,150].includes(draft.min)?[]:[[draft.min,draft.min+' min']]),draft.min)}</div>
   <div class="field"><span>C’était comment ?</span>${optsHtml('rpe',INTENS.map(([v,l])=>[v,l]),draft.rpe)}</div>
-  <details style="margin:4px 0 6px"><summary><span class="vchip">${ic('chart')} Mes stats (facultatif)</span>${ic('chev')}</summary><div class="det">${STATK.map(([k2,l])=>`<div class="stp"><span>${l}</span><button type="button" data-act="stp" data-k="${k2}" data-v="-1" aria-label="${l} moins un">−</button><b id="st-${k2}">0</b><button type="button" data-act="stp" data-k="${k2}" data-v="1" aria-label="${l} plus un">+</button></div>`).join('')}</div></details>
+  <details style="margin:4px 0 6px" ${ty==='match'?'open':''}><summary><span class="vchip">${ic('chart')} Mes stats (facultatif)</span>${ic('chev')}</summary><div class="det">${STATK.map(([k2,l])=>`<div class="stp"><span>${l}</span><button type="button" data-act="stp" data-k="${k2}" data-v="-1" aria-label="${l} moins un">−</button><b id="st-${k2}">0</b><button type="button" data-act="stp" data-k="${k2}" data-v="1" aria-label="${l} plus un">+</button></div>`).join('')}</div></details>
   <details style="margin:4px 0 18px"><summary class="small muted">Ajouter une note ${ic('chev')}</summary><div class="det"><input id="v-note" placeholder="Sauts, douleurs, ressenti…"></div></details>
   <button class="btn acc block" data-act="savevb">${ic('check')} Enregistrer</button>`)}
 function injBody(){const iz=injs();return `<div class="inj">${Object.entries(INJ).map(([k2,z])=>`<button class="${iz.includes(k2)?'on':''}" data-act="injt" data-v="${k2}" aria-pressed="${iz.includes(k2)}">${z.n}</button>`).join('')}</div>
@@ -2409,7 +2470,7 @@ function teamSessions(){const from=addDays(todayStr(),-42);
   const gym=sessionDates().filter(d=>d>=from).reverse().slice(0,20).map(d=>{const ents=Object.values(logs).filter(e=>e.date===d&&hasData(e)&&EX[e.exId]),e0=ents.find(x=>x.sid);let n='Salle';
     if(e0)for(const p of Object.values(PROGS)){const s=p.sessions.find(x=>x.id===e0.sid);if(s){n=s.name;break}}
     return{d,n,dur:gymDur(d),rpe:rpe[d]||null,ex:ents.map(e=>({n:EX[e.exId].name,s:e.sets.filter(s=>s.d&&isDone(s)).map(s=>fmtSet(EX[e.exId],s)).join(' · ')}))}});
-  const club=volley.filter(v=>v.date>=from).sort((a,b)=>a.date<b.date?1:-1).slice(0,20).map(v=>({d:v.date,t:VTYPES[v.type]||'Séance',min:v.min,rpe:v.rpe}));
+  const club=volley.filter(v=>v.date>=from).sort((a,b)=>a.date<b.date?1:-1).slice(0,20).map(v=>Object.assign({d:v.date,t:VTYPES[v.type]||'Séance',min:v.min,rpe:v.rpe},v.res?{r:v.res}:{}));
   return{name:profile.name||'Sans nom',sport:profile.sport||'volley',gym,club,stamp:Date.now()}}
 // Les résumés sont écrits par les autres membres : on n’accepte que des nombres et du texte court (jamais de HTML)
 const nb0=v=>{const n=+v;return isFinite(n)?n:0},nbN=v=>v==null||!isFinite(+v)?null:+v,isDay=d=>/^\d{4}-\d{2}-\d{2}$/.test(d);
@@ -2716,9 +2777,14 @@ document.addEventListener('click',ev=>{
   case 'deljump':{const x=jumps.find(j=>j.id===d.id);jumps=jumps.filter(j=>j.id!==d.id);saveJumps();render();if(x)undoBar('Test supprimé',()=>{jumps.push(x);saveJumps()});break}
   case 'sheet-test':tk=d.tk||(tab==='progress'&&ptab==='detente'?jkind:'cmj');testSheet();break;
   case 'sheet-vb':vbSheet();break;
+  case 'vseg':vseg=d.v;render();window.scrollTo(0,0);break;
+  case 'vbquick':quickVb(d.v);break;
+  case 'vbmatch':vbSheet('match',d.d);break;
+  case 'warmup':warmupSheet();break;
+  case 'wupgo':{const W=WARMUP[profile.sport||'volley']||WARMUP.volley,i=+d.v;startTimer(W[i][1],W[i][0]);draft.wdone=[...new Set([...(draft.wdone||[]),i])];const l=$('#wuplist');if(l)l.innerHTML=warmRows();break}
   case 'sheet-sensor':sensorSheet();break;
   case 'closesheet':closeSheet();break;
-  case 'opt':{const g=t.closest('.opts');g.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));draft[d.k]=isNaN(+d.v)||d.k==='date'?d.v:+d.v;if(d.k==='vjf')vjCalc();break}
+  case 'opt':{const g=t.closest('.opts');g.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));draft[d.k]=isNaN(+d.v)||d.k==='date'?d.v:+d.v;if(d.k==='type'){const r0=$('#vb-res');if(r0)r0.hidden=d.v!=='match'}if(d.k==='vjf')vjCalc();break}
   case 'wprog':t.parentNode.querySelectorAll('.choice').forEach(b=>b.classList.toggle('on',b===t));draft.prog=d.v;break;
   case 'wsport':t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));draft.sport=d.v;break;
   case 'setsport':if(d.v===(profile.sport||'volley'))break;profile.sport=d.v;profile.poste='';saveProfile();applySport();progId=SPORTS[d.v].prog;saveProg();sid=null;render();toast(SPORTS[d.v].n+' · programme adapté');break;
@@ -2750,7 +2816,8 @@ document.addEventListener('click',ev=>{
   case 'injt':{const r=injs().slice(),j=r.indexOf(d.v);if(j<0)r.push(d.v);else r.splice(j,1);profile.inj=r;saveProfile();openEx.clear();autoKey='';const b=$('#injbody');if(b)b.innerHTML=injBody();render();toast(j<0?'Séances adaptées : '+INJ[d.v].n.toLowerCase():'Douleur retirée ✓');break}
   case 'savevb':{const sp=profile.sport||'volley',st=draft.st&&Object.values(draft.st).some(x=>x>0)?Object.assign({},draft.st,sp==='volley'?{att:Math.max(draft.st.att||0,draft.st.kill||0)}:{}):null;
     const v={id:uid(),sp,date:draft.date||todayStr(),type:draft.type||'entr',min:+draft.min||120,rpe:+draft.rpe||5,note:($('#v-note')&&$('#v-note').value.trim())||''};if(st)v.st=st;
-    volley.push(v);saveVolley();closeSheet();toast('Séance de '+spLow()+' notée ✓ +'+(v.type==='match'?80:60)+' XP');render();break}
+    if(v.type==='match'){if(RES[draft.res])v.res=draft.res;const sc=(($('#v-score')&&$('#v-score').value)||'').trim().slice(0,15);if(sc)v.score=sc}
+    volley.push(v);saveVolley();closeSheet();toast((v.type==='match'?(v.res==='v'?'Victoire notée ! 🏆':'Match noté ✓'):'Séance de '+spLow()+' notée ✓')+' +'+(v.type==='match'?80:60)+' XP');if(v.res==='v')confetti();render();break}
   case 'sensgo':sensGo();break;
   case 'senssave':if(sens.att.length){const b=Math.max(...sens.att),pb=bestJ('cmj');jumps.push({id:uid(),date:todayStr(),kind:'cmj',val:b,method:'capteur'});saveJumps();closeSheet();toast(pb!=null&&b>pb?'Nouveau record : '+b+' cm 🚀':'Détente enregistrée : '+b+' cm');if(pb!=null&&b>pb)confetti();jkind='cmj';render()}break;
   case 'nseg':nseg=d.v;render();break;
