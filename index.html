@@ -748,9 +748,9 @@ const INTENS=[[3,'Tranquille'],[5,'Normal'],[7,'Intense'],[9,'À fond']];
 const POSTES=['','Réceptionneur-attaquant','Pointu','Central','Passeur','Libéro'];
 
 // ----- Sports : programme, postes, stats de match, tests et explications -----
-const APP='Yosha',APP_V='20',TERMS_V=2;
+const APP='Yosha',APP_V='21',TERMS_V=2;
 // Nouveautés montrées une fois après la mise à jour
-const NEWS={'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
+const NEWS={'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
 const SPORTS={
  volley:{n:'Volley',ic:'ball',prog:'volley',de:'de volleyeur',bar:'filet',barD:'du filet',barL:'le filet',postes:POSTES.slice(),
   types:{entr:'Entraînement',match:'Match',beach:'Beach'},stk:[['att','Attaques tentées'],['kill','Attaques gagnantes'],['blk','Contres gagnants'],['ace','Aces'],['err','Fautes de service']],
@@ -1362,6 +1362,7 @@ const lin=(v,a,b)=>Math.max(0,Math.min(100,Math.round((v-a)/(b-a)*100)));  // a 
 function ficheStats(){const w=num(profile.poids),fe=profile.sexe==='f',t=todayStr(),o={},d={};
   const c=[['squat',1],['frontsq',1.15],['trapdl',.9],['gobletsq',1.6]].map(([id,k])=>[id,bestEx1rm(id)*k]).find(x=>x[1]>0);
   if(w&&c){o.force=lin(c[1]/w,fe?.4:.5,fe?1.6:2);d.force=`${c[0]==='squat'?'Squat':'Squat estimé'} ≈ ${fr(c[1]/w,2)} × ton poids`}
+  else if(w&&profile.eval&&profile.eval.sq){o.force=lin(profile.eval.sq/w,fe?.4:.5,fe?1.6:2);d.force=`Squat estimé au bilan ≈ ${fr(profile.eval.sq/w,2)} × ton poids`}
   const cm=bestJ('cmj');if(cm!=null){o.expl=lin(cm,fe?15:20,fe?55:70);d.expl=`Détente sans élan : ${fr(cm)} cm`}
   const s10=bestJ('sp10'),s30=bestJ('sp30'),nv=bestJ('nav');
   if(s10!=null){o.vit=lin(s10,2.3,1.65);d.vit=`10 m en ${f2(s10)} s`}else if(s30!=null){o.vit=lin(s30,5.6,4);d.vit=`30 m en ${f2(s30)} s`}else if(nv!=null){o.vit=lin(nv,6,4.4);d.vit=`Navette en ${f2(nv)} s`}
@@ -1417,7 +1418,7 @@ function ficheView(){const {o,d}=ficheStats(),A=archOf(o),G=gameStats(),keys=STA
    ${radarSvg(o)}</section>
   <div class="card" style="padding:8px 18px">${STATN.map(([k,n,kj])=>`<div class="frow"><span class="fkj">${kj}</span><div style="flex:1;min-width:0"><div class="lvrow" style="justify-content:space-between;gap:8px"><b>${n}</b><span class="rk rk${rankOf(o[k])}">${tierOf(o[k])}</span></div>
     <div class="pbar" style="margin-top:6px;height:6px"><i style="width:${o[k]||0}%"></i></div><div class="small muted" style="margin-top:4px">${o[k]!=null?esc(d[k])+' · '+o[k]+'/100':'Pas encore mesuré'}</div></div></div>`).join('')}</div>
-  ${miss.length?`<div class="card"><span class="t">${ic('target')} Pour compléter ta fiche</span><div class="btnrow">${miss.map(btn).join('')}</div></div>`:''}
+  ${miss.length?`<div class="card"><span class="t">${ic('target')} Pour compléter ta fiche</span><div class="btnrow">${known.length<3?`<button class="btn sm acc" data-act="bilan">Premier bilan · 2 min</button>`:''}${miss.map(btn).join('')}</div></div>`:''}
   ${weak&&o[weak]<75?`<div class="card warn"><span class="t">${ic('bolt')} Ton point à travailler : ${STATN.find(s=>s[0]===weak)[1]}</span><div class="small">Rang « ${tierOf(o[weak])} ». C’est là que tu gagneras le plus vite. ${esc(REPERES[weak])}</div><div class="btnrow">${btn(weak)}</div></div>`:''}
   <details class="card"><summary><span class="vchip">${ic('info')} Repères et calcul</span>${ic('chev')}</summary><div class="det"><ul>${STATN.map(([k,n])=>`<li><b>${n}</b> : ${esc(REPERES[k])}</li>`).join('')}</ul>
    <p class="small muted">Rangs, du débutant au maître : ${tiersOf().map((n2,i)=>esc(n2)+' ('+[0,20,40,60,75,90][i]+')').join(' · ')}. Les seuils sont des ordres de grandeur pour un sportif amateur, adaptés pour les femmes en force et en détente. Ce ne sont pas des normes scientifiques.</p></div></details>
@@ -1446,7 +1447,7 @@ function persoCard(){const {o}=ficheStats(),A=archOf(o),R=arcInfo(),ov=ovrOf(o);
    <div class="psp">${spriteSvg(o,{size:112})}</div>
    <div class="pmain"><div class="bubble">${esc(sayL('hello'))}</div>
     <span class="parch">${A?esc(A.n):'Archétype à découvrir'}</span>
-    <div class="small muted" style="margin-top:2px">${ov!=null?`Rang <b class="rk rk${rankOf(ov)}" style="font-size:15px">${esc(tierOf(ov))}</b> · `:'Fais un test pour obtenir ton rang · '}${esc(R.kj)} ${esc(R.name)}</div>
+    <div class="small muted" style="margin-top:2px">${ov!=null?`Rang <b class="rk rk${rankOf(ov)}" style="font-size:15px">${esc(tierOf(ov))}</b> · `:''}${esc(R.kj)} ${esc(R.name)}</div>${ov==null?`<button class="btn sm acc" data-act="bilan" style="margin-top:8px">Premier bilan · 2 min</button>`:''}
     <div class="arcb" style="margin-top:7px">${[0,1,2,3].map(j=>`<i class="${j<R.into?'on':''}"></i>`).join('')}</div></div></div>`}
 let cgT=null;const queueGame=()=>{clearTimeout(cgT);cgT=setTimeout(checkGame,2400)};
 function chRow(c){return `<div class="chl ${c.ok?'ok':''}"><span class="cc ${c.ok?'ok':''}">${ic(c.ok?'check':'target')}</span><div style="flex:1;min-width:0"><div class="lb">${esc(c.n)}</div>${c.ok?'':`<div class="pbar"><i style="width:${Math.round(Math.min(1,c.cur/c.tgt)*100)}%;background:var(--yel)"></i></div>`}</div><span class="xp">${c.ok?'✓ ':''}${c.ok?'+100':Math.min(c.cur,c.tgt)+'/'+c.tgt}</span></div>`}
@@ -2030,7 +2031,7 @@ const DEB={squat:'gobletsq',frontsq:'gobletsq',powerclean:'trapdl',pushpress:'dm
 const lvl0=()=>profile.lvl0||'int';
 const consentBox=(id,html)=>`<label class="cons"><input type="checkbox" id="${id}"><span>${html}</span></label>`;
 function welcomeSheet(){draft={sport:profile.sport||'volley',goalVb:profile.goalVb,goalGym:profile.goalGym,lvl0:profile.lvl0||'int'};
-  openSheet('<span style="font-family:var(--jp);color:var(--acc);margin-right:8px">よっしゃ</span>Bienvenue',`<p class="lead">${APP}, c’est le cri qu’on lâche quand c’est gagné. Trois réglages et c’est parti : tout reste sur ton téléphone.</p>
+  openSheet('<span style="font-family:var(--jp);color:var(--acc);margin-right:8px">よっしゃ</span>Bienvenue',`<p class="lead">${APP}, c’est le cri qu’on lâche quand c’est gagné. Trois réglages, ton personnage, et c’est parti : tout reste sur ton téléphone.</p>
   <label class="field"><span>Ton prénom</span><input id="w-name" value="${esc(profile.name)}" autocomplete="given-name" placeholder="Prénom"></label>
   <div class="field"><span>Ton sport</span><div class="sports">${Object.entries(SPORTS).map(([k2,s])=>`<button type="button" class="${k2===draft.sport?'on':''}" data-act="wsport" data-v="${k2}">${ic(s.ic)}${s.n}</button>`).join('')}</div><div class="help">L’appli choisit un programme de salle adapté à ton sport, avec l’explication de chaque exercice. Tu pourras le changer dans Profil.</div></div>
   <div class="field"><span>Séances de salle par semaine</span>${optsHtml('goalGym',[[1,'1'],[2,'2'],[3,'3'],[4,'4']],draft.goalGym)}</div>
@@ -2039,6 +2040,36 @@ function welcomeSheet(){draft={sport:profile.sport||'volley',goalVb:profile.goal
   ${consentBox('w-ok',`J’ai lu l’<a href="legal.html#sante" target="_blank">avertissement santé</a> : l’appli ne remplace pas un avis médical, et je m’entraîne sous ma responsabilité.`)}
   <button class="btn acc block" data-act="wdone" style="margin-top:8px">C’est parti</button>
   <div class="center" style="margin-top:12px"><button class="linkbtn" data-act="acct" data-v="login">J’ai déjà un compte : me connecter</button></div>`)}
+// ----- Premier lancement : créer son personnage, puis un bilan de 2 minutes pour avoir un rang tout de suite -----
+const afterOnb=()=>setTimeout(()=>{if(inviteCode()&&!cUser)acctSheet('signup');else tourMaybe('home')},700);
+function persoSheet(first){openSheet('Crée ton personnage',`<p class="lead">Il grandit avec toi : au début il galère, puis il maîtrise son sport à mesure que tes stats montent.</p>
+  <div id="avbox">${avBody()}</div>
+  <button class="btn acc block" data-act="${first?'w2':'closesheet'}" style="margin-top:18px">${first?'Continuer':'C’est bon'}</button>`)}
+function bilanSheet(first){const p=profile;draft=Object.assign({},draft,{bsexe:""});
+  openSheet('Ton premier bilan',`<p class="lead">2 minutes pour donner un rang à ton personnage. Remplis ce que tu connais, laisse vide le reste.</p>
+  <div class="row"><label class="field"><span>Poids (kg)</span><input id="b-poids" inputmode="decimal" value="${esc(p.poids)}" placeholder="ex. 72"></label>
+   <div class="field"><span>Sexe</span>${optsHtml('bsexe',[['h','Homme'],['f','Femme']],draft.bsexe||p.sexe||'',2)}</div></div>
+  <label class="field"><span>Détente sans élan (cm)</span><input id="b-cmj" inputmode="decimal" placeholder="ex. 42"><div class="help">Hauteur du saut, pieds joints. Tu ne sais pas ? Laisse vide : tu pourras la mesurer avec la caméra dans Progrès → Tests.</div></label>
+  <div class="field"><span>Ta meilleure série de squat récente</span><div class="row" style="margin:0"><label class="field" style="margin:0"><input id="b-sqw" inputmode="decimal" placeholder="Charge (kg)" aria-label="Charge du squat en kg"></label><label class="field" style="margin:0"><input id="b-sqr" inputmode="numeric" placeholder="Répétitions" aria-label="Nombre de répétitions"></label></div><div class="help">Charge sur la barre et nombre de répétitions propres. L’appli estime ta force à partir de ça.</div></div>
+  <label class="field"><span>Sprint 10 m (secondes, facultatif)</span><input id="b-sp" inputmode="decimal" placeholder="ex. 1,85"></label>
+  <button class="btn acc block" data-act="bilansave" style="margin-top:10px">Révéler mon rang</button>
+  <div class="center" style="margin-top:12px"><button class="linkbtn" data-act="bilanlater">${first?'Plus tard':'Annuler'}</button></div>`);bilanSheet.first=!!first}
+function bilanSave(){const p=profile,w=num($('#b-poids').value),cm=num($('#b-cmj').value),sw=num($('#b-sqw').value),sr=num($('#b-sqr').value),spr=num($('#b-sp').value),t0=todayStr();
+  if(w!=null&&(w<30||w>200)){toast('Poids entre 30 et 200 kg');return}
+  if(cm!=null&&(cm<5||cm>110)){toast('Détente entre 5 et 110 cm');return}
+  if((sw!=null)!==(sr!=null)||(sw!=null&&(sw<=0||sw>400||sr<1||sr>20))){toast('Squat : charge (kg) et répétitions (1 à 20)');return}
+  if(spr!=null&&(spr<1.2||spr>4)){toast('Sprint 10 m : entre 1,2 et 4 secondes');return}
+  if(w!=null)p.poids=String(w);if(draft.bsexe)p.sexe=draft.bsexe;
+  if(sw!=null)p.eval=Object.assign({},p.eval,{sq:Math.round(e1rm(sw,sr)),at:t0});
+  if(cm!=null)jumps.push({id:uid(),date:t0,kind:'cmj',val:cm,method:'bilan'});if(spr!=null)jumps.push({id:uid(),date:t0,kind:'sp10',val:spr,method:'bilan'});
+  saveProfile();saveJumps();const first=bilanSheet.first;closeSheet();go('home');
+  const {o}=ficheStats(),ov=ovrOf(o);if(ov==null){toast(p.poids?'Il manque une mesure pour ton rang':'Ajoute ton poids et une mesure pour ton rang',3000);if(first)afterOnb();return}
+  rankReveal(o,first)}
+function rankReveal(o,first){const ov=ovrOf(o),A=archOf(o),d=document.createElement('div');d.className='lvup arcup';d.setAttribute('role','dialog');
+  d.innerHTML=`<div class="lvk">診断</div><div class="lvt">Ton rang</div><div style="margin:8px 0 -6px">${spriteSvg(o,{size:168})}</div><div class="lvr" style="font-size:44px">${esc(tierOf(ov))}</div>
+   <div class="small muted" style="margin-top:10px;max-width:320px">${A?'Archétype : '+esc(A.n)+'. ':''}${esc(STAGEN[stageOf(o)])} Chaque séance et chaque test le font évoluer.</div>
+   <button class="btn acc block" style="margin-top:24px;max-width:320px">Continuer</button>`;
+  d.onclick=()=>{d.remove();if(first)afterOnb()};document.body.appendChild(d);beep(2);confetti()}
 let tk='cmj';
 function testSheet(){
   const J=JK[tk],r=reach(),ord=[...new Set([...SP().tiles,...Object.keys(JK)])];chrStop();
@@ -2592,6 +2623,10 @@ document.addEventListener('click',ev=>{
   case 'rmine':rmine=!rmine;render();break;
   case 'rgo':nseg='recettes';rcat='batch';render();window.scrollTo(0,0);break;
   case 'sharefiche':shareFiche();break;
+  case 'w2':bilanSheet(true);break;
+  case 'bilan':bilanSheet(false);break;
+  case 'bilansave':bilanSave();break;
+  case 'bilanlater':{const f0=bilanSheet.first;closeSheet();if(f0){toast(profile.name?'Bienvenue '+profile.name+' !':'C’est parti !');afterOnb()}break}
   case 'avset':{const a=Object.assign({},profile.av||{});a[d.k]=+d.v;profile.av=a;saveProfile();const b=$('#avbox');if(b)b.innerHTML=avBody();break}
   case 'avnum':{const a=Object.assign({},profile.av||{});a.n=((+avNum()+ +d.v)%100+100)%100;profile.av=a;saveProfile();const b=$('#avbox');if(b)b.innerHTML=avBody();break}
   case 'avrand':{const r=n=>Math.floor(Math.random()*n);profile.av={s:r(AV.skin.length),h:r(AV.style.length),c:r(AV.hair.length),e:r(AV.eyes.length),k:r(AV.kit.length),a:r(AV.acc.length),n:r(100)};saveProfile();const b=$('#avbox');if(b)b.innerHTML=avBody();break}
@@ -2635,7 +2670,7 @@ document.addEventListener('click',ev=>{
   case 'wsport':t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));draft.sport=d.v;break;
   case 'setsport':if(d.v===(profile.sport||'volley'))break;profile.sport=d.v;profile.poste='';saveProfile();applySport();progId=SPORTS[d.v].prog;saveProg();sid=null;render();toast(SPORTS[d.v].n+' · programme adapté');break;
   case 'wdone':if(!$('#w-ok').checked){toast('Coche l’avertissement santé pour continuer',2600);$('#w-ok').closest('.cons').classList.add('need');break}
-    profile.terms={v:TERMS_V,at:Date.now()};profile.lvl0=draft.lvl0||'int';profile.name=$('#w-name').value.trim();profile.goalVb=draft.goalVb;profile.goalGym=draft.goalGym;profile.sport=draft.sport||'volley';profile.onb=1;saveProfile();applySport();progId=SPORTS[profile.sport].prog;saveProg();sid=null;closeSheet();render();toast(profile.name?'Bienvenue '+profile.name+' !':'C’est parti !');setTimeout(()=>{if(inviteCode()&&!cUser)acctSheet('signup');else tourMaybe('home')},1200);break;
+    profile.terms={v:TERMS_V,at:Date.now()};profile.lvl0=draft.lvl0||'int';profile.name=$('#w-name').value.trim();profile.goalVb=draft.goalVb;profile.goalGym=draft.goalGym;profile.sport=draft.sport||'volley';profile.onb=1;saveProfile();applySport();progId=SPORTS[profile.sport].prog;saveProg();sid=null;closeSheet();render();persoSheet(true);break;
   case 'setlvl':profile.lvl0=d.v;saveProfile();openEx.clear();autoKey='';render();toast('Niveau : '+LVLS.find(x=>x[0]===d.v)[1]+' · séances adaptées');break;
   case 'tok':{const acc=!!$('#t-ok2');if(!$('#t-ok1').checked||(acc&&!($('#t-ok2').checked&&$('#t-ok3').checked))){toast('Coche les cases pour continuer',2400);document.querySelectorAll('.cons').forEach(c=>{if(!c.querySelector('input').checked)c.classList.add('need')});break}
     profile.terms={v:TERMS_V,at:Date.now()};if(acc)profile.consent={v:TERMS_V,at:Date.now(),health:true,age15:true};saveProfile();closeSheet();if(acc&&cUser){cState='sync';pushCloud().then(tryInvite)}setTimeout(whatsNew,400);break}
