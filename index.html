@@ -475,6 +475,16 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 .mstat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;text-align:center}.mstat b{display:block;font-size:22px;font-weight:850}
 .mstat small{display:block;font-size:12px;color:var(--mute)}.mstat em{display:block;font-style:normal;font-size:12.5px;font-weight:800;margin-top:2px}
 .newpr{font-size:10px;font-weight:850;letter-spacing:.06em;color:#0b0a0d;background:var(--yel);padding:2px 6px;border-radius:6px;vertical-align:2px}
+/* ---- v26 : techniques et examen ---- */
+.tech{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}.tech:first-child{border-top:0}
+.tech b{display:block;font-size:15.5px}.tech small{display:block;font-size:12.5px;color:var(--mute);line-height:1.35;margin-top:2px}
+.tech .tk{width:38px;height:38px;border-radius:12px;background:var(--card2);display:grid;place-items:center;font:900 18px/1 var(--jp);flex:none}
+.tech.ok .tk{background:linear-gradient(180deg,#ffd76a,#e0a91a);color:#0b0a0d}.tech .btn{flex:none}
+.exam{border-color:rgba(255,200,61,.45);background:linear-gradient(160deg,rgba(255,200,61,.10),var(--card) 60%)}
+.exk{width:52px;height:52px;border-radius:14px;background:var(--yel);color:#0b0a0d;display:grid;place-items:center;font:900 26px/1 var(--jp);flex:none;transform:rotate(-6deg)}
+.exbox{width:100%;max-width:340px;margin-top:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:6px 14px;text-align:left}
+.exrow{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-top:1px solid var(--line)}.exrow:first-child{border-top:0}
+.exrow span{flex:1;font-size:13.5px;color:var(--mute);font-weight:700}.exrow b{font-family:var(--disp);font-weight:400;font-size:18px}.exrow em{font-style:normal;font-weight:850;min-width:34px;text-align:right}
 /* ---- v16 : animations ---- */
 #view.wipe{animation:wipe .26s var(--ease-out) both}
 @keyframes wipe{from{clip-path:polygon(0 0,0 0,-35% 100%,0 100%)}to{clip-path:polygon(0 0,135% 0,100% 100%,0 100%)}}
@@ -777,9 +787,9 @@ const INTENS=[[3,'Tranquille'],[5,'Normal'],[7,'Intense'],[9,'À fond']];
 const POSTES=['','Réceptionneur-attaquant','Pointu','Central','Passeur','Libéro'];
 
 // ----- Sports : programme, postes, stats de match, tests et explications -----
-const APP='Yosha',APP_V='25',TERMS_V=2;
+const APP='Yosha',APP_V='26',TERMS_V=2;
 // Nouveautés montrées une fois après la mise à jour
-const NEWS={'25':['Nutrition en 3 parties : Aujourd’hui (ta journée en 3 anneaux et des idées de repas à noter en un appui), Mon plan, Cuisine (recettes et courses).','Progrès : bilan des 28 derniers jours comparé au mois d’avant, records récents en tête, et l’analyse du corps rangée dans « Tests & corps ».'],'24':['Onglet sport repensé en 3 parties : Aujourd’hui, Matchs, Progresser.','Note ton entraînement en un appui (même durée que la dernière fois, annulable).','Matchs : résultat et score, bilan de ta saison (victoires, défaites, forme sur 5 matchs) et courbe de tes stats.','Jour de match : échauffement guidé avec chrono, conseils de la veille et du lendemain.'],'23':['Finitions : les boutons s’enfoncent sous le doigt, les feuilles glissent à la fermeture et les changements d’écran sont plus vifs.','Accessibilité : l’appli s’utilise mieux avec VoiceOver et au clavier (repère de focus, tous les éléments activables).','Installation plus légère : les photos d’exercices se téléchargent quand tu les ouvres.'],'22':['Ton personnage vit avec toi : il dort si tu ne viens plus, souffle après une séance et fait la fête quand ton objectif de la semaine est tenu.','Passage de rang : une animation quand une stat monte d’un rang, avec de nouveaux gestes quand ton personnage progresse.','Objets à gagner en t’entraînant : bandeau or (niveau 5), brassard de capitaine (6 semaines d’affilée), maillot or (niveau 8).'],'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
+const NEWS={'26':['Techniques spéciales : 4 par sport (Frappe éclair, Dunk du ciel, Frappe canon, Raffut…), débloquées par tes rangs, chacune avec son animation. Dans Progrès → Fiche.','Examen de fin d’arc : toutes les 4 semaines d’entraînement, refais tes mesures et découvre ta progression, avec une planche manga à partager.'],'25':['Nutrition en 3 parties : Aujourd’hui (ta journée en 3 anneaux et des idées de repas à noter en un appui), Mon plan, Cuisine (recettes et courses).','Progrès : bilan des 28 derniers jours comparé au mois d’avant, records récents en tête, et l’analyse du corps rangée dans « Tests & corps ».'],'24':['Onglet sport repensé en 3 parties : Aujourd’hui, Matchs, Progresser.','Note ton entraînement en un appui (même durée que la dernière fois, annulable).','Matchs : résultat et score, bilan de ta saison (victoires, défaites, forme sur 5 matchs) et courbe de tes stats.','Jour de match : échauffement guidé avec chrono, conseils de la veille et du lendemain.'],'23':['Finitions : les boutons s’enfoncent sous le doigt, les feuilles glissent à la fermeture et les changements d’écran sont plus vifs.','Accessibilité : l’appli s’utilise mieux avec VoiceOver et au clavier (repère de focus, tous les éléments activables).','Installation plus légère : les photos d’exercices se téléchargent quand tu les ouvres.'],'22':['Ton personnage vit avec toi : il dort si tu ne viens plus, souffle après une séance et fait la fête quand ton objectif de la semaine est tenu.','Passage de rang : une animation quand une stat monte d’un rang, avec de nouveaux gestes quand ton personnage progresse.','Objets à gagner en t’entraînant : bandeau or (niveau 5), brassard de capitaine (6 semaines d’affilée), maillot or (niveau 8).'],'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
 const SPORTS={
  volley:{n:'Volley',ic:'ball',prog:'volley',de:'de volleyeur',bar:'filet',barD:'du filet',barL:'le filet',postes:POSTES.slice(),
   types:{entr:'Entraînement',match:'Match',beach:'Beach'},stk:[['att','Attaques tentées'],['kill','Attaques gagnantes'],['blk','Contres gagnants'],['ace','Aces'],['err','Fautes de service']],
@@ -1171,17 +1181,19 @@ function gameStats(){if(gC)return gC;
   let lvl=1;while(xp>=lvlXp(lvl+1))lvl++;
   return gC={xp,lvl,title:titleOf(lvl),into:xp-lvlXp(lvl),need:lvlXp(lvl+1)-lvlXp(lvl),streak,best,ch:chOf(wkNow),badges,nb,chDone,goalT}}
 // Compare les rangs et les objets débloqués avec la dernière fois ; annonce ce qui a monté
-function tierSnap(){const {o}=ficheStats(),s={};STATN.forEach(([k])=>s[k]=tierIdx(o[k]));s.ovr=tierIdx(ovrOf(o));s.st=stageOf(o);const G=gameStats(),u=[];Object.entries(UNL).forEach(([k,L])=>Object.entries(L).forEach(([i,x])=>{if(x.ok(G))u.push(k+i)}));s.u=u;return s}
+function tierSnap(){const {o}=ficheStats(),s={};STATN.forEach(([k])=>s[k]=tierIdx(o[k]));s.ovr=tierIdx(ovrOf(o));s.st=stageOf(o);const G=gameStats(),u=[];Object.entries(UNL).forEach(([k,L])=>Object.entries(L).forEach(([i,x])=>{if(x.ok(G))u.push(k+i)}));s.u=u;s.tech=techsOf(o);return s}
 function checkTiers(delay){const now=tierSnap(),old=LS.get('gym_tiers',null);LS.set('gym_tiers',now);if(!old)return;
   const ups=STATN.filter(([k])=>now[k]>old[k]&&old[k]>=0).map(([k,n])=>({n,from:old[k]>=0?tiersOf()[old[k]]:null,to:tiersOf()[now[k]]}));
   const newU=(now.u||[]).filter(x=>!(old.u||[]).includes(x)).map(x=>UNL[x[0]][x.slice(1)].n);
+  const newT=old.tech?(now.tech||[]).filter(x=>!old.tech.includes(x)):[];
+  if(newT.length)setTimeout(()=>techShow(newT[0],true),(delay||0)+(ups.length?4200:300));
   setTimeout(()=>{if(ups.length)rankUp(ups,now.ovr>old.ovr&&old.ovr>=0?tiersOf()[now.ovr]:null,now.st>old.st);newU.forEach((n,i)=>setTimeout(()=>toast('🎁 Nouveau pour ton personnage : '+n+' (Profil)',3200),(ups.length?3500:0)+i*3300))},delay||0)}
 function rankUp(ups,ovr,stUp){const {o}=ficheStats(),d=document.createElement('div');d.className='lvup arcup';d.setAttribute('role','dialog');
   d.innerHTML=`<div class="lvk">昇段</div><div class="lvt">Passage de rang</div><div style="margin:6px 0 -6px">${spriteSvg(o,{size:150})}</div>
    ${ovr?`<div class="lvr" style="font-size:40px">${esc(ovr)}</div>`:''}<div style="margin-top:10px;font-weight:750">${ups.slice(0,3).map(u=>`${esc(u.n)} : ${u.from?esc(u.from)+' → ':''}<span style="color:var(--yel)">${esc(u.to)}</span>`).join('<br>')}</div>
    ${stUp?'<div class="small" style="margin-top:10px;color:var(--yel)">Ton personnage débloque de nouveaux gestes !</div>':''}<button class="btn acc block" style="margin-top:22px;max-width:320px">Continuer</button>`;
   d.onclick=()=>d.remove();document.body.appendChild(d);beep(2);confetti()}
-function checkGame(){gC=null;const G=gameStats(),st=LS.get('gym_game',null),got=G.badges.filter(b=>b.ok).map(b=>b.id);checkTiers(st&&G.lvl>st.lvl?3600:0);
+function checkGame(){gC=null;if(!profile.arcStart&&profile.onb){profile.arcStart=snapStats();saveProfile()}const G=gameStats(),st=LS.get('gym_game',null),got=G.badges.filter(b=>b.ok).map(b=>b.id);checkTiers(st&&G.lvl>st.lvl?3600:0);
   if(!st){LS.set('gym_game',{lvl:G.lvl,b:got,ch:G.chDone,arc:arcInfo().i});return}
   const msgs=[];
   const A=arcInfo(),arcUp=st.arc!=null&&A.i>st.arc,lvUp=G.lvl>st.lvl;
@@ -1327,6 +1339,8 @@ function spDraw(cv,P,K){const x=cv.getContext('2d');x.clearRect(0,0,SPW,SPH);
     else if(e==='spark'){const a=hx+17,b=hy-6;R(a,b-3,1,7,'#ffffff');R(a-3,b,7,1,'#ffffff');R(a-1,b-1,3,3,'#ffffff');R(a-9,b+8,1,3,'#ffc83d');R(a-10,b+9,3,1,'#ffc83d');R(a-20,b+2,1,1,'#ffffff')}
     else if(e==='z1'||e==='z2'){const Z=(a,b,sz)=>{const G=sz?['1111','0010','0100','1111']:['111','010','111'];G.forEach((r,j)=>[...r].forEach((c,i)=>{if(c==='1')R(a+i,b+j,1,1,'#d6d1dc')}))};Z(hx+15,hy-1,0);if(e==='z2')Z(hx+18,hy-8,1)}
     else if(e==='puff'){x.globalAlpha=.6;R(hx+15,hy+9,3,2,'#ffffff');R(hx+18,hy+8,2,2,'#ffffff');x.globalAlpha=1}
+    else if(e==='bolt'){const [bx,by]=P.ball||[30,4];const Z=[[bx+12,by-12],[bx+8,by-6],[bx+12,by-5],[bx+7,by+3]];for(let i=0;i<3;i++){L(Z[i][0],Z[i][1],Z[i+1][0],Z[i+1][1],2,'#ffc83d');L(Z[i][0],Z[i][1],Z[i+1][0],Z[i+1][1],1,'#ffffff')}}
+    else if(e==='shock'){const [cx,cy]=P.sp||[24,30];for(let i=0;i<8;i++){const an=i*Math.PI/4;R(cx+Math.cos(an)*12,cy+Math.sin(an)*12,2,2,'#ffffff');R(cx+Math.cos(an)*16,cy+Math.sin(an)*16,1,1,'#ffc83d')}}
     else if(e==='dust'){[[13,61],[10,59],[31,61],[34,59]].forEach(([a,b],i)=>{x.globalAlpha=.55;R(a,b,i%2?2:3,i%2?2:1,'#d6d1dc')});x.globalAlpha=1}
   })}
 // Poses : bras [coude x, coude y, main x, main y] relatifs à l’épaule ; jambes [genou x, genou y, pied x, pied y] absolus
@@ -1390,12 +1404,70 @@ const MOODANIM={
   pz(450,{dy:3,ll:CRL,rl:CRR,la:HANDSK_L,ra:HANDSK_R,face:'tired',fx:['sweat','puff']}),pz(300,{dy:1,ra:WIPE,face:'tired',fx:['sweat']}),pz(700,{ra:WIPE,face:'happy'}),pz(600,{face:'happy'})],
  proud:[pz(160,{dy:3,ll:CRL,rl:CRR,la:OUTL,ra:OUTR,face:'happy'}),pz(220,air(-8,{la:UPL,ra:UPR,face:'happy',fx:['spark']})),pz(150,{dy:2,ll:CRL,rl:CRR,face:'happy'}),
   pz(350,{ra:FISTR,face:'happy'}),pz(200,air(-6,{la:UPL,ra:UPR,face:'happy'})),pz(140,{dy:2,ll:CRL,rl:CRR,face:'happy'}),pz(800,{la:UPL,ra:UPR,face:'happy',fx:['spark']})]};
+// ===================== v26 : techniques spéciales =====================
+// [id, nom, stat requise, rang minimum (2 Solide, 3 Redoutable, 4 Prodige), description]
+const TECH={
+ volley:[['v_service','Service smashé','reg',2,'Lancer haut, frappe en suspension : la régularité paie au service.'],['v_eclair','Frappe éclair','expl',3,'Ta détente te place au-dessus du contre : la balle part comme la foudre.'],
+  ['v_mur','Mur d’acier','force',3,'Bras tendus au-dessus du filet : la balle revient chez l’adversaire.'],['v_defense','Défense impossible','endu',4,'Tu vas chercher les ballons que personne n’attend plus.']],
+ basket:[['b_trois','Tir à trois points','reg',2,'Des milliers de répétitions pour un geste qui ne tremble plus.'],['b_cross','Crossover fantôme','vit',3,'Un changement de main si vif qu’il laisse une image derrière toi.'],
+  ['b_dunk','Dunk du ciel','expl',3,'Détente et explosivité : tu finis au-dessus du cercle.'],['b_mur','Contre colossal','force',4,'Ta force ferme la raquette : rien ne passe.']],
+ foot:[['f_tete','Tête plongeante','expl',2,'Tu t’envoles pour couper la trajectoire au premier poteau.'],['f_dribble','Dribble éclair','vit',3,'Crochet, accélération : le défenseur reste sur place.'],
+  ['f_canon','Frappe canon','force',3,'Une reprise de volée qui fait trembler les filets.'],['f_moteur','Moteur infatigable','endu',4,'Tu cours encore à la 90e comme à la 1re.']],
+ rugby:[['r_plaquage','Plaquage d’acier','endu',2,'Bas, solide, et tu te relèves aussitôt pour recommencer.'],['r_raffut','Raffut','force',3,'Le bras tendu repousse le plaqueur : la voie est libre.'],
+  ['r_percee','Percée éclair','vit',3,'Un appui, une accélération, la ligne est franchie.'],['r_essai','Essai en vol','expl',4,'Tu plonges par-dessus la défense pour aplatir.']]};
+const techList=()=>TECH[profile.sport||'volley']||TECH.volley;
+const techsOf=o=>techList().filter(([,,k,t])=>tierIdx(o[k])>=t).map(x=>x[0]);
+const techById=id=>Object.values(TECH).flat().find(x=>x[0]===id);
+// Animations des techniques (mêmes poses que le reste du personnage)
+const WRAPL=[3,4,9,6],WRAPR=[-3,4,-9,6],DIGL=[3,8,9,13],DIGR=[-3,8,-9,13],LOWL=[17,53,18,58],LOWR=[31,53,30,58],OVHL=[-1,-7,6,-14],OVHR=[1,-7,-6,-14],BLKL=[-1,-7,0,-14],BLKR=[1,-7,0,-14];
+const addFx=(L,fx,only)=>L.map((p,i)=>(!only||only.includes(i))?Object.assign({},p,{fx:[...(p.fx||[]),...fx]}):p);
+const TECHANIM={
+ v_eclair:addFx(SPANIM.volley[2],['bolt'],[4,5]),
+ v_mur:[pz(220,{ball:[24,-14],face:'focus'}),pz(140,{dy:3,ll:CRL,rl:CRR,la:OUTL,ra:OUTR,face:'focus',ball:[23,-10]}),pz(120,air(-10,{la:BLKL,ra:BLKR,face:'strain',ball:[21,-11]})),
+  pz(110,air(-11,{la:BLKL,ra:BLKR,face:'shout',ball:[21,-12],fx:['hit','shock'],sp:[24,-6]})),pz(120,air(-7,{la:UPL,ra:UPR,face:'happy',ball:[6,18],fx:['trail'],tr:[4,-7]})),pz(160,{dy:2,ll:CRL,rl:CRR,face:'happy'}),pz(700,{ra:FISTR,face:'happy',fx:['spark']})],
+ v_service:[pz(260,{la:[-1,6,3,10],face:'focus',ball:[16,34]}),pz(160,{la:UPL,face:'focus',ball:[9,4]}),pz(160,{la:UPL,ra:CKR,face:'focus',ball:[10,-8]}),pz(140,air(-5,{ra:CKR,face:'strain',ball:[22,-10]})),
+  pz(110,air(-6,{ra:HITR,face:'shout',ball:[39,-2],fx:['hit']})),pz(110,air(-3,{ra:FOLR,ball:[54,8],fx:['trail','speed'],tr:[-5,-3]})),pz(700,{face:'happy',ra:FISTR,fx:['spark']})],
+ v_defense:[pz(220,{face:'focus',ball:[40,-10]}),pz(150,{dy:6,ll:LOWL,rl:LOWR,la:DIGL,ra:DIGR,face:'strain',ball:[34,28]}),pz(120,{dy:7,ll:LOWL,rl:LOWR,la:DIGL,ra:DIGR,face:'shout',ball:[21,36],fx:['hit','dust']}),
+  pz(160,{dy:4,ll:LOWL,rl:LOWR,la:DIGL,ra:DIGR,face:'focus',ball:[20,0],fx:['trail'],tr:[0,7]}),pz(700,{face:'happy',la:UPL,ra:UPR,fx:['spark']})],
+ b_trois:[pz(220,{la:HOLDL,ra:HOLDR,face:'focus',ball:[21,32]}),pz(140,{dy:3,ll:CRL,rl:CRR,la:HOLDL,ra:HOLDR,face:'focus',ball:[21,32]}),pz(130,air(-4,{la:[-1,-6,4,-12],ra:[2,-7,0,-14],face:'focus',ball:[23,-10]})),
+  pz(130,air(-5,{la:[-1,-6,4,-12],ra:[3,-7,6,-15],face:'focus',ball:[34,-14],fx:['trail'],tr:[-4,4]})),pz(160,{ra:[3,-7,6,-15],face:'focus',ball:[48,-18],fx:['trail'],tr:[-5,3]}),pz(700,{ra:[3,-7,6,-15],face:'happy',fx:['spark']})],
+ b_cross:addFx(SPANIM.basket[2],['speed'],[0,1,2,3,4,5,6,7,8]),
+ b_dunk:[pz(200,{ra:DRR,face:'focus',ball:[35,38]}),pz(140,{dy:3,ll:CRL,rl:CRR,la:HOLDL,ra:HOLDR,face:'focus',ball:[21,32]}),pz(130,air(-12,{la:OVHL,ra:OVHR,face:'strain',ball:[21,-7]})),
+  pz(110,air(-12,{lean:1,la:UPL,ra:[3,-4,6,4],face:'shout',ball:[27,8],fx:['hit','bolt']})),pz(110,{dy:3,ll:CRL,rl:CRR,face:'shout',ball:[27,52],fx:['dust','shock'],sp:[30,56]}),pz(700,{ra:FISTR,face:'happy',fx:['spark']})],
+ b_mur:[pz(220,{ball:[24,-14],face:'focus'}),pz(140,{dy:3,ll:CRL,rl:CRR,la:OUTL,ra:OUTR,face:'focus',ball:[23,-10]}),pz(120,air(-11,{la:BLKL,ra:BLKR,face:'strain',ball:[21,-12]})),
+  pz(110,air(-12,{la:BLKL,ra:BLKR,face:'shout',ball:[21,-13],fx:['hit','shock'],sp:[24,-7]})),pz(120,air(-7,{la:UPL,ra:UPR,face:'happy',ball:[4,24],fx:['trail'],tr:[4,-7]})),pz(700,{ra:FISTR,face:'happy',fx:['spark']})],
+ f_tete:[pz(200,{face:'focus',ball:[40,-12]}),pz(140,{dy:3,ll:CRL,rl:CRR,la:OUTL,ra:OUTR,face:'focus',ball:[34,-6]}),pz(120,air(-9,{lean:1,la:OUTL,ra:OUTR,face:'strain',ball:[26,-14]})),
+  pz(110,air(-10,{lean:1,la:OUTL,ra:OUTR,face:'shout',ball:[21,-17],fx:['hit']})),pz(110,air(-6,{la:UPL,ra:UPR,ball:[2,-20],fx:['trail'],tr:[5,2]})),pz(700,{face:'happy',la:UPL,ra:UPR,fx:['spark']})],
+ f_dribble:[pz(90,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,face:'focus',ball:[25,53],fx:['speed']}),pz(90,{x:-4,lean:-1,ll:RBL,rl:RBR,la:PUMPL2,face:'focus',ball:[14,53],fx:['speed']}),
+  pz(90,{x:4,lean:1,dy:-1,ll:RAL,rl:RAR,la:PUMPL,face:'shout',ball:[34,53],fx:['speed','bolt']}),pz(90,{ll:RBL,rl:RBR,la:PUMPL2,face:'focus',ball:[26,53],fx:['speed']}),pz(90,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,face:'focus',ball:[25,53],fx:['speed']}),pz(700,{ra:FISTR,face:'happy',ball:[30,53],fx:['spark']})],
+ f_canon:[pz(220,{face:'focus',ball:[30,53]}),pz(150,{lean:-1,rl:[29,46,31,51],la:FLL,face:'focus',ball:[31,53]}),pz(110,{lean:-1,rl:VOR,la:FLL,face:'shout',ball:[37,41],fx:['hit','bolt']}),
+  pz(100,{lean:-1,rl:VOR,la:FLL,ball:[58,32],fx:['trail','speed'],tr:[-7,3]}),pz(700,{ra:FISTR,face:'happy',fx:['spark']})],
+ f_moteur:[pz(110,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,ra:[2,4,-1,9],face:'focus',fx:['speed']}),pz(110,{ll:RBL,rl:RBR,la:PUMPL2,ra:[2,6,3,11],face:'focus',fx:['speed']}),
+  pz(110,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,ra:[2,4,-1,9],face:'focus',fx:['speed']}),pz(110,{ll:RBL,rl:RBR,la:PUMPL2,ra:[2,6,3,11],face:'focus',fx:['speed']}),pz(700,{face:'happy',ra:FISTR,fx:['spark']})],
+ r_plaquage:[pz(220,{face:'focus'}),pz(140,{dy:5,ll:LOWL,rl:LOWR,la:OUTL,ra:OUTR,face:'focus'}),pz(110,{dy:7,ll:LOWL,rl:LOWR,la:WRAPL,ra:WRAPR,face:'shout',fx:['shock','dust'],sp:[24,40]}),
+  pz(160,{dy:4,ll:LOWL,rl:LOWR,la:WRAPL,ra:WRAPR,face:'strain'}),pz(700,{face:'happy',ra:FISTR,fx:['spark']})],
+ r_raffut:[pz(110,{dy:-1,ll:RAL,rl:RAR,la:PUMPL,ra:CARRY,face:'focus',ball:[28,34]}),pz(110,{ll:RBL,rl:RBR,la:PUMPL2,ra:CARRY,face:'focus',ball:[28,35]}),
+  pz(140,{lean:-1,ll:RAL,rl:RAR,la:[-6,-1,-13,-2],ra:CARRY,face:'shout',ball:[28,34],fx:['shock'],sp:[0,24]}),pz(110,{x:3,ll:RBL,rl:RBR,la:[-6,-1,-13,-2],ra:CARRY,face:'focus',ball:[28,35],fx:['speed']}),pz(700,{la:UPL,ra:CARRY,face:'happy',ball:[28,34],fx:['spark']})],
+ r_percee:addFx(SPANIM.rugby[2],['bolt'],[2,3]),
+ r_essai:[pz(110,{dy:-1,ll:RAL,rl:RAR,la:HOLDL,ra:HOLDR,face:'focus',ball:[20,32],fx:['speed']}),pz(110,{ll:RBL,rl:RBR,la:HOLDL,ra:HOLDR,face:'focus',ball:[20,32],fx:['speed']}),
+  pz(130,air(-8,{la:OVHL,ra:OVHR,face:'shout',ball:[20,-8]})),pz(130,{dy:6,ll:LOWL,rl:LOWR,la:[1,8,6,16],ra:[-1,8,-6,16],face:'shout',ball:[20,50],fx:['dust','shock'],sp:[24,56]}),pz(700,{la:UPL,ra:UPR,face:'happy',fx:['spark']})]};
+// Carte « Techniques spéciales » de la fiche
+function techCard(o){const L=techList(),on=techsOf(o);
+  return `<div class="sect-h" style="margin-top:24px"><h3>Techniques spéciales</h3><span class="muted small">${on.length}/${L.length} débloquées</span></div>
+  <div class="card">${L.map(([id,n,k,tm,dsc])=>{const ok=on.includes(id),st=STATN.find(s=>s[0]===k),need=[0,20,40,60,75,90][tm],cur=o[k]||0;
+   return `<div class="tech ${ok?'ok':''}"><span class="tk">${ok?'技':'🔒'}</span><div style="flex:1;min-width:0"><b>${esc(n)}</b><small>${ok?esc(dsc):`${esc(st[1])} : rang « ${esc(tiersOf()[tm])} » (${cur}/${need})`}</small>
+    ${ok?'':`<div class="pbar" style="margin-top:6px;height:5px"><i style="width:${Math.min(100,Math.round(cur/need*100))}%"></i></div>`}</div>${ok?`<button class="btn sm" data-act="techshow" data-v="${id}" aria-label="Voir ${esc(n)}">▶ Voir</button>`:''}</div>`}).join('')}</div>`}
+function techShow(id,isNew){const T=techById(id);if(!T)return;const {o}=ficheStats(),d=document.createElement('div');d.className='lvup arcup';d.setAttribute('role','dialog');
+  d.innerHTML=`<div class="lvk">技</div><div class="lvt">${isNew?'Nouvelle technique':'Technique spéciale'}</div><div style="margin:6px 0 -6px">${spriteSvg(o,{size:190,tech:id})}</div>
+   <div class="lvr" style="font-size:38px">${esc(T[1])}</div><div class="small muted" style="margin-top:10px;max-width:320px">${esc(T[4])}</div>
+   <button class="btn acc block" style="margin-top:22px;max-width:320px">Continuer</button>`;
+  d.onclick=()=>d.remove();document.body.appendChild(d);if(isNew){beep(2);confetti()}}
 const SPC={};
 function spFrames(key){if(SPC[key])return SPC[key];const v=key.split('|'),sp=v[0],st=+v[1];
-  const K={sp,s:+v[2],sk:AV.skin[+v[3]]||AV.skin[0],hs:+v[4],hc:AV.hair[+v[5]]||AV.hair[0],ey:AV.eyes[+v[6]]||AV.eyes[0],kit:AV.kit[+v[7]]||AV.kit[0],acc:+v[8],num:v[9],flame:st===2?(v[10]||'#ffc83d'):''};
-  const A=spExpand(MOODANIM[v[1]]||(SPANIM[sp]||SPANIM.volley)[st]||SPANIM.volley[0]);let prev=null;
+  const K={sp,s:+v[2],sk:AV.skin[+v[3]]||AV.skin[0],hs:+v[4],hc:AV.hair[+v[5]]||AV.hair[0],ey:AV.eyes[+v[6]]||AV.eyes[0],kit:AV.kit[+v[7]]||AV.kit[0],acc:+v[8],num:v[9],flame:st===2||v[1].startsWith('t:')?(v[10]||'#ffc83d'):''};
+  const isT=v[1].startsWith('t:'),A=spExpand((isT&&TECHANIM[v[1].slice(2)])||MOODANIM[v[1]]||(SPANIM[sp]||SPANIM.volley)[st]||SPANIM.volley[0]);let prev=null;
   const fr=A.map((p,i)=>{const cv=document.createElement('canvas');cv.width=SPW;cv.height=SPH;spDraw(cv,Object.assign({_i:i},p),K);
-    if(st===2&&prev&&(p.fx||[]).includes('speed')){const g=document.createElement('canvas');g.width=SPW;g.height=SPH;const x=g.getContext('2d');x.globalAlpha=.28;x.drawImage(prev,0,0);x.globalAlpha=1;x.drawImage(cv,0,0);prev=cv;return g}
+    if((st===2||isT)&&prev&&(p.fx||[]).includes('speed')){const g=document.createElement('canvas');g.width=SPW;g.height=SPH;const x=g.getContext('2d');x.globalAlpha=.28;x.drawImage(prev,0,0);x.globalAlpha=1;x.drawImage(cv,0,0);prev=cv;return g}
     prev=cv;return cv});
   return SPC[key]={fr,d:A.map(p=>p.t),tot:A.reduce((z,p)=>z+p.t,0)}}
 function spTick(){const now=performance.now(),red=reduced();document.querySelectorAll('canvas.sprite').forEach(c=>{const F=spFrames(c.dataset.spk);let i=0;
@@ -1405,7 +1477,7 @@ const avNum=()=>{const n=(profile.av||{}).n;return n==null||n===''?KITN[profile.
 // Garde le nom spriteSvg (appelé à 3 endroits) : renvoie un canvas animé
 function spriteSvg(o,opt){opt=opt||{};o=o||{};const sp=profile.sport||'volley',av=profile.av||{},w=opt.size||96,h=Math.round(w*SPH/SPW);
   const s=Math.min(2,Math.round(((o.force||0)+(o.endu||0))/90)),ti=Math.max(0,tierIdx(ovrOf(o))),au=AURA[ti];
-  const key=[sp,opt.mood||stageOf(o),s,av.s|0,av.h|0,av.c|0,av.e|0,av.k|0,av.a|0,avNum(),ti>=5?'#ffc83d':'#ff5a4c'].join('|');
+  const key=[sp,opt.mood||(opt.tech?'t:'+opt.tech:stageOf(o)),s,av.s|0,av.h|0,av.c|0,av.e|0,av.k|0,av.a|0,avNum(),ti>=5?'#ffc83d':'#ff5a4c'].join('|');
   setTimeout(spTick,0);
   return `<span class="spw" style="width:${w}px;height:${h}px;background:radial-gradient(ellipse 50% 48% at 50% 52%,${au}55,transparent 70%)"><canvas class="sprite" width="${SPW}" height="${SPH}" data-spk="${key}" style="width:${w}px;height:${h}px" role="img" aria-label="Ton personnage"></canvas></span>`}
 // Écran de personnalisation
@@ -1474,6 +1546,7 @@ function ficheView(){const {o,d}=ficheStats(),A=archOf(o),G=gameStats(),keys=STA
    ${radarSvg(o)}</section>
   <div class="card" style="padding:8px 18px">${STATN.map(([k,n,kj])=>`<div class="frow"><span class="fkj">${kj}</span><div style="flex:1;min-width:0"><div class="lvrow" style="justify-content:space-between;gap:8px"><b>${n}</b><span class="rk rk${rankOf(o[k])}">${tierOf(o[k])}</span></div>
     <div class="pbar" style="margin-top:6px;height:6px"><i style="width:${o[k]||0}%"></i></div><div class="small muted" style="margin-top:4px">${o[k]!=null?esc(d[k])+' · '+o[k]+'/100':'Pas encore mesuré'}</div></div></div>`).join('')}</div>
+  ${examCard()}${techCard(o)}
   ${miss.length?`<div class="card"><span class="t">${ic('target')} Pour compléter ta fiche</span><div class="btnrow">${known.length<3?`<button class="btn sm acc" data-act="bilan">Premier bilan · 2 min</button>`:''}${miss.map(btn).join('')}</div></div>`:''}
   ${weak&&o[weak]<75?`<div class="card warn"><span class="t">${ic('bolt')} Ton point à travailler : ${STATN.find(s=>s[0]===weak)[1]}</span><div class="small">Rang « ${tierOf(o[weak])} ». C’est là que tu gagneras le plus vite. ${esc(REPERES[weak])}</div><div class="btnrow">${btn(weak)}</div></div>`:''}
   <details class="card"><summary><span class="vchip">${ic('info')} Repères et calcul</span>${ic('chev')}</summary><div class="det"><ul>${STATN.map(([k,n])=>`<li><b>${n}</b> : ${esc(REPERES[k])}</li>`).join('')}</ul>
@@ -1758,6 +1831,7 @@ function renderHome(){
    <button class="btn acc block" data-act="start" data-sid="${hs}">${ic('play')} ${started?'Reprendre la séance':'Commencer'}</button>
    <div class="sub2"><button class="linkbtn" data-act="go" data-go="workout">Voir tous les exercices ${ic('chev')}</button></div><div class="big">${ic(prog.icon)}</div></section>
   ${persoCard()}
+  ${examCard()}
   ${recapCard()}
   <div class="card hrow">${nd?`<button data-act="prot">${ring(pt/nd.P,44,5,'var(--blu)',`<b style="font-size:12px">${pt}</b>`)}<span><b>Protéines</b><small>${pt} / ${nd.P} g aujourd’hui</small></span></button>`:`<button data-act="go" data-go="nutri">${ring(0,44,5,'var(--blu)',ic('apple'))}<span><b>Nutrition</b><small>Calcule tes besoins</small></span></button>`}
    <button data-act="go" data-go="progress" data-ptab="fiche">${ring(G.ch.filter(c=>c.ok).length/(G.ch.length||1),44,5,'var(--yel)',`<b style="font-size:12px">${G.ch.filter(c=>c.ok).length}/${G.ch.length}</b>`)}<span><b>Défis</b><small>${G.streak?'🔥 '+G.streak+' sem. d’affilée':'Voir dans ta fiche'}</small></span></button></div>
@@ -2200,14 +2274,14 @@ const afterOnb=()=>setTimeout(()=>{if(inviteCode()&&!cUser)acctSheet('signup');e
 function persoSheet(first){openSheet('Crée ton personnage',`<p class="lead">Il grandit avec toi : au début il galère, puis il maîtrise son sport à mesure que tes stats montent.</p>
   <div id="avbox">${avBody()}</div>
   <button class="btn acc block" data-act="${first?'w2':'closesheet'}" style="margin-top:18px">${first?'Continuer':'C’est bon'}</button>`)}
-function bilanSheet(first){const p=profile;draft=Object.assign({},draft,{bsexe:""});
-  openSheet('Ton premier bilan',`<p class="lead">2 minutes pour donner un rang à ton personnage. Remplis ce que tu connais, laisse vide le reste.</p>
+function bilanSheet(first,exam){const p=profile;draft=Object.assign({},draft,{bsexe:""});bilanSheet.exam=!!exam;
+  openSheet(exam?'Examen de fin d’arc':'Ton premier bilan',`<p class="lead">${exam?'Refais tes mesures du moment : l’appli les compare au début de l’arc. Remplis ce que tu peux, laisse vide le reste.':'2 minutes pour donner un rang à ton personnage. Remplis ce que tu connais, laisse vide le reste.'}</p>
   <div class="row"><label class="field"><span>Poids (kg)</span><input id="b-poids" inputmode="decimal" value="${esc(p.poids)}" placeholder="ex. 72"></label>
    <div class="field"><span>Sexe</span>${optsHtml('bsexe',[['h','Homme'],['f','Femme']],draft.bsexe||p.sexe||'',2)}</div></div>
   <label class="field"><span>Détente sans élan (cm)</span><input id="b-cmj" inputmode="decimal" placeholder="ex. 42"><div class="help">Hauteur du saut, pieds joints. Tu ne sais pas ? Laisse vide : tu pourras la mesurer avec la caméra dans Progrès → Tests.</div></label>
   <div class="field"><span>Ta meilleure série de squat récente</span><div class="row" style="margin:0"><label class="field" style="margin:0"><input id="b-sqw" inputmode="decimal" placeholder="Charge (kg)" aria-label="Charge du squat en kg"></label><label class="field" style="margin:0"><input id="b-sqr" inputmode="numeric" placeholder="Répétitions" aria-label="Nombre de répétitions"></label></div><div class="help">Charge sur la barre et nombre de répétitions propres. L’appli estime ta force à partir de ça.</div></div>
   <label class="field"><span>Sprint 10 m (secondes, facultatif)</span><input id="b-sp" inputmode="decimal" placeholder="ex. 1,85"></label>
-  <button class="btn acc block" data-act="bilansave" style="margin-top:10px">Révéler mon rang</button>
+  <button class="btn acc block" data-act="bilansave" style="margin-top:10px">${exam?'Voir mon résultat':'Révéler mon rang'}</button>
   <div class="center" style="margin-top:12px"><button class="linkbtn" data-act="bilanlater">${first?'Plus tard':'Annuler'}</button></div>`);bilanSheet.first=!!first}
 function bilanSave(){const p=profile,w=num($('#b-poids').value),cm=num($('#b-cmj').value),sw=num($('#b-sqw').value),sr=num($('#b-sqr').value),spr=num($('#b-sp').value),t0=todayStr();
   if(w!=null&&(w<30||w>200)){toast('Poids entre 30 et 200 kg');return}
@@ -2217,7 +2291,7 @@ function bilanSave(){const p=profile,w=num($('#b-poids').value),cm=num($('#b-cmj
   if(w!=null)p.poids=String(w);if(draft.bsexe)p.sexe=draft.bsexe;
   if(sw!=null)p.eval=Object.assign({},p.eval,{sq:Math.round(e1rm(sw,sr)),at:t0});
   if(cm!=null)jumps.push({id:uid(),date:t0,kind:'cmj',val:cm,method:'bilan'});if(spr!=null)jumps.push({id:uid(),date:t0,kind:'sp10',val:spr,method:'bilan'});
-  saveProfile();saveJumps();const first=bilanSheet.first;closeSheet();go('home');
+  saveProfile();saveJumps();const first=bilanSheet.first;closeSheet();if(bilanSheet.exam){bilanSheet.exam=false;examFinish();return}go('home');
   const {o}=ficheStats(),ov=ovrOf(o);if(ov==null){toast(p.poids?'Il manque une mesure pour ton rang':'Ajoute ton poids et une mesure pour ton rang',3000);if(first)afterOnb();return}
   rankReveal(o,first)}
 function rankReveal(o,first){LS.set('gym_tiers',tierSnap());const ov=ovrOf(o),A=archOf(o),d=document.createElement('div');d.className='lvup arcup';d.setAttribute('role','dialog');
@@ -2225,6 +2299,61 @@ function rankReveal(o,first){LS.set('gym_tiers',tierSnap());const ov=ovrOf(o),A=
    <div class="small muted" style="margin-top:10px;max-width:320px">${A?'Archétype : '+esc(A.n)+'. ':''}${esc(STAGEN[stageOf(o)])} Chaque séance et chaque test le font évoluer.</div>
    <button class="btn acc block" style="margin-top:24px;max-width:320px">Continuer</button>`;
   d.onclick=()=>{d.remove();if(first)afterOnb()};document.body.appendChild(d);beep(2);confetti()}
+// ===================== v26 : examen de fin d’arc =====================
+// À la fin de chaque arc (4 semaines d’entraînement), un examen refait les mesures et compare avec le début de l’arc
+const snapStats=()=>{const {o}=ficheStats();return{o:Object.assign({},o),ovr:ovrOf(o),at:todayStr(),arc:arcInfo().i}};
+function examDue(){const A=arcInfo();return A.i>=1&&(profile.examArc==null?-1:profile.examArc)<A.i?A:null}
+const arcNameOf=i=>{const L=SP().arcs||ARCS;return L[i]||'Légende '+(i-L.length+2)};
+function examCard(){const A=examDue();if(!A)return '';
+  return `<div class="card exam"><div class="lvrow" style="gap:12px"><span class="exk">${KNUM[A.i-1]||A.i}</span><div style="flex:1;min-width:0"><div class="small" style="color:var(--yel);font-weight:800;letter-spacing:.08em;text-transform:uppercase">Examen de fin d’arc</div>
+   <b style="display:block;font-size:17px;margin-top:2px">« ${esc(arcNameOf(A.i-1))} » terminé !</b><div class="small muted">3 mesures, 5 minutes : découvre ce que l’arc a changé.</div></div></div>
+   <button class="btn acc block" data-act="exam" style="margin-top:12px">Passer l’examen</button></div>`}
+function examFinish(){const A=arcInfo(),before=profile.arcStart&&profile.arcStart.at!==todayStr()?profile.arcStart:null,after=snapStats();
+  const tb=before?techsOf(before.o):techsOf({}),ta=techsOf(after.o);
+  profile.exams=(profile.exams||[]).concat({arc:A.i,at:after.at,b:before?before.o:null,a:after.o}).slice(-12);profile.examArc=A.i;profile.arcStart=after;saveProfile();LS.set('gym_tiers',tierSnap());go('home');
+  examReveal(before,after,A.i,ta.filter(x=>!tb.includes(x)))}
+function examReveal(before,after,arcN,newT){const d=document.createElement('div');d.className='lvup arcup';d.setAttribute('role','dialog');
+  const rows=STATN.map(([k,n])=>{const a=after.o[k],b=before?before.o[k]:null;if(a==null)return '';const dv=b!=null?a-b:null;
+    return `<div class="exrow"><span>${esc(n)}</span><b>${b!=null&&tierIdx(b)!==tierIdx(a)?esc(tierOf(b))+' → ':''}<span style="color:var(--yel)">${esc(tierOf(a))}</span></b>${dv!=null?`<em style="color:${dv>0?'var(--good)':dv<0?'var(--ora)':'var(--mute)'}">${dv>0?'+':''}${dv}</em>`:''}</div>`}).join('');
+  const up=before&&STATN.some(([k])=>after.o[k]!=null&&before.o[k]!=null&&after.o[k]>before.o[k]);
+  d.innerHTML=`<div class="lvk">${before?(up?'合格':'継続'):'始'}</div><div class="lvt">Examen du chapitre ${arcN}</div>
+   <div class="lvr" style="font-size:34px;margin-top:6px">${before?(up?'Réussi !':'Tiens bon'):'Ta base est posée'}</div>
+   <div class="exbox">${rows||'<div class="small muted">Aucune mesure : refais l’examen avec au moins une mesure.</div>'}</div>
+   ${newT.length?`<div class="small" style="margin-top:10px;color:var(--yel)">Nouvelle technique : ${newT.map(id=>esc(techById(id)[1])).join(', ')} !</div>`:''}
+   <div class="small muted" style="margin-top:8px;max-width:320px">${before?(up?'Ton travail se voit dans les chiffres. Le prochain arc commence maintenant.':'Les chiffres bougent parfois lentement : la régularité finit toujours par payer.'):'Les prochains examens compareront tes résultats à ceux-ci.'}</div>
+   <div class="btnrow" style="max-width:320px;width:100%;margin-top:18px"><button class="btn" data-x="share">${ic('share')} Ma planche</button><button class="btn acc" data-x="ok">Continuer</button></div>`;
+  d.onclick=e=>{const b=e.target.closest('[data-x]');if(!b)return;if(b.dataset.x==='share')sharePlanche(before,after,arcN);else{d.remove();if(newT.length)setTimeout(()=>techShow(newT[0],true),300)}};
+  document.body.appendChild(d);beep(2);confetti()}
+// Planche manga 1080 × 1350 : le personnage, l’avant/après, le tampon de l’examen
+function sharePlanche(before,after,arcN){const c=document.createElement('canvas'),W=1080,H=1350;c.width=W;c.height=H;const x=c.getContext('2d');
+  const D=s=>`${s}px Anton,Impact,"Arial Narrow",sans-serif`,J=s=>`900 ${s}px "Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif`,F=(s,w)=>`${w||700} ${s}px -apple-system,system-ui,"Segoe UI",Roboto,sans-serif`;
+  const up=before&&STATN.some(([k])=>after.o[k]!=null&&before.o[k]!=null&&after.o[k]>before.o[k]);
+  x.fillStyle='#f6f3ee';x.fillRect(0,0,W,H);
+  const panel=(px,py,pw,ph,bg)=>{x.fillStyle=bg||'#0b0a0d';x.fillRect(px,py,pw,ph);x.lineWidth=8;x.strokeStyle='#0b0a0d';x.strokeRect(px,py,pw,ph)};
+  // Case 1 : titre
+  panel(40,40,1000,190,'#ff3b30');x.fillStyle='#fff';x.font=D(40);x.textAlign='left';x.fillText(APP.toUpperCase()+' · EXAMEN DE FIN D’ARC',80,105);
+  x.font=D(84);x.fillText(('Chapitre '+arcN+' · '+arcNameOf(arcN-1)).toUpperCase().slice(0,30),80,200);
+  x.font=J(150);x.fillStyle='rgba(255,255,255,.18)';x.textAlign='right';x.fillText('第'+(KNUM[arcN-1]||arcN)+'章',1020,200);
+  // Case 2 : le personnage en action, lignes de vitesse
+  panel(40,260,480,640,'#1a1218');x.save();x.beginPath();x.rect(44,264,472,632);x.clip();x.translate(280,580);x.rotate(-24*Math.PI/180);
+  for(let j=0;j<40;j++){x.fillStyle=j%3?'rgba(255,255,255,.07)':'rgba(255,59,48,.25)';x.fillRect(-700+(j*97%500),-700+j*36,500+(j*53%400),4)}x.restore();
+  try{const av=profile.av||{},o=after.o,s=Math.min(2,Math.round(((o.force||0)+(o.endu||0))/90)),key=[profile.sport||'volley','proud',s,av.s|0,av.h|0,av.c|0,av.e|0,av.k|0,av.a|0,avNum(),'#ffc83d'].join('|'),F2=spFrames(key),fr2=F2.fr[F2.fr.length-1];
+    x.imageSmoothingEnabled=false;x.drawImage(fr2,280-196,300,392,518)}catch(e){}
+  // Case 3 : avant / après
+  panel(550,260,490,640,'#0b0a0d');x.textAlign='left';x.fillStyle='#ffc83d';x.font=D(44);x.fillText(before?'AVANT → APRÈS':'MES MESURES',590,330);
+  let yy=400;STATN.forEach(([k,n])=>{const a=after.o[k];if(a==null)return;const b=before?before.o[k]:null;
+    x.fillStyle='#8f8a96';x.font=F(28,800);x.fillText(n.toUpperCase(),590,yy);
+    x.fillStyle='#f6f3ee';x.font=D(38);x.fillText((b!=null&&tierIdx(b)!==tierIdx(a)?tierOf(b)+' → ':'')+tierOf(a),590,yy+48,420);
+    if(b!=null){const dv=a-b;x.textAlign='right';x.fillStyle=dv>0?'#3ddc97':dv<0?'#ff9f43':'#8f8a96';x.font=D(34);x.fillText((dv>0?'+':'')+dv,1010,yy);x.textAlign='left'}
+    yy+=100});
+  // Case 4 : tampon
+  panel(40,930,1000,380,'#0b0a0d');x.fillStyle='#f6f3ee';x.font=D(64);x.textAlign='left';x.fillText((profile.name||'Mon personnage').toUpperCase().slice(0,16),90,1030);
+  const ov=after.ovr;x.font=F(34,700);x.fillStyle='#8f8a96';x.fillText(ov!=null?'Rang : '+tierOf(ov)+' · '+SP().n:SP().n,90,1085);
+  x.fillText(new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}),90,1135);
+  x.save();x.translate(860,1120);x.rotate(-14*Math.PI/180);x.strokeStyle='#ff3b30';x.lineWidth=12;x.beginPath();x.arc(0,0,130,0,Math.PI*2);x.stroke();
+  x.fillStyle='#ff3b30';x.textAlign='center';x.font=J(110);x.fillText(before?(up?'合格':'継続'):'始',0,30);x.font=D(30);x.fillText(before?(up?'RÉUSSI':'EN COURS'):'DÉBUT',0,90);x.restore();
+  const u=c.toDataURL('image/png'),bb=atob(u.split(',')[1]),a=new Uint8Array(bb.length);for(let j=0;j<bb.length;j++)a[j]=bb.charCodeAt(j);
+  shareFile(new Blob([a],{type:'image/png'}),'yosha-examen-chapitre-'+arcN+'.png','image/png',()=>toast('Planche prête ✓'))}
 let tk='cmj';
 function testSheet(){
   const J=JK[tk],r=reach(),ord=[...new Set([...SP().tiles,...Object.keys(JK)])];chrStop();
@@ -2785,6 +2914,8 @@ document.addEventListener('click',ev=>{
   case 'rgo':nseg='recettes';rcat='batch';render();window.scrollTo(0,0);break;
   case 'sharefiche':shareFiche();break;
   case 'w2':bilanSheet(true);break;
+  case 'exam':bilanSheet(false,true);break;
+  case 'techshow':techShow(d.v);break;
   case 'bilan':bilanSheet(false);break;
   case 'bilansave':bilanSave();break;
   case 'bilanlater':{const f0=bilanSheet.first;closeSheet();if(f0){toast(profile.name?'Bienvenue '+profile.name+' !':'C’est parti !');afterOnb()}break}
