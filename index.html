@@ -424,6 +424,39 @@ body.offline #off{display:block}
 .fmini{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer}.fmini b{display:block;font-family:var(--disp);font-weight:400;font-size:19px;text-transform:uppercase;letter-spacing:.02em}
 .fmk{width:46px;height:46px;border-radius:13px;background:linear-gradient(180deg,#ff5a4c,#d9231b);color:#fff;display:grid;place-items:center;font:900 24px/1 var(--jp);flex:none;transform:rotate(-6deg)}
 .frk{display:flex;gap:4px}.frk i{font-size:18px}
+/* ---- v17 : personnage, sections ---- */
+.sprite{display:block;image-rendering:pixelated;overflow:visible}
+.sprite .sp-aura{animation:aura 2.4s ease-in-out infinite}@keyframes aura{50%{opacity:.55}}
+.sprite .amU,.sprite .lgB,.sprite .lgK,.sprite .sp-ball{opacity:0}
+.sprite .sp-body{animation:bob 1.6s steps(1) infinite}@keyframes bob{50%{transform:translateY(1px)}}
+.spa-volley .sp-body{animation:spvJ 1.8s steps(1) infinite}@keyframes spvJ{0%,38%{transform:translateY(0)}42%{transform:translateY(-3px)}46%,66%{transform:translateY(-7px)}70%{transform:translateY(-3px)}74%,100%{transform:translateY(0)}}
+.spa-volley .amD{animation:offMid 1.8s steps(1) infinite}.spa-volley .amU{animation:onMid 1.8s steps(1) infinite}
+@keyframes offMid{0%{opacity:1}42%{opacity:0}74%{opacity:1}}@keyframes onMid{0%{opacity:0}42%{opacity:1}74%{opacity:0}}
+.spa-volley .sp-ball{animation:spvB 1.8s steps(1) infinite}@keyframes spvB{0%,52%{opacity:0;transform:translate(23px,-6px)}54%{opacity:1;transform:translate(23px,-6px)}58%{transform:translate(26px,0)}62%{transform:translate(28px,7px)}66%{transform:translate(30px,14px)}70%,100%{opacity:0;transform:translate(31px,20px)}}
+.spa-basket .sp-ball{opacity:1;animation:spbB .9s steps(1) infinite}@keyframes spbB{0%{transform:translate(23px,24px)}20%{transform:translate(23px,28px)}40%{transform:translate(23px,33px)}60%{transform:translate(23px,28px)}80%,100%{transform:translate(23px,25px)}}
+.spa-basket .sp-body{animation:bob .9s steps(1) infinite}
+.spa-foot .sp-ball{opacity:1;animation:spfB 1.2s steps(1) infinite}@keyframes spfB{0%{transform:translate(23px,24px)}15%{transform:translate(23px,18px)}30%{transform:translate(23px,14px)}45%{transform:translate(23px,18px)}60%{transform:translate(23px,23px)}75%,100%{transform:translate(23px,25px)}}
+.spa-foot .lgA{animation:offK 1.2s steps(1) infinite}.spa-foot .lgK{animation:onK 1.2s steps(1) infinite}
+@keyframes offK{0%{opacity:0}12%{opacity:1}82%{opacity:0}}@keyframes onK{0%{opacity:1}12%{opacity:0}82%{opacity:1}}
+.spa-rugby .lgA{animation:offH .7s steps(1) infinite}.spa-rugby .lgB{animation:onH .7s steps(1) infinite}.spa-rugby .sp-body{animation:bob .35s steps(1) infinite}
+@keyframes offH{0%{opacity:1}50%{opacity:0}}@keyframes onH{0%{opacity:0}50%{opacity:1}}
+.perso{display:flex;gap:12px;align-items:center;padding:12px 14px;cursor:pointer;overflow:visible}
+.perso .psp{flex:none;width:92px;margin:-6px 0 -4px}.perso .pmain{flex:1;min-width:0}
+.bubble{position:relative;background:#fff;color:#0b0a0d;font-size:13px;font-weight:700;line-height:1.35;padding:8px 11px;border-radius:12px;margin-bottom:9px}
+.bubble::before{content:"";position:absolute;left:-7px;top:14px;border:7px solid transparent;border-right-color:#fff;border-left:0}
+.parch{display:block;font-family:var(--disp);font-weight:400;font-size:20px;text-transform:uppercase;letter-spacing:.02em}
+.fsp{position:absolute!important;right:10px;top:46px;width:104px}
+.fiche .fhead{padding-right:96px}
+.frow .rk{font-size:17px;letter-spacing:.03em}
+.avedit{display:flex;gap:10px;align-items:center}.avprev{flex:none;width:96px;background:radial-gradient(circle,rgba(255,59,48,.12),transparent 70%);border-radius:16px}
+.avopts{display:flex;gap:5px;flex-wrap:wrap}.avopts button{min-width:34px;height:34px;border-radius:10px;border:1.5px solid var(--line);background:var(--card2);font-size:12.5px;font-weight:750;cursor:pointer;padding:0 8px;display:grid;place-items:center}
+.avopts button.on{border-color:var(--acc)}.avopts i{width:18px;height:18px;border-radius:50%;display:block}
+.psec{margin:22px 0 0}.psec>summary{display:flex;align-items:center;gap:10px;padding:14px 2px;border-bottom:1px solid var(--line);list-style:none;cursor:pointer}
+.psec>summary::-webkit-details-marker{display:none}.psec>summary b{flex:1;font-size:17px}.psec>summary small{display:block;font-size:12.5px;color:var(--mute);font-weight:600}
+.psec>summary .pi{width:36px;height:36px;border-radius:11px;background:var(--accd);color:var(--acc);display:grid;place-items:center;flex:none}
+.psec>summary>.i:last-child{transition:transform .2s;color:var(--mute)}.psec[open]>summary>.i:last-child{transform:rotate(90deg)}
+.psec>.card:first-of-type{margin-top:14px}
+@media (prefers-reduced-motion:reduce){.sprite,.sprite *{animation:none!important}}
 /* ---- v16 : animations ---- */
 #view.wipe{animation:wipe .42s cubic-bezier(.2,.8,.2,1) both}
 @keyframes wipe{from{clip-path:polygon(0 0,0 0,-35% 100%,0 100%)}to{clip-path:polygon(0 0,135% 0,100% 100%,0 100%)}}
@@ -726,9 +759,9 @@ const INTENS=[[3,'Tranquille'],[5,'Normal'],[7,'Intense'],[9,'À fond']];
 const POSTES=['','Réceptionneur-attaquant','Pointu','Central','Passeur','Libéro'];
 
 // ----- Sports : programme, postes, stats de match, tests et explications -----
-const APP='Yosha',APP_V='16',TERMS_V=2;
+const APP='Yosha',APP_V='17',TERMS_V=2;
 // Nouveautés montrées une fois après la mise à jour
-const NEWS={'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
+const NEWS={'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
 const SPORTS={
  volley:{n:'Volley',ic:'ball',prog:'volley',de:'de volleyeur',bar:'filet',barD:'du filet',barL:'le filet',postes:POSTES.slice(),
   types:{entr:'Entraînement',match:'Match',beach:'Beach'},stk:[['att','Attaques tentées'],['kill','Attaques gagnantes'],['blk','Contres gagnants'],['ace','Aces'],['err','Fautes de service']],
@@ -923,7 +956,9 @@ const ICONS={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1
  list:'M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01',note:'M4 20h4l10-10-4-4L4 16zM13 7l4 4',trophy:'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6',
  apple:'<path d="M12 7.5c-1.6-1.4-5.2-1.6-6.6 1.1-1.5 2.9-.4 7 1.6 9.6 1.4 1.8 3 2.4 5 1.5 2 .9 3.6.3 5-1.5 2-2.6 3.1-6.7 1.6-9.6-1.4-2.7-5-2.5-6.6-1.1z"/><path d="M12 7.5c0-2 1-3.6 3.2-4.3"/>',
  scale:'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8.5 9.5a5 5 0 0 1 7 0M12 12l1.5-2.5"/>',drop:'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z',
- scan:'M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 8v8M11 8v8M14 8v8M17 8v8',up:'M6 15l6-6 6 6',dn:'M6 9l6 6 6-6',edit:'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',expand:'M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5',share:'M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6',body:'<circle cx="12" cy="4.5" r="2.5"/><path d="M5 9h14M12 9v6M9 22l3-7 3 7"/>'};
+ scan:'M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3M8 8v8M11 8v8M14 8v8M17 8v8',up:'M6 15l6-6 6 6',dn:'M6 9l6 6 6-6',edit:'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',expand:'M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5',share:'M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6',body:'<circle cx="12" cy="4.5" r="2.5"/><path d="M5 9h14M12 9v6M9 22l3-7 3 7"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c1-3.5 3.6-5.5 6.5-5.5s5.5 2 6.5 5.5"/><path d="M15.5 4.8a3.3 3.3 0 0 1 0 6.4M17.5 14.8c2 .8 3.4 2.5 4 5.2"/>',
+ bell:'M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4',heart:'M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z'};
 const ic=(n,c='')=>{const p=ICONS[n]||'';return `<svg class="i ${c}" viewBox="0 0 24 24" aria-hidden="true">${p.startsWith('<')?p:`<path d="${p}"/>`}</svg>`};
 
 // ===================== STOCKAGE =====================
@@ -936,7 +971,7 @@ let logs=LS.get('gym_logs',{}),swaps=LS.get('gym_swaps',{}),profile=Object.assig
     nut=Object.assign({f:{},w:{}},LS.get('gym_nut',{}));
 const saveNut=()=>LS.set('gym_nut',nut);
 let focusOn=false,fIdx=0,fList=false,fDir=0,edQ='',rcat='all',rmine=true,calM=null,justChecked='',tTot=60;
-let tab='home',grp='plyo',libQ='',openEx=new Set(),progId='volley',sid=null,date=null,deferredPrompt=null,ptab='salle',pex=null,jkind='cmj',showDate=false,autoKey='',draft={},nseg='besoins',nmom='Midi';
+let tab='home',grp='plyo',libQ='',openEx=new Set(),progId='volley',sid=null,date=null,deferredPrompt=null,ptab='fiche',pex=null,jkind='cmj',showDate=false,autoKey='',draft={},nseg='besoins',nmom='Midi';
 try{const p=localStorage.getItem('gym_prog');if(p&&PROGS[p])progId=p}catch(e){}
 applySport();
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
@@ -1149,7 +1184,37 @@ function levelUp(kind,o){const d=document.createElement('div');d.className='lvup
 // 5 stats sur 100, calculées à partir des vraies séances et des tests ; rang E à S
 const STATN=[['force','Force','力'],['expl','Explosivité','跳'],['vit','Vitesse','速'],['endu','Endurance','耐'],['reg','Régularité','継']];
 const RANKS=[[90,'S'],[75,'A'],[60,'B'],[40,'C'],[20,'D'],[0,'E']];
-const rankOf=v=>v==null?'?':RANKS.find(r=>v>=r[0])[1];
+const rankOf=v=>v==null?'?':RANKS.find(r=>v>=r[0])[1];  // lettre interne, sert seulement à la couleur
+// Rangs affichés : propres à chaque sport (du plus bas au plus haut)
+const TIERS={volley:['Plume','Rebond','Envol','Smash','Altitude','Ciel'],basket:['Parquet','Panier','Contre','Dunk','Zone','Mythe'],
+ foot:['Crampon','Passe','Frappe','Lucarne','Maestro','Légende'],rugby:['Boue','Maul','Raffut','Percée','Essai','Légende']};
+const tierIdx=v=>v==null?-1:[20,40,60,75,90].filter(x=>v>=x).length;
+const tierOf=v=>v==null?'?':(TIERS[profile.sport||'volley']||TIERS.volley)[tierIdx(v)];
+// ----- Personnage en pixel art (dessiné ici, animé selon le sport) -----
+const AV={skin:['#f3cfb0','#dba57f','#a8724c','#6a4430'],hair:['#1c1512','#5a3520','#c8923f','#d9d4cc'],style:['Court','Attaché','Bouclé','Rasé']};
+const AURA=['#5c5763','#8f8a96','#3ad0ff','#3ddc97','#ff3b30','#ffc83d'];
+let spN=0;
+function spriteSvg(o,opt){opt=opt||{};o=o||{};const sp=profile.sport||'volley',av=profile.av||{},sk=AV.skin[av.s|0],hc=AV.hair[av.c|0],hs=av.h|0,id='sp'+(++spN);
+  const s=Math.min(2,Math.round(((o.force||0)+(o.endu||0))/90)),best=Math.max(-1,...STATN.map(([k])=>tierIdx(o[k]))),au=AURA[Math.max(0,best)];
+  const R=(x,y,w,h,c)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`;
+  const J='#ff3b30',JD='#b3241c',SH='#24202a',SO='#f6f3ee',EY='#1b1418';
+  const torso=sp==='basket'?R(12-s,15,8+2*s,11,J)+R(12-s,15,8+2*s,1,JD)+R(15,18,2,4,SO):sp==='rugby'?R(11-s,15,10+2*s,11,J)+R(11-s,18,10+2*s,2,SO)+R(11-s,22,10+2*s,2,SO)+R(14,15,4,1,JD):R(11-s,15,10+2*s,11,J)+R(14,15,4,1,JD)+R(11-s,24,10+2*s,1,JD);
+  const sleeve=sp==='basket'?sk:J;
+  const legs=(a,b)=>R(12,27,3,a,sk)+R(17,27,3,b,sk)+R(11,27+a-1,4,2,SO)+R(17,27+b-1,4,2,SO)+(sp==='volley'?R(12,30,3,2,SO)+R(17,30,3,2,SO):'')+(sp==='foot'?R(12,31,3,4,J)+R(17,31,3,4,J):'');
+  const legsA=`<g class="lgA">${legs(10,10)}</g>`,legsB=`<g class="lgB">${R(12,27,3,10,sk)+R(11,36,4,2,SO)+R(17,27,3,7,sk)+R(18,33,4,2,SO)+(sp==='foot'?R(12,31,3,4,J)+R(17,30,3,3,J):'')+(sp==='volley'?R(12,30,3,2,SO)+R(17,29,3,2,SO):'')}</g>`;
+  const kick=sp==='foot'?`<g class="lgK">${R(12,27,3,10,sk)+R(11,36,4,2,SO)+R(12,31,3,4,J)+R(17,27,7,3,sk)+R(17,27,4,3,J)+R(23,26,3,3,SO)}</g>`:'';
+  const armD=`<g class="amD">${R(8-s,15,3,8,sleeve)+R(8-s,23,3,2,sk)+R(21+s,15,3,8,sleeve)+R(21+s,23,3,2,sk)}</g>`;
+  const armU=`<g class="amU">${R(8-s,15,3,8,sleeve)+R(8-s,23,3,2,sk)+R(21+s,7,3,9,sleeve)+R(21+s,5,3,2,sk)}</g>`;
+  const hair=[R(12,4,8,2,hc)+R(11,5,1,3,hc)+R(20,5,1,3,hc),R(12,4,8,2,hc)+R(11,5,1,3,hc)+R(20,5,1,2,hc)+R(20,6,2,6,hc),R(11,3,10,3,hc)+R(10,5,2,3,hc)+R(20,5,2,3,hc)+R(12,2,2,1,hc)+R(17,2,2,1,hc),R(12,4,8,1,hc)][hs];
+  const head=R(14,13,4,2,sk)+R(12,5,8,8,sk)+hair+R(14,8,1,2,EY)+R(17,8,1,2,EY)+R(15,11,2,1,'#8a3a30')+(sp==='rugby'?R(11,7,1,4,SH)+R(20,7,1,4,SH):'');
+  const ball={volley:R(0,0,3,3,'#f6f3ee')+R(1,0,1,3,'#ffc83d')+R(0,1,3,1,'#3a6fd8'),basket:R(0,0,3,3,'#ff8a3d')+R(1,0,1,3,'#7a3410')+R(0,1,3,1,'#7a3410'),foot:R(0,0,3,3,'#f6f3ee')+R(1,1,1,1,'#1b1418')+R(0,0,1,1,'#1b1418'),rugby:''}[sp];
+  const held=sp==='rugby'?R(9-s,18,6,3,'#8a5a2b')+R(11-s,19,2,1,SO):'';
+  return `<svg class="sprite spa-${opt.still?'none':sp}" viewBox="0 0 32 40" width="${opt.size||96}" height="${Math.round((opt.size||96)*1.25)}" shape-rendering="crispEdges" role="img" aria-label="Ton personnage">
+   <defs><radialGradient id="${id}"><stop offset="0" stop-color="${au}" stop-opacity=".55"/><stop offset="1" stop-color="${au}" stop-opacity="0"/></radialGradient></defs>
+   <ellipse class="sp-aura" cx="16" cy="21" rx="15" ry="19" fill="url(#${id})"/>${R(9,38,14,2,'rgba(0,0,0,.45)')}
+   <g class="sp-body">${legsA}${legsB}${kick}${R(11,25,10,4,SH)}${torso}${armD}${armU}${head}${held}</g>${ball?`<g class="sp-ball">${ball}</g>`:''}</svg>`}
+function avBody(){const a=profile.av||{},row=(k,arr,lab)=>`<div class="field" style="margin:12px 0 0"><span>${lab}</span><div class="avopts">${arr.map((v,i)=>`<button class="${(a[k]|0)===i?'on':''}" data-act="avset" data-k="${k}" data-v="${i}" aria-label="${lab} ${i+1}">${k==='h'?esc(v):`<i style="background:${v}"></i>`}</button>`).join('')}</div></div>`;
+  return `<div class="avedit"><div class="avprev">${spriteSvg(ficheStats().o,{size:96})}</div><div style="flex:1;min-width:0">${row('s',AV.skin,'Teint')}${row('h',AV.style,'Coiffure')}${row('c',AV.hair,'Cheveux')}</div></div>`}
 const lin=(v,a,b)=>Math.max(0,Math.min(100,Math.round((v-a)/(b-a)*100)));  // a = 0 point, b = 100 points (marche aussi à l’envers pour les chronos)
 function ficheStats(){const w=num(profile.poids),fe=profile.sexe==='f',t=todayStr(),o={},d={};
   const c=[['squat',1],['frontsq',1.15],['trapdl',.9],['gobletsq',1.6]].map(([id,k])=>[id,bestEx1rm(id)*k]).find(x=>x[1]>0);
@@ -1195,24 +1260,24 @@ function radarSvg(o,size){const S=size||300,cx=S/2,cy=S/2+6,R=S*.34,pt=(i,v)=>{c
   const grid=[20,40,60,80,100].map(g=>`<polygon points="${STATN.map((s,i)=>pt(i,g).map(x=>x.toFixed(1)).join(',')).join(' ')}" fill="none" stroke="rgba(255,255,255,${g===100?.18:.07})"/>`).join('');
   const axes=STATN.map((s,i)=>{const [x,y]=pt(i,100);return `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,.07)"/>`}).join('');
   const P=STATN.map((s,i)=>pt(i,o[s[0]]==null?0:Math.max(6,o[s[0]])));
-  const lab=STATN.map(([k,n],i)=>{const [x,y]=pt(i,128);return `<text x="${x.toFixed(1)}" y="${(y+4).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--mute)">${n}</text><text x="${x.toFixed(1)}" y="${(y+22).toFixed(1)}" text-anchor="middle" class="rk rk${rankOf(o[k])}" font-size="17">${rankOf(o[k])}</text>`}).join('');
+  const lab=STATN.map(([k,n],i)=>{const [x,y]=pt(i,128);return `<text x="${x.toFixed(1)}" y="${(y+4).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--mute)">${n}</text><text x="${x.toFixed(1)}" y="${(y+22).toFixed(1)}" text-anchor="middle" class="rk rk${rankOf(o[k])}" font-size="14">${tierOf(o[k])}</text>`}).join('');
   return `<svg class="radar" viewBox="0 0 ${S} ${S+20}" role="img" aria-label="Radar des 5 stats">${grid}${axes}<g class="radp" style="transform-origin:${cx}px ${cy}px"><polygon points="${P.map(p=>p.map(x=>x.toFixed(1)).join(',')).join(' ')}" fill="rgba(255,59,48,.28)" stroke="var(--acc)" stroke-width="2.5" stroke-linejoin="round"/>${P.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4" fill="#fff"/>`).join('')}</g>${lab}</svg>`}
 function ficheView(){const {o,d}=ficheStats(),A=archOf(o),G=gameStats(),keys=STATN.map(s=>s[0]),known=keys.filter(k=>o[k]!=null);
   const weak=known.length?known.reduce((a,b)=>o[a]<=o[b]?a:b):null,miss=keys.filter(k=>o[k]==null);
   const how={force:['Note ton poids (Profil) et fais du squat','go','profile'],expl:['Fais un test de détente','test','cmj'],vit:['Fais un test de sprint 10 m','test','sp10'],endu:['Valide tes séances','go','workout'],reg:['Tiens ton objectif de la semaine','go','home']};
   const btn=k=>{const [l,a,v]=how[k];return a==='test'?`<button class="btn sm" data-act="sheet-test" data-tk="${v}">${l}</button>`:`<button class="btn sm" data-act="go" data-go="${v}">${l}</button>`};
-  return `<section class="fiche ${A?'':'locked'}"><div class="fk" aria-hidden="true">${A?A.kj:'?'}</div>
+  return `<section class="fiche ${A?'':'locked'}"><div class="fk" aria-hidden="true">${A?A.kj:'?'}</div><div class="fsp">${spriteSvg(o,{size:104})}</div>
    <div class="fhead"><div class="small" style="letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--acc)">${esc(SP().n)}${profile.poste?' · '+esc(profile.poste):''}</div>
     <h2>${esc(profile.name||'Ton personnage')}</h2><div class="farch">${A?esc(A.n):'Archétype à découvrir'}</div>
     <div class="small" style="color:#d6d1dc;margin-top:6px;max-width:300px">${A?esc(A.d):'Encore '+(3-known.length)+' stat'+(3-known.length>1?'s':'')+' à mesurer pour révéler ton archétype.'}</div>
     <div class="ftags"><span>Niv. ${G.lvl} · ${esc(G.title)}</span><span>${esc(arcInfo().kj)} ${esc(arcInfo().name)}</span></div></div>
    ${radarSvg(o)}</section>
-  <div class="card" style="padding:8px 18px">${STATN.map(([k,n,kj])=>`<div class="frow"><span class="fkj">${kj}</span><div style="flex:1;min-width:0"><div class="lvrow" style="justify-content:space-between;gap:8px"><b>${n}</b><span class="rk rk${rankOf(o[k])}">${rankOf(o[k])}</span></div>
+  <div class="card" style="padding:8px 18px">${STATN.map(([k,n,kj])=>`<div class="frow"><span class="fkj">${kj}</span><div style="flex:1;min-width:0"><div class="lvrow" style="justify-content:space-between;gap:8px"><b>${n}</b><span class="rk rk${rankOf(o[k])}">${tierOf(o[k])}</span></div>
     <div class="pbar" style="margin-top:6px;height:6px"><i style="width:${o[k]||0}%"></i></div><div class="small muted" style="margin-top:4px">${o[k]!=null?esc(d[k])+' · '+o[k]+'/100':'Pas encore mesuré'}</div></div></div>`).join('')}</div>
   ${miss.length?`<div class="card"><span class="t">${ic('target')} Pour compléter ta fiche</span><div class="btnrow">${miss.map(btn).join('')}</div></div>`:''}
-  ${weak&&o[weak]<75?`<div class="card warn"><span class="t">${ic('bolt')} Ton point à travailler : ${STATN.find(s=>s[0]===weak)[1]}</span><div class="small">Rang ${rankOf(o[weak])}. C’est là que tu gagneras le plus vite. ${esc(REPERES[weak])}</div><div class="btnrow">${btn(weak)}</div></div>`:''}
+  ${weak&&o[weak]<75?`<div class="card warn"><span class="t">${ic('bolt')} Ton point à travailler : ${STATN.find(s=>s[0]===weak)[1]}</span><div class="small">Rang « ${tierOf(o[weak])} ». C’est là que tu gagneras le plus vite. ${esc(REPERES[weak])}</div><div class="btnrow">${btn(weak)}</div></div>`:''}
   <details class="card"><summary><span class="vchip">${ic('info')} Repères et calcul</span>${ic('chev')}</summary><div class="det"><ul>${STATN.map(([k,n])=>`<li><b>${n}</b> : ${esc(REPERES[k])}</li>`).join('')}</ul>
-   <p class="small muted">Rangs : E (0) · D (20) · C (40) · B (60) · A (75) · S (90). Les seuils sont des ordres de grandeur pour un sportif amateur, adaptés pour les femmes en force et en détente. Ce ne sont pas des normes scientifiques.</p></div></details>
+   <p class="small muted">Rangs ${esc(SP().n.toLowerCase())} : ${(TIERS[profile.sport||'volley']||TIERS.volley).map((n2,i)=>esc(n2)+' ('+[0,20,40,60,75,90][i]+')').join(' · ')}. Les seuils sont des ordres de grandeur pour un sportif amateur, adaptés pour les femmes en force et en détente. Ce ne sont pas des normes scientifiques.</p></div></details>
   <button class="btn acc block" data-act="sharefiche">${ic('share')} Partager ma fiche</button>`}
 // Carte de la fiche à partager (image 1080 × 1350)
 function shareFiche(){const {o}=ficheStats(),A=archOf(o),G=gameStats(),c=document.createElement('canvas'),W=1080,H=1350;c.width=W;c.height=H;const x=c.getContext('2d');
@@ -1226,12 +1291,20 @@ function shareFiche(){const {o}=ficheStats(),A=archOf(o),G=gameStats(),c=documen
   const cx=W/2,cy=800,R=300,pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/5;return[cx+Math.cos(a)*R*v/100,cy+Math.sin(a)*R*v/100]};
   [20,40,60,80,100].forEach(g=>{x.beginPath();STATN.forEach((s,i)=>{const p=pt(i,g);i?x.lineTo(...p):x.moveTo(...p)});x.closePath();x.strokeStyle=g===100?'rgba(255,255,255,.22)':'rgba(255,255,255,.08)';x.lineWidth=2;x.stroke()});
   x.beginPath();STATN.forEach((s,i)=>{const p=pt(i,o[s[0]]==null?0:Math.max(6,o[s[0]]));i?x.lineTo(...p):x.moveTo(...p)});x.closePath();x.fillStyle='rgba(255,59,48,.32)';x.fill();x.strokeStyle='#ff3b30';x.lineWidth=6;x.stroke();
-  STATN.forEach(([k,n],i)=>{const p=pt(i,132);x.textAlign='center';x.fillStyle='#d6d1dc';x.font=F(30,800);x.fillText(n,p[0],p[1]);x.fillStyle=o[k]==null?'#5c5763':'#ffc83d';x.font=D(64);x.fillText(rankOf(o[k]),p[0],p[1]+64)});
+  STATN.forEach(([k,n],i)=>{const p=pt(i,132);x.textAlign='center';x.fillStyle='#d6d1dc';x.font=F(30,800);x.fillText(n,p[0],p[1]);x.fillStyle=o[k]==null?'#5c5763':'#ffc83d';x.font=D(46);x.fillText(tierOf(o[k]).toUpperCase(),p[0],p[1]+58)});
   x.textAlign='left';x.fillStyle='#5c5763';x.font=F(28,600);x.fillText(new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}),80,1290);
   const u=c.toDataURL('image/png'),b=atob(u.split(',')[1]),a=new Uint8Array(b.length);for(let j=0;j<b.length;j++)a[j]=b.charCodeAt(j);
   shareFile(new Blob([a],{type:'image/png'}),'yosha-fiche.png','image/png',()=>toast('Fiche prête ✓'))}
 function ficheMini(){const {o}=ficheStats(),A=archOf(o);
   return `<div class="card fmini" data-act="go" data-go="progress" data-ptab="fiche" role="button"><span class="fmk">${A?A.kj:'?'}</span><div style="flex:1;min-width:0"><div class="small muted" style="font-weight:700">Ma fiche</div><b>${A?esc(A.n):'Archétype à découvrir'}</b></div><span class="frk">${STATN.map(([k])=>`<i class="rk rk${rankOf(o[k])}">${rankOf(o[k])}</i>`).join('')}</span>${ic('chev')}</div>`}
+// Accueil : ton personnage, sa réplique, son archétype, son meilleur rang et l’arc en cours (remplace 3 cartes)
+function persoCard(){const {o}=ficheStats(),A=archOf(o),R=arcInfo(),best=STATN.map(([k,n])=>[n,o[k]]).filter(x=>x[1]!=null).sort((a,b)=>b[1]-a[1])[0];
+  return `<div class="card perso" data-act="go" data-go="progress" data-ptab="fiche" role="button" aria-label="Ouvrir ma fiche">
+   <div class="psp">${spriteSvg(o,{size:92})}</div>
+   <div class="pmain"><div class="bubble">${esc(sayL('hello'))}</div>
+    <span class="parch">${A?esc(A.n):'Archétype à découvrir'}</span>
+    <div class="small muted" style="margin-top:2px">${best?`${esc(best[0])} : <b class="rk rk${rankOf(best[1])}" style="font-size:15px">${esc(tierOf(best[1]))}</b> · `:''}${esc(R.kj)} ${esc(R.name)}</div>
+    <div class="arcb" style="margin-top:7px">${[0,1,2,3].map(j=>`<i class="${j<R.into?'on':''}"></i>`).join('')}</div></div></div>`}
 let cgT=null;const queueGame=()=>{clearTimeout(cgT);cgT=setTimeout(checkGame,2400)};
 function chRow(c){return `<div class="chl ${c.ok?'ok':''}"><span class="cc ${c.ok?'ok':''}">${ic(c.ok?'check':'target')}</span><div style="flex:1;min-width:0"><div class="lb">${esc(c.n)}</div>${c.ok?'':`<div class="pbar"><i style="width:${Math.round(Math.min(1,c.cur/c.tgt)*100)}%;background:var(--yel)"></i></div>`}</div><span class="xp">${c.ok?'✓ ':''}${c.ok?'+100':Math.min(c.cur,c.tgt)+'/'+c.tgt}</span></div>`}
 const estDur=list=>Math.max(15,Math.round(list.reduce((a,it)=>a+it.sets*(EX[it.id].rest+40),0)/300)*5);
@@ -1490,16 +1563,14 @@ function renderHome(){
   const lastV=[...volley].sort((a,b)=>a.date<b.date?1:-1)[0];
   const phx=list.find(x=>!x.rt&&PHOTO.has(x.id));
   $('#view').innerHTML=`<header class="hdr"><div><div class="hello"><span class="jp">${KJ.home}</span>${new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</div><h1>Salut${nm?' '+nm:''}</h1></div>${avatarBtn()}</header>
-  <div class="motto"><span>${SP().kj}</span>${esc(sayL('hello'))}</div>
   ${inviteCard()}
   ${matchBanner()}
   <section class="hero" data-k="今日の修行">${phx?`<div class="ph" style="background-image:url(${phx.id}-1.jpg)"></div>`:''}<span class="tag">${ic('dumbbell')} Séance du jour</span><h2>${esc(ses.name)}</h2><p>${esc(ses.sub)}</p>
    <div class="meta-row"><span>${ic('list')} ${nMain} exercices${hasRt?' + détente':''}</span><span>${ic('clock')} ~${estDur(list)} min</span>${hm.why.length?`<span style="color:var(--ora)">${ic('shield')} adaptée</span>`:''}</div>
    <button class="btn acc block" data-act="start" data-sid="${hs}">${ic('play')} ${started?'Reprendre la séance':'Commencer'}</button>
    <div class="sub2"><button class="linkbtn" data-act="go" data-go="workout">Voir tous les exercices ${ic('chev')}</button></div><div class="big">${ic(prog.icon)}</div></section>
+  ${persoCard()}
   ${recapCard()}
-  ${arcCard()}
-  ${ficheMini()}
   <div class="minis">
    <button class="mini" data-act="go" data-go="progress" data-ptab="histo" aria-label="Ma semaine">${ring(doneT/goalT,60,6,'var(--acc)',`<b style="font-size:16px">${doneT}<span class="muted" style="font-size:12px">/${goalT}</span></b>`)}<span>${doneT>=goalT?'Semaine ✓':'Semaine'}</span></button>
    <button class="mini" data-act="go" data-go="progress" data-ptab="trophees" aria-label="Mon niveau">${ring(G.into/G.need,60,6,'var(--yel)',`<b style="font-size:19px">${G.lvl}</b>`)}<span>${G.title}</span></button>
@@ -1701,7 +1772,8 @@ function weightCard(g){const l=wSorted(),t=wTrend();
   <div class="goal" style="color:${t?'var(--ink)':'var(--mute)'}">${ic('target')}<span>${trendMsg(t,g)}</span></div>
   ${l.length?`<details style="margin-top:14px"><summary class="small muted">Mes pesées ${ic('chev')}</summary><div class="det">${[...l].reverse().slice(0,10).map(x=>`<div class="li"><div class="mid"><div class="nm">${fr(x.kg)} kg</div><div class="sub">${relDay(x.date)}</div></div><button class="xbtn" data-act="delw" data-id="${x.id}" aria-label="Supprimer">${ic('trash')}</button></div>`).join('')}</div></details>`:''}</div>`}
 function renderProgress(){
-  const segs=Object.assign({fiche:'Fiche',salle:'Salle',detente:'Tests',charge:'Charge',trophees:'Trophées'},profile.team||ptab==='equipe'?{equipe:'Équipe'}:{},{histo:'Calendrier'});
+  if(ptab==='trophees')ptab='fiche';if(ptab==='charge')ptab='histo';
+  const segs=Object.assign({fiche:'Fiche',salle:'Salle',detente:'Tests'},profile.team||ptab==='equipe'?{equipe:'Équipe'}:{},{histo:'Historique'});
   let h=`<header class="hdr"><div><div class="hello">Tes performances</div><h1>Progrès</h1></div>${avatarBtn()}</header><div class="seg">${Object.keys(segs).map(s=>`<button class="${s===ptab?'on':''}" data-act="ptab" data-v="${s}">${segs[s]}</button>`).join('')}</div>`;
   const t=todayStr(),wk=monday(t),W8=[];for(let i=7;i>=0;i--)W8.push(addDays(wk,-7*i));
   if(ptab==='salle'){
@@ -1726,7 +1798,7 @@ function renderProgress(){
     <button class="btn acc block" data-act="sheet-test">${ic('plus')} Nouveau test</button>
     ${l.length?`<div class="card">${[...l].reverse().map(j=>`<div class="li"><div class="mid"><div class="nm">${fmtJ(j.kind,j.val)} ${u}${J.reach&&r?` <span class="muted small">· détente ${j.val-r} cm</span>`:''}</div><div class="sub">${relDay(j.date)} · ${j.method==='capteur'?'téléphone':'mesuré'}${j.note?' · '+esc(j.note):''}</div></div><button class="xbtn" data-act="deljump" data-id="${j.id}" aria-label="Supprimer">${ic('trash')}</button></div>`).join('')}</div>`:''}
     <div class="small muted" style="margin-top:14px">${J.help}</div>`;
-  }else if(ptab==='charge'){
+  }else if(ptab==='histo'){h+=calCard()+'<div class="sect-h" style="margin-top:24px"><h3>Charge d’entraînement</h3></div>';
     const ac=acwr(),z=zone(ac.r);
     const gymL=W8.map(w=>sessionDates().filter(d=>d>=w&&d<=addDays(w,6)).reduce((a,d)=>a+gymDur(d)*(rpe[d]||6),0));
     const vbL=W8.map(w=>volley.filter(v=>v.date>=w&&v.date<=addDays(w,6)).reduce((a,v)=>a+v.min*v.rpe,0));
@@ -1736,22 +1808,22 @@ function renderProgress(){
     <div class="card"><span class="t">${ic('bolt')} Sauts de pliométrie</span>${bars(pc,W8.map(fmtDM),7,v=>v,'var(--yel)','rgba(250,204,21,.32)')}</div>
     <details class="card"><summary><span class="vchip">${ic('info')} Comment c’est calculé</span>${ic('chev')}</summary><div class="det">Effort = durée × intensité ressentie. L’appli compare tes 7 derniers jours à ta moyenne des 4 dernières semaines : entre 0,8 et 1,3, c’est la zone où l’on se blesse le moins.</div></details>`;
   }else if(ptab==='equipe'){h+=teamView();
-  }else if(ptab==='fiche'){h+=ficheView();
-  }else if(ptab==='trophees'){const G=gameStats();
+  }else if(ptab==='fiche'){h+=ficheView();const G=gameStats();h+='<div class="sect-h" style="margin-top:30px"><h3>Niveau, défis et badges</h3></div>';
     h+=`<section class="hero nu"><span class="tag" style="color:var(--yel);background:var(--yeld)">${ic('trophy')} Niveau ${G.lvl}</span><h2>${G.title}</h2><p>${G.xp.toLocaleString('fr-FR')} XP au total · encore ${(G.need-G.into).toLocaleString('fr-FR')} XP pour « ${titleOf(G.lvl+1)} »</p>
      <div class="pbar"><i style="width:${Math.round(G.into/G.need*100)}%;background:var(--yel)"></i></div>
      <button class="btn sm" data-act="share" style="margin-top:16px">${ic('share')} Partager ma progression</button><div class="big">${ic('trophy')}</div></section>
     <div class="kpis"><div class="kpi"><small>Série en cours</small><b>${G.streak}</b><em>sem. 🔥</em></div><div class="kpi"><small>Meilleure série</small><b>${G.best}</b><em>sem.</em></div></div>
-    <div class="small muted" style="margin:-4px 2px 0">Une semaine compte quand tu fais tes ${G.goalT} séances (salle + volley).</div>
+    <div class="small muted" style="margin:-4px 2px 0">Une semaine compte quand tu fais tes ${G.goalT} séances (salle + ${spLow()}).</div>
     <div class="sect-h"><h3>Défis de la semaine</h3><span class="muted small">+100 XP chacun</span></div><div class="card">${G.ch.map(chRow).join('')}<div class="small muted" style="margin-top:10px">Nouveaux défis chaque lundi.</div></div>
     <div class="sect-h"><h3>Badges</h3><span class="muted small">${G.nb} / ${G.badges.length}</span></div>
     <div class="bdgs">${G.badges.map(b=>`<div class="bdg ${b.ok?'ok':'off'}"><div class="e">${b.e}</div><b>${esc(b.n)}</b><small>${esc(b.d)}</small>${b.ok?'':`<div class="pbar"><i style="width:${Math.round(b.p*100)}%;background:var(--yel)"></i></div>`}</div>`).join('')}</div>
     <details class="card"><summary><span class="vchip">${ic('info')} Comment gagner de l’XP</span>${ic('chev')}</summary><div class="det"><ul>
      <li>Séance de salle : <b>+100</b>, et +5 par série validée</li><li>${SP().n} : <b>+60</b> (+20 si c’est un match)</li><li>Record battu : <b>+50</b> · Badge : <b>+50</b></li>
      <li>Objectif de la semaine atteint : <b>+150</b> · Défi réussi : <b>+100</b></li><li>Test de détente : <b>+30</b> · Protéines atteintes : <b>+20</b></li><li>Bilan forme, pesée : <b>+10</b></li></ul></div></details>`;
-  }else{
+  }
+  if(ptab==='histo'){
     const gd=sessionDates(),all=[...new Set([...gd,...volley.map(v=>v.date),...jumps.map(j=>j.date)])].sort().reverse().slice(0,60);
-    h+=calCard()+`<div class="sect-h" style="margin-top:24px"><h3>Dernières séances</h3></div>`;
+    h+=`<div class="sect-h" style="margin-top:24px"><h3>Dernières séances</h3></div>`;
     h+=all.length?all.map(d=>{const ents=Object.values(logs).filter(e=>e.date===d&&hasData(e)&&EX[e.exId]),vs=volley.filter(v=>v.date===d),js=jumps.filter(j=>j.date===d);
       const sn=(()=>{const e=ents.find(x=>x.sid);if(e)for(const p of Object.values(PROGS)){const s=p.sessions.find(x=>x.id===e.sid);if(s)return s.name}return 'Salle'})();
       return `<div class="card"><h3>${relDay(d)}</h3>
@@ -1765,37 +1837,52 @@ function renderProfile(){
   const lb=LS.get('gym_lastbk',0),p=profile;
   const opt=(arr,v)=>arr.map(([val,l])=>`<option value="${val}" ${String(val)===String(v)?'selected':''}>${l}</option>`).join('');
   const goals=(key,max,min)=>`<div class="opts" style="grid-template-columns:repeat(${max-min+1},1fr)">${Array.from({length:max-min+1},(_,i)=>i+min).map(n=>`<button class="${+p[key]===n?'on':''}" data-act="goal" data-k="${key}" data-v="${n}">${n}</button>`).join('')}</div>`;
+  const sec=(i,t,s,o)=>`<details class="psec" ${o?'open':''}><summary><span class="pi">${ic(i)}</span><div style="flex:1;min-width:0"><b>${t}</b><small>${s}</small></div>${ic('chev')}</summary>`;
   $('#view').innerHTML=`<header class="hdr"><button class="iconbtn" data-act="go" data-go="home" aria-label="Retour">${ic('back')}</button><div style="flex:1"><div class="hello">Réglages</div><h1>Profil</h1></div></header>
+  ${sec('user','Moi et mon personnage','Prénom, mensurations, apparence',true)}
   <div class="card"><span class="t">${ic('user')} Moi</span>
    <label class="field"><span>Prénom</span><input data-pf="name" value="${esc(p.name)}" autocomplete="given-name"></label>
    <div class="row"><label class="field"><span>Taille (cm)</span><input data-pf="taille" inputmode="numeric" value="${esc(p.taille)}"></label><label class="field"><span>Poids (kg)</span><input data-pf="poids" inputmode="decimal" value="${esc(p.poids)}"></label></div>
-   <div class="row"><label class="field" style="margin-top:0"><span>Âge</span><input data-pf="age" inputmode="numeric" value="${esc(p.age)}"></label><div class="field" style="margin-top:0"><span>Sexe</span><div class="opts" style="grid-template-columns:1fr 1fr">${[['h','Homme'],['f','Femme']].map(([v,l])=>`<button class="${p.sexe===v?'on':''}" data-act="psexe" data-v="${v}">${l}</button>`).join('')}</div></div></div>
-   <div class="field"><span>Mon sport</span><div class="sports">${Object.entries(SPORTS).map(([k2,s])=>`<button class="${k2===(p.sport||'volley')?'on':''}" data-act="setsport" data-v="${k2}" aria-pressed="${k2===(p.sport||'volley')}">${ic(s.ic)}${s.n}</button>`).join('')}</div><div class="help">Change le programme de salle, les exercices conseillés et les explications.</div></div>
+   <div class="row"><label class="field" style="margin-top:0"><span>Âge</span><input data-pf="age" inputmode="numeric" value="${esc(p.age)}"></label><div class="field" style="margin-top:0"><span>Sexe</span><div class="opts" style="grid-template-columns:1fr 1fr">${[['h','Homme'],['f','Femme']].map(([v,l])=>`<button class="${p.sexe===v?'on':''}" data-act="psexe" data-v="${v}">${l}</button>`).join('')}</div></div></div></div>
+  <div class="card"><span class="t">${ic('user')} Mon personnage</span><div class="small muted">Il prend du gabarit avec ta force et ton endurance, et son aura prend la couleur de ton meilleur rang.</div><div id="avbox" style="margin-top:6px">${avBody()}</div></div>
+  </details>
+  ${sec(SP().ic,'Mon sport et ma salle','Sport, niveau, poste, objectifs, programme')}
+  <div class="card">
+   <div class="field" style="margin-top:0"><span>Mon sport</span><div class="sports">${Object.entries(SPORTS).map(([k2,s])=>`<button class="${k2===(p.sport||'volley')?'on':''}" data-act="setsport" data-v="${k2}" aria-pressed="${k2===(p.sport||'volley')}">${ic(s.ic)}${s.n}</button>`).join('')}</div><div class="help">Change le programme de salle, les exercices conseillés et les explications.</div></div>
    <div class="field"><span>Mon niveau en salle</span><div class="opts" style="grid-template-columns:repeat(3,1fr)">${LVLS.map(([v,l,s])=>`<button class="${lvl0()===v?'on':''}" data-act="setlvl" data-v="${v}">${l}<small>${s}</small></button>`).join('')}</div><div class="help">${lvl0()==='deb'?'Débutant : exercices plus simples à apprendre (goblet squat, tirage vertical…) et une série de moins.':lvl0()==='conf'?'Confirmé : une série de plus sur les deux premiers gros exercices de chaque séance.':'Intermédiaire : le programme tel qu’il est conçu.'}</div></div>
    <label class="field"><span>Poste (${SP().n.toLowerCase()})</span><select data-pf="poste">${opt(POSTES.map(x=>[x,x||'—']),p.poste)}</select></label>
    <label class="field"><span>Atteinte debout (cm)</span><input data-pf="reach" inputmode="numeric" placeholder="${num(p.taille)?'≈ '+Math.round(num(p.taille)*1.33)+' (estimé)':'ex. 235'}" value="${esc(p.reach)}"><div class="help">Debout, pieds à plat, bras tendu contre un mur : hauteur du bout des doigts. Sert à calculer ta détente.</div></label>
    ${(p.sport||'volley')==='volley'?`<label class="field" style="margin-bottom:4px"><span>Hauteur du filet</span><select data-pf="net">${opt([[243,'2,43 m (hommes)'],[235,'2,35 m (jeunes / mixte)'],[224,'2,24 m (femmes)'],[215,'2,15 m (jeunes)']],p.net)}</select></label>`:''}</div>
+  <div class="card"><span class="t">${ic('target')} Mes objectifs par semaine</span><div class="small muted" style="margin-bottom:10px">Séances de salle</div>${goals('goalGym',5,1)}<div class="small muted" style="margin:18px 0 10px">Séances de ${spLow()} (club, matchs)</div>${goals('goalVb',5,0)}</div>
+  <div class="card"><span class="t">${ic('dumbbell')} Programme</span>${[SP().prog,...Object.keys(PROGS).filter(k2=>k2!==SP().prog)].map(k2=>`<button class="choice ${k2===progId?'on':''}" data-act="setprog" data-v="${k2}"><span class="thumb" style="background:var(--accd);color:var(--acc)">${ic(PROGS[k2].icon)}</span><span><b>${PROGS[k2].name}</b><small>${PROGS[k2].desc}</small></span></button>`).join('')}</div>
+  </details>
+  ${sec('users','Compte et équipe',p.team?'Synchronisation, équipe '+esc(p.team):'Synchronisation, équipe, coach')}
   ${acctCard()}
+  </details>
+  ${sec('bell','Notifications et rappels','Alertes de séance, calendrier')}
   ${notifCard()}
+  <div class="card"><span class="t">${ic('cal')} Rappels</span><div class="small muted">Choisis tes jours de salle : l’appli crée un événement qui se répète chaque semaine dans ton calendrier, avec une alerte 15 min avant.</div>
+   <div class="days" style="margin-top:14px">${'LMMJVSD'.split('').map((l,i)=>`<button class="${(p.rdays||[]).includes(i)?'on':''}" data-act="rday" data-v="${i}" aria-label="${DAYN[i]}" aria-pressed="${(p.rdays||[]).includes(i)}">${l}</button>`).join('')}</div>
+   <label class="field" style="margin-bottom:0"><span>Heure</span><select data-pf="rtime">${opt(Array.from({length:33},(_,i)=>{const hh=6+Math.floor(i/2),mm=i%2?'30':'00';return[pad(hh)+':'+mm,hh+'h'+mm]}),p.rtime||'18:00')}</select></label>
+   <div class="btnrow"><button class="btn acc" data-act="ics">${ic('cal')} Ajouter à mon calendrier</button></div>
+   <div class="small muted" style="margin-top:10px">Sur iPhone, si « Calendrier » n’apparaît pas dans le menu de partage : choisis « Enregistrer dans Fichiers », puis ouvre le fichier depuis l’app Fichiers.</div></div>
+  </details>
+  ${sec('heart','Santé',injs().length?'Douleur déclarée : séances adaptées':'Douleurs et blessures')}
+  <div class="card ${injs().length?'warn':''}"><span class="t">🩹 Douleurs et blessures</span><div class="small muted">${injs().length?'Déclaré : '+esc(injs().map(z=>INJ[z].n).join(', '))+'. Tes séances sont adaptées.':'Une douleur ? Déclare-la : l’appli remplace les exercices qui la sollicitent.'}</div><div class="btnrow"><button class="btn sm" data-act="injsheet">${injs().length?'Modifier':'Déclarer une douleur'}</button></div></div>
+  </details>
+  ${sec('down','Données et appli','Sauvegarde, installation, affichage, aide')}
+  <div class="card"><span class="t">${ic('down')} Sauvegarde</span><div class="small muted">Tout est sur ce téléphone, même sans réseau. Fais une copie de temps en temps.${lb?' Dernière : '+fmtD(dstr(new Date(lb)))+'.':''}</div>
+   <div class="btnrow"><button class="btn acc" data-act="dl">${ic('down')} Sauvegarder</button><button class="btn" data-act="file">${ic('upload')} Restaurer</button></div>
+   <details style="margin-top:16px"><summary class="small">Copier / coller en texte ${ic('chev')}</summary><div class="det"><div class="btnrow" style="margin-top:0"><button class="btn sm" data-act="copy">Copier</button><button class="btn sm" data-act="paste">Importer</button></div><textarea id="bk" style="margin-top:10px" placeholder="Colle ici une sauvegarde"></textarea></div></details>
+   <div class="small" id="bkmsg" style="margin-top:8px;color:var(--acc)"></div></div>
+  <div class="card"><span class="t">${ic('phone')} Installation</span><div class="small muted">${isStandalone()?'L’appli est installée ✓ Ouvre-la toujours depuis son icône.':isIOS()?'Dans Safari : Partager → Sur l’écran d’accueil.':'Menu ⋮ du navigateur → Installer l’application.'}</div><div class="btnrow"><a class="btn sm" href="installer.html">Page d’installation</a><a class="btn sm" href="guide.html">Guide complet</a>${deferredPrompt?`<button class="btn sm acc" data-act="install">Installer</button>`:''}</div></div>
   <div class="card"><span class="t">${ic('info')} Affichage et aide</span>
    <div class="setrow" data-act="bigtxt" role="switch" aria-checked="${!!p.big}"><div><b>Texte plus grand</b><small>Plus lisible avec le téléphone posé au sol</small></div><span class="sw ${p.big?'on':''}"></span></div>
    <div class="setrow" data-act="tourreset"><div><b>Revoir la visite guidée</b><small>Les bulles d’explication des écrans</small></div>${ic('chev')}</div>
    <div class="setrow" data-act="fbsheet"><div><b>Une idée ou un bug ?</b><small>Ton message arrive directement, chaque retour est lu</small></div>${ic('chev')}</div>
    <a class="setrow" href="legal.html#donnees" style="text-decoration:none;color:inherit"><div><b>Confidentialité et mentions légales</b><small>Tes données, tes droits, comment tout supprimer</small></div>${ic('chev')}</a>
    <a class="setrow" href="legal.html#sante" style="text-decoration:none;color:inherit"><div><b>Avertissement santé</b><small>L’appli ne remplace pas un avis médical</small></div>${ic('chev')}</a></div>
-  <div class="card ${injs().length?'warn':''}"><span class="t">🩹 Douleurs et blessures</span><div class="small muted">${injs().length?'Déclaré : '+esc(injs().map(z=>INJ[z].n).join(', '))+'. Tes séances sont adaptées.':'Une douleur ? Déclare-la : l’appli remplace les exercices qui la sollicitent.'}</div><div class="btnrow"><button class="btn sm" data-act="injsheet">${injs().length?'Modifier':'Déclarer une douleur'}</button></div></div>
-  <div class="card"><span class="t">${ic('target')} Mes objectifs par semaine</span><div class="small muted" style="margin-bottom:10px">Séances de salle</div>${goals('goalGym',5,1)}<div class="small muted" style="margin:18px 0 10px">Séances de ${spLow()} (club, matchs)</div>${goals('goalVb',5,0)}</div>
-  <div class="card"><span class="t">${ic('cal')} Rappels</span><div class="small muted">Choisis tes jours de salle : l’appli crée un événement qui se répète chaque semaine dans ton calendrier, avec une alerte 15 min avant.</div>
-   <div class="days" style="margin-top:14px">${'LMMJVSD'.split('').map((l,i)=>`<button class="${(p.rdays||[]).includes(i)?'on':''}" data-act="rday" data-v="${i}" aria-label="${DAYN[i]}" aria-pressed="${(p.rdays||[]).includes(i)}">${l}</button>`).join('')}</div>
-   <label class="field" style="margin-bottom:0"><span>Heure</span><select data-pf="rtime">${opt(Array.from({length:33},(_,i)=>{const hh=6+Math.floor(i/2),mm=i%2?'30':'00';return[pad(hh)+':'+mm,hh+'h'+mm]}),p.rtime||'18:00')}</select></label>
-   <div class="btnrow"><button class="btn acc" data-act="ics">${ic('cal')} Ajouter à mon calendrier</button></div>
-   <div class="small muted" style="margin-top:10px">Sur iPhone, si « Calendrier » n’apparaît pas dans le menu de partage : choisis « Enregistrer dans Fichiers », puis ouvre le fichier depuis l’app Fichiers.</div></div>
-  <div class="card"><span class="t">${ic('dumbbell')} Programme</span>${[SP().prog,...Object.keys(PROGS).filter(k2=>k2!==SP().prog)].map(k2=>`<button class="choice ${k2===progId?'on':''}" data-act="setprog" data-v="${k2}"><span class="thumb" style="background:var(--accd);color:var(--acc)">${ic(PROGS[k2].icon)}</span><span><b>${PROGS[k2].name}</b><small>${PROGS[k2].desc}</small></span></button>`).join('')}</div>
-  <div class="card"><span class="t">${ic('down')} Sauvegarde</span><div class="small muted">Tout est sur ce téléphone, même sans réseau. Fais une copie de temps en temps.${lb?' Dernière : '+fmtD(dstr(new Date(lb)))+'.':''}</div>
-   <div class="btnrow"><button class="btn acc" data-act="dl">${ic('down')} Sauvegarder</button><button class="btn" data-act="file">${ic('upload')} Restaurer</button></div>
-   <details style="margin-top:16px"><summary class="small">Copier / coller en texte ${ic('chev')}</summary><div class="det"><div class="btnrow" style="margin-top:0"><button class="btn sm" data-act="copy">Copier</button><button class="btn sm" data-act="paste">Importer</button></div><textarea id="bk" style="margin-top:10px" placeholder="Colle ici une sauvegarde"></textarea></div></details>
-   <div class="small" id="bkmsg" style="margin-top:8px;color:var(--acc)"></div></div>
-  <div class="card"><span class="t">${ic('phone')} Installation</span><div class="small muted">${isStandalone()?'L’appli est installée ✓ Ouvre-la toujours depuis son icône.':isIOS()?'Dans Safari : Partager → Sur l’écran d’accueil.':'Menu ⋮ du navigateur → Installer l’application.'}</div><div class="btnrow"><a class="btn sm" href="installer.html">Page d’installation</a><a class="btn sm" href="guide.html">Guide complet</a>${deferredPrompt?`<button class="btn sm acc" data-act="install">Installer</button>`:''}</div></div>
+  </details>
   <div class="center small muted" style="margin:24px 0"><span style="font-family:var(--jp);color:var(--acc);font-weight:800;letter-spacing:.2em">よっしゃ</span> ${APP} — Salle & Sport · v${APP_V} · <a href="legal.html" style="color:inherit">Confidentialité</a></div>`;
 }
 const NAV=()=>[['home','home','Accueil'],['volley',SP().ic,SP().n],['workout','dumbbell','Séance'],['nutri','apple','Nutrition'],['progress','chart','Progrès']];
@@ -2384,6 +2471,7 @@ document.addEventListener('click',ev=>{
   case 'rgo':nseg='recettes';rcat='batch';render();window.scrollTo(0,0);break;
   case 'share':shareCard();break;
   case 'sharefiche':shareFiche();break;
+  case 'avset':{const a=Object.assign({},profile.av||{});a[d.k]=+d.v;profile.av=a;saveProfile();const b=$('#avbox');if(b)b.innerHTML=avBody();break}
   case 'rready':readySheet();break;
   case 'rsave':{const sc=draft.s+draft.c+draft.p;ready[todayStr()]={s:draft.s,c:draft.c,p:draft.p,score:sc};LS.set('gym_ready',ready);closeSheet();openEx.clear();autoKey='';if(focusOn){const j=curList().findIndex(x=>!exDone(x.id));fIdx=j<0?0:j}render();toast(curMods().why.length?'Séance adaptée à ta forme':'Feu vert : séance complète 💪');if(draft.p===0&&!injs().length)setTimeout(injSheet,700);break}
   case 'nodl':profile.nodl=monday(todayStr());saveProfile();openEx.clear();autoKey='';render();toast('Semaine normale');break;
