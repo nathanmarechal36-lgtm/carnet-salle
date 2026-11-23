@@ -467,6 +467,14 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
 .spark{display:flex;align-items:flex-end;gap:5px;height:64px;margin-top:8px}.spark i{flex:1;background:linear-gradient(180deg,var(--vio),rgba(155,124,255,.35));border-radius:5px 5px 2px 2px;min-height:4px}
 .wcard{display:flex;gap:12px;align-items:center;width:100%;color:inherit;font:inherit;cursor:pointer}.wcard .bi{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none}
 .wcard b{display:block;font-size:16px}.wcard small{display:block;font-size:12.5px;color:var(--mute);margin-top:2px}
+/* ---- v25 : nutrition et progrès ---- */
+.nrings{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}
+.nring{display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;color:inherit;font:inherit;padding:4px 0;cursor:pointer}
+.nring span{font-size:13px;font-weight:750;text-align:center;line-height:1.2}.nring small{display:block;font-size:11px;color:var(--mute);font-weight:600}
+.mrow{display:flex;gap:10px;align-items:center}.mrow .btn{flex:none}
+.mstat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;text-align:center}.mstat b{display:block;font-size:22px;font-weight:850}
+.mstat small{display:block;font-size:12px;color:var(--mute)}.mstat em{display:block;font-style:normal;font-size:12.5px;font-weight:800;margin-top:2px}
+.newpr{font-size:10px;font-weight:850;letter-spacing:.06em;color:#0b0a0d;background:var(--yel);padding:2px 6px;border-radius:6px;vertical-align:2px}
 /* ---- v16 : animations ---- */
 #view.wipe{animation:wipe .26s var(--ease-out) both}
 @keyframes wipe{from{clip-path:polygon(0 0,0 0,-35% 100%,0 100%)}to{clip-path:polygon(0 0,135% 0,100% 100%,0 100%)}}
@@ -769,9 +777,9 @@ const INTENS=[[3,'Tranquille'],[5,'Normal'],[7,'Intense'],[9,'À fond']];
 const POSTES=['','Réceptionneur-attaquant','Pointu','Central','Passeur','Libéro'];
 
 // ----- Sports : programme, postes, stats de match, tests et explications -----
-const APP='Yosha',APP_V='24',TERMS_V=2;
+const APP='Yosha',APP_V='25',TERMS_V=2;
 // Nouveautés montrées une fois après la mise à jour
-const NEWS={'24':['Onglet sport repensé en 3 parties : Aujourd’hui, Matchs, Progresser.','Note ton entraînement en un appui (même durée que la dernière fois, annulable).','Matchs : résultat et score, bilan de ta saison (victoires, défaites, forme sur 5 matchs) et courbe de tes stats.','Jour de match : échauffement guidé avec chrono, conseils de la veille et du lendemain.'],'23':['Finitions : les boutons s’enfoncent sous le doigt, les feuilles glissent à la fermeture et les changements d’écran sont plus vifs.','Accessibilité : l’appli s’utilise mieux avec VoiceOver et au clavier (repère de focus, tous les éléments activables).','Installation plus légère : les photos d’exercices se téléchargent quand tu les ouvres.'],'22':['Ton personnage vit avec toi : il dort si tu ne viens plus, souffle après une séance et fait la fête quand ton objectif de la semaine est tenu.','Passage de rang : une animation quand une stat monte d’un rang, avec de nouveaux gestes quand ton personnage progresse.','Objets à gagner en t’entraînant : bandeau or (niveau 5), brassard de capitaine (6 semaines d’affilée), maillot or (niveau 8).'],'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
+const NEWS={'25':['Nutrition en 3 parties : Aujourd’hui (ta journée en 3 anneaux et des idées de repas à noter en un appui), Mon plan, Cuisine (recettes et courses).','Progrès : bilan des 28 derniers jours comparé au mois d’avant, records récents en tête, et l’analyse du corps rangée dans « Tests & corps ».'],'24':['Onglet sport repensé en 3 parties : Aujourd’hui, Matchs, Progresser.','Note ton entraînement en un appui (même durée que la dernière fois, annulable).','Matchs : résultat et score, bilan de ta saison (victoires, défaites, forme sur 5 matchs) et courbe de tes stats.','Jour de match : échauffement guidé avec chrono, conseils de la veille et du lendemain.'],'23':['Finitions : les boutons s’enfoncent sous le doigt, les feuilles glissent à la fermeture et les changements d’écran sont plus vifs.','Accessibilité : l’appli s’utilise mieux avec VoiceOver et au clavier (repère de focus, tous les éléments activables).','Installation plus légère : les photos d’exercices se téléchargent quand tu les ouvres.'],'22':['Ton personnage vit avec toi : il dort si tu ne viens plus, souffle après une séance et fait la fête quand ton objectif de la semaine est tenu.','Passage de rang : une animation quand une stat monte d’un rang, avec de nouveaux gestes quand ton personnage progresse.','Objets à gagner en t’entraînant : bandeau or (niveau 5), brassard de capitaine (6 semaines d’affilée), maillot or (niveau 8).'],'21':['Premier bilan en 2 minutes (accueil ou Progrès → Fiche) : poids, détente, squat, sprint. Ton personnage reçoit son rang tout de suite.','Les nouveaux joueurs créent leur personnage dès l’arrivée dans l’appli.'],'20':['Personnage encore plus détaillé et des animations plus fluides : clignements d’yeux, poussière à l’atterrissage, image fantôme et aura de flammes quand tu maîtrises.','Personnalisation : 6 teints, 8 coupes, 8 couleurs de cheveux, couleur des yeux, couleur du maillot, numéro, bandeau et poignets. Et un bouton « Au hasard ».'],'19':['Appli allégée : le niveau n’a plus de titre (c’est ton rang qui en porte un), l’accueil n’a plus de doublons, un seul bouton de partage, et l’historique montre tes 10 dernières journées.'],'18':['Ton personnage est redessiné : plus détaillé, avec ombres, contour et vraies animations.','Il évolue avec ton rang : au début il rate son smash, perd son dribble ou fait tomber le ballon ; plus tu progresses, plus son geste devient propre, puis explosif.','Les rangs racontent ta progression : Premiers pas, Apprenti, Solide, Redoutable, Prodige, puis Maître de ton sport.'],'17':['Ton personnage en pixel art : il smashe, dribble, jongle ou court selon ton sport, et grandit avec tes stats. Choisis son apparence dans Profil.','Les rangs changent selon ton sport : de Plume à Ciel au volley, de Parquet à Mythe au basket, de Crampon à Légende au foot, de Boue à Légende au rugby.','Écrans allégés : accueil plus simple, Progrès en 4 onglets, Profil rangé en sections.'],'16':['Nouvelle fiche de personnage (Progrès → Fiche) : 5 stats de E à S, un radar et ton archétype, comme « Le petit sauteur » ou « L’éclair ». Tu peux la partager.','Plus d’animations : transitions en cases de manga, impact sur les records, tampon à chaque série validée, chrono qui s’emballe sur les 3 dernières secondes.'],'15':['L’appli s’appelle maintenant Yosha (よっしゃ !). Tes données ne bougent pas. Pour voir la nouvelle icône sur iPhone, supprime puis réinstalle l’appli : fais d’abord une sauvegarde (Profil → Sauvegarder) ou vérifie que ton compte est synchronisé.','Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.'],'14':['Le vert veut dire « validé » ou « équilibré » ; le rouge n’est plus utilisé pour les bonnes nouvelles.','Supprimer ton compte efface maintenant aussi tes réglages de notification, tes messages et tes séances partagées avec le coach.','La page Confidentialité a été corrigée : relis-la avant d’accepter.','La mesure vidéo du saut affiche une marge d’erreur réaliste.'],'13':['Les mises à jour s’installent d’un seul bouton : plus besoin de fermer l’appli deux fois.','Ton niveau en salle (débutant, intermédiaire, confirmé) adapte tes séances : Profil → Mon niveau.','Une page claire sur tes données et tes droits : Profil → Confidentialité.']};
 const SPORTS={
  volley:{n:'Volley',ic:'ball',prog:'volley',de:'de volleyeur',bar:'filet',barD:'du filet',barL:'le filet',postes:POSTES.slice(),
   types:{entr:'Entraînement',match:'Match',beach:'Beach'},stk:[['att','Attaques tentées'],['kill','Attaques gagnantes'],['blk','Contres gagnants'],['ace','Aces'],['err','Fautes de service']],
@@ -976,7 +984,7 @@ let logs=LS.get('gym_logs',{}),swaps=LS.get('gym_swaps',{}),profile=Object.assig
     nut=Object.assign({f:{},w:{}},LS.get('gym_nut',{}));
 const saveNut=()=>LS.set('gym_nut',nut);
 let focusOn=false,fIdx=0,fList=false,fDir=0,edQ='',rcat='all',rmine=true,calM=null,justChecked='',tTot=60;
-let tab='home',grp='plyo',libQ='',openEx=new Set(),progId='volley',sid=null,date=null,deferredPrompt=null,ptab='fiche',pex=null,jkind='cmj',showDate=false,autoKey='',draft={},nseg='besoins',nmom='Midi';
+let tab='home',grp='plyo',libQ='',openEx=new Set(),progId='volley',sid=null,date=null,deferredPrompt=null,ptab='fiche',pex=null,jkind='cmj',showDate=false,autoKey='',draft={},nseg='auj',nmom='Midi';
 try{const p=localStorage.getItem('gym_prog');if(p&&PROGS[p])progId=p}catch(e){}
 applySport();
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
@@ -1732,7 +1740,7 @@ function matchBanner(plyoCtx){const n=matchIn();if(n===null||n>3)return '';
 
 // ===================== ÉCRANS =====================
 function renderHome(){
-  const t=todayStr(),prog=PROGS[progId],hs=sidFor(t)||nextSid(),ses=prog.sessions.find(s=>s.id===hs),list=sessList(ses,t),hm=mods(ses,t),G=gameStats(),pt=protSum(t);
+  const t=todayStr(),prog=PROGS[progId],hs=sidFor(t)||nextSid(),ses=prog.sessions.find(s=>s.id===hs),list=sessList(ses,t),hm=mods(ses,t),G=gameStats(),pt=dayProt(t);
   const started=Object.values(logs).some(e=>e.date===t&&e.sid===hs&&hasData(e));
   const wk=monday(t),gd=new Set(sessionDates()),vd=new Set(volley.map(v=>v.date));
   const gymW=[...gd].filter(d=>monday(d)===wk).length,vbW=volley.filter(v=>monday(v.date)===wk).length;
@@ -1912,11 +1920,35 @@ function bodyForm(){const p=profile;return `<div class="card warn"><span class="
   <div class="row"><label class="field" style="margin:12px 0"><span>Taille (cm)</span><input data-pf="taille" inputmode="numeric" value="${esc(p.taille)}" placeholder="180"></label><label class="field" style="margin:12px 0"><span>Poids (kg)</span><input data-pf="poids" inputmode="decimal" value="${esc(p.poids)}" placeholder="75"></label></div>
   <div class="row"><label class="field" style="margin:0"><span>Âge</span><input data-pf="age" inputmode="numeric" value="${esc(p.age)}" placeholder="20"></label><div class="field" style="margin:0"><span>Sexe</span><div class="opts" style="grid-template-columns:1fr 1fr">${[['h','Homme'],['f','Femme']].map(([v,l])=>`<button class="${p.sexe===v?'on':''}" data-act="psexe" data-v="${v}">${l}</button>`).join('')}</div></div></div>
   <button class="btn acc block" data-act="nrefresh" style="margin-top:18px">Calculer</button></div>`}
+// ===================== v25 : Nutrition (Aujourd’hui · Mon plan · Cuisine) =====================
+let nsub='rec',ntm=null;
+const momentNow=()=>{const hr=new Date().getHours();return hr<10?'Petit-déj':hr<14?'Midi':hr<18?'Collation':'Soir'};
+// Protéines du jour : ajouts rapides + produits scannés ou repas notés
+const dayProt=d=>protSum(d)+foodOf(d).reduce((a,x)=>a+(+x.pr||0),0);
+function ringBox(p,col,big,unit,lab,act){return `<button class="nring" ${act?`data-act="${act}"`:''} aria-label="${lab} : ${big} ${unit}">${ring(p,74,7,col,`<b style="font-size:15px">${big}</b>`)}<span>${lab}<small>${unit}</small></span></button>`}
+function todayNutri(nd,g){const t=todayStr(),kc=kcalSum(t),pr=dayProt(t),w=nut.w[t]||0,mt=matchIn(),wg=Math.ceil(nd.water*4)+(mt===0?2:0),mom=ntm||momentNow();
+  let h='';
+  if(mt===0||mt===1)h+=`<div class="card" style="border-color:var(--vio)"><span class="t" style="color:var(--vio)">${ic('ball')} ${mt===0?'Jour de match':'Match demain'}</span><div class="small">${esc(mt===0?MATCHFOOD[1]+' '+MATCHFOOD[2]:MATCHFOOD[0])}</div></div>`;
+  h+=`<div class="card"><div class="lvrow" style="justify-content:space-between"><span class="t" style="margin:0">${ic('target')} Ma journée</span><button class="iconbtn" data-act="scan" aria-label="Scanner un produit" style="width:38px;height:38px;border-color:var(--yel);color:var(--yel)">${ic('scan')}</button></div>
+   <div class="nrings">${ringBox(kc/nd.kcal,kc>nd.kcal*1.1?'var(--ora)':'var(--yel)',kc.toLocaleString('fr-FR'),'/ '+nd.kcal.toLocaleString('fr-FR')+' kcal','Calories')}
+    ${ringBox(pr/nd.P,'var(--acc)',pr,'/ '+nd.P+' g','Protéines','prot')}${ringBox(w/wg,'var(--blu)',fr(w*0.25,2),'/ '+fr(wg*0.25,2)+' L','Eau')}</div>
+   <div class="small muted" style="margin-top:10px">${kc||pr?(kc<nd.kcal?'Il te reste ≈ '+(nd.kcal-kc).toLocaleString('fr-FR')+' kcal'+(pr<nd.P?' et '+(nd.P-pr)+' g de protéines':'')+'.':'Objectif calories atteint ✓'):'Note tes repas en un appui ci-dessous, ou scanne un produit.'}</div></div>`;
+  // Idée de repas pour maintenant, notée en un appui
+  const L=MEALS[g][mom]||[];
+  h+=`<div class="sect-h"><h3>Idées pour ${mom==='Petit-déj'?'le petit-déj':mom==='Midi'?'midi':mom==='Collation'?'la collation':'ce soir'}</h3></div>
+   <div class="chips">${MOMENTS.map(m=>`<button class="chip ${mom===m?'on':''}" data-act="ntm" data-v="${m}">${m}</button>`).join('')}</div>
+   <div class="card">${L.map(([n,k2,p],i)=>`<div class="meal mrow"><div style="flex:1;min-width:0"><b>${esc(n)}</b><div class="sub">≈ ${k2} kcal · ${p} g de protéines</div></div><button class="btn sm" data-act="mealeat" data-m="${esc(mom)}" data-i="${i}" aria-label="J’ai mangé ${esc(n)}">${ic('plus')} Noter</button></div>`).join('')}</div>`;
+  h+=`<div class="btnrow"><button class="btn" data-act="prot">${ic('plus')} Protéines</button><button class="btn" data-act="wat" data-v="1" style="color:var(--blu)">${ic('drop')} + 1 verre</button></div>`;
+  h+=foodCard(nd);
+  return h}
 function renderNutri(){
   const nd=needs(),g=profile.ngoal||'maintien';
+  if(nseg==='recettes'){nseg='cuisine';nsub='rec'}else if(nseg==='courses'){nseg='cuisine';nsub='shop'}else if(nseg==='besoins'||nseg==='repas')nseg='plan';else if(nseg==='corps')nseg='plan';
+  if(!['auj','plan','cuisine'].includes(nseg))nseg='auj';
   let h=`<header class="hdr"><div><div class="hello">Assiette & corps</div><h1>Nutrition</h1></div><div class="hbtns"><button class="iconbtn" data-act="scan" aria-label="Scanner un produit" style="border-color:var(--yel);color:var(--yel)">${ic('scan')}</button>${avatarBtn()}</div></header>
-  <div class="seg">${[['besoins','Besoins'],['repas','Repas'],['recettes','Recettes'],['courses','Courses'],['corps','Analyse']].map(([v,l])=>`<button class="${nseg===v?'on':''}" data-act="nseg" data-v="${v}">${l}</button>`).join('')}</div>`;
-  if(nseg==='besoins'){
+  <div class="seg">${[['auj','Aujourd’hui'],['plan','Mon plan'],['cuisine','Cuisine']].map(([v,l])=>`<button class="${nseg===v?'on':''}" data-act="nseg" data-v="${v}" aria-pressed="${nseg===v}">${l}</button>`).join('')}</div>`;
+  if(nseg==='auj'){if(!nd)h+=bodyForm();else h+=todayNutri(nd,g)}
+  else if(nseg==='plan'){
     h+=`<div class="opts" style="grid-template-columns:repeat(3,1fr)">${Object.entries(NGOALS).map(([v,o])=>`<button class="${g===v?'on':''}" data-act="ngoal" data-v="${v}">${o.n}<small>${o.s}</small></button>`).join('')}</div>`;
     if(!nd)h+=bodyForm();
     else{const pct=x=>Math.round(x/nd.kcal*100);
@@ -1925,34 +1957,39 @@ function renderNutri(){
       <div class="macro"><div class="mr"><b>Glucides</b><span>${nd.C} g</span></div><div class="pbar"><i style="width:${pct(nd.C*4)}%;background:var(--yel)"></i></div></div>
       <div class="macro"><div class="mr"><b>Lipides</b><span>${nd.F} g</span></div><div class="pbar"><i style="width:${pct(nd.F*9)}%;background:var(--vio)"></i></div></div><div class="big">${ic('apple')}</div></section>
       <div class="kpis"><div class="kpi"><small>Eau</small><b>${fr(nd.water)}</b><em>L / jour</em></div><div class="kpi"><small>Protéines / repas</small><b>${Math.round(nd.P/4)}</b><em>g × 4 repas</em></div></div>
-      ${(()=>{const cur=protSum(todayStr());return `<div class="card"><div class="lvrow" style="justify-content:space-between"><div><span class="t" style="margin:0">${ic('target')} Protéines aujourd’hui</span><div style="font-size:28px;font-weight:800;margin-top:4px">${cur}<span class="muted" style="font-size:15px;font-weight:650"> / ${nd.P} g</span></div></div><button class="btn acc sm" data-act="prot">${ic('plus')} Ajouter</button></div><button class="btn block" data-act="scan" style="margin-top:14px">${ic('scan')} Scanner un produit (calories, protéines)</button><div class="pbar"><i style="width:${Math.min(100,Math.round(cur/nd.P*100))}%"></i></div><div class="small muted" style="margin-top:8px">${cur>=nd.P?'Objectif atteint ✓ (+20 XP)':'Touche « Ajouter » à chaque repas : 2 secondes, pas besoin de peser.'}</div></div>`})()}
-      ${foodCard(nd)}${waterCard(nd)}
       <div class="card"><span class="t">${ic('info')} Ce que ça veut dire</span><div class="small muted">${g==='masse'?`Mange un peu plus que ce que tu dépenses pour construire du muscle. ${nd.P} g de protéines, c’est par exemple 200 g de poulet + 3 œufs + 2 yaourts + 1 shake.`:g==='seche'?`Mange un peu moins que ce que tu dépenses pour perdre du gras. Beaucoup de protéines (${nd.P} g) pour garder ton muscle et ta détente.`:`Mange autant que ce que tu dépenses pour rester stable et performant.`} Les jours de match ou de gros entraînement, ajoute 200-300 kcal de féculents.</div>
       <details style="margin-top:12px"><summary class="small muted">Détail du calcul ${ic('chev')}</summary><div class="det small">Métabolisme de base (formule de Mifflin-St Jeor) : ${nd.bmr.toLocaleString('fr-FR')} kcal × activité ${fr(nd.f,2)} (${nd.ses} séances/semaine) = ${nd.tdee.toLocaleString('fr-FR')} kcal d’entretien. Estimation : ajuste selon l’évolution de ton poids.</div></details></div>`;
       h+=weightCard(g);
     }
-  }else if(nseg==='repas'){
-    h+=`<div class="chips">${Object.entries(NGOALS).map(([v,o])=>`<button class="chip ${g===v?'on':''}" data-act="ngoal" data-v="${v}">${o.n}</button>`).join('')}</div>
-    <div class="seg">${MOMENTS.map(m=>`<button class="${nmom===m?'on':''}" data-act="nmom" data-v="${m}">${m}</button>`).join('')}</div>
+    if(nd){h+='<div class="sect-h" style="margin-top:26px"><h3>Repas types</h3></div>';
+    h+=`<div class="chips">${MOMENTS.map(m=>`<button class="chip ${nmom===m?'on':''}" data-act="nmom" data-v="${m}">${m}</button>`).join('')}</div>
     <div class="card">${MEALS[g][nmom].map(([n,kc,p])=>`<div class="meal"><b>${esc(n)}</b><div class="sub">≈ ${kc} kcal · ${p} g de protéines</div></div>`).join('')}</div>
     ${nd?`<div class="small muted center">Ton objectif : ${nd.kcal.toLocaleString('fr-FR')} kcal et ${nd.P} g de protéines par jour. Ajuste les portions.</div>`:''}
     <div class="sect-h"><h3>À privilégier</h3></div><div class="card"><div class="foods">${GOOD[g].map(f=>`<span>${esc(f)}</span>`).join('')}</div></div>
     <div class="sect-h"><h3>À limiter</h3></div><div class="card"><div class="foods">${BAD[g].map(f=>`<span style="color:var(--mute)">${esc(f)}</span>`).join('')}</div></div>
     <details class="card"><summary><span class="vchip">${ic('target')} Conseils ${NGOALS[g].n.toLowerCase()}</span>${ic('chev')}</summary><div class="det"><ul>${NTIPS[g].map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div></details>
     <details class="card"><summary><span class="vchip">${ic('ball')} Manger autour d’un match</span>${ic('chev')}</summary><div class="det"><ul>${MATCHFOOD.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div></details>`;
-  }else if(nseg==='courses'){
+    }
+  }else{
+    h+=`<div class="chips"><button class="chip ${nsub==='rec'?'on':''}" data-act="nsub" data-v="rec">${ic('book')} Recettes</button><button class="chip ${nsub==='shop'?'on':''}" data-act="nsub" data-v="shop">${ic('list')} Courses</button></div>`;
+    if(nsub==='shop'){
     h+=`<div class="chips">${Object.entries(NGOALS).map(([v,o])=>`<button class="chip ${g===v?'on':''}" data-act="ngoal" data-v="${v}">${o.n}</button>`).join('')}</div>
     <div class="sect-h" style="margin-top:20px"><h3>Liste de courses</h3><span class="muted small">pour 1 semaine</span></div>
     <div class="card">${SHOP[g].map(([cat,items])=>`<div class="shopcat">${esc(cat)}</div>${items.map(it=>{const key=g+'|'+it,on=!!shop[key];return `<div class="shop ${on?'on':''}" data-act="shopck" data-v="${esc(key)}" role="checkbox" aria-checked="${on}"><span class="bx">${on?ic('check'):''}</span>${esc(it)}</div>`}).join('')}`).join('')}
      <div class="btnrow"><button class="btn sm" data-act="shopshare">${ic('upload')} Envoyer la liste</button><button class="btn sm" data-act="shopclear">Tout décocher</button></div></div>
     <div class="card" style="display:flex;align-items:center;gap:14px;cursor:pointer" data-act="rgo"><span class="thumb" style="background:var(--yeld);color:var(--yel)">${ic('book')}</span><div style="flex:1"><h3 style="font-size:16px">Prépare ta semaine</h3><div class="small muted">1 h le dimanche = des repas prêts pour 4 jours. Voir les recettes à préparer à l’avance.</div></div>${ic('chev')}</div>`;
-  }else if(nseg==='recettes'){
+    }else{
     const l=RECIPES.filter(r=>(rcat==='all'||(rcat==='batch'?r.b:r.c===rcat))&&(!rmine||r.g.includes(g)));
     h+=`<div class="chips">${Object.entries(RCAT).map(([v,l2])=>`<button class="chip ${rcat===v?'on':''}" data-act="rcat" data-v="${v}">${l2}</button>`).join('')}</div>
     <div class="row" style="justify-content:space-between;align-items:center;margin:4px 2px 0"><span class="small muted">${l.length} recette${l.length>1?'s':''}${rmine?' pour ta '+NGOALS[g].n.toLowerCase():''}</span><button class="linkbtn" data-act="rmine" style="flex:none">${rmine?'Voir toutes':'Seulement mon objectif'}</button></div>
     <div class="small muted" style="margin:8px 2px 0">${g==='masse'?'Prise de masse : ajoute du pain, un fruit ou une poignée d’oléagineux si tu as encore faim.':g==='seche'?'Sèche : double les légumes et réduis les féculents d’un tiers si tu stagnes.':'Ajuste les portions à ta faim et à tes séances.'}</div>
     ${l.map(recipeCard).join('')||'<div class="card empty">Aucune recette dans cette catégorie pour ton objectif.</div>'}`;
-  }else{
+    }
+  }
+  $('#view').innerHTML=h;
+}
+// Analyse du corps (IMC, force par rapport au poids, puissance de saut) : affichée dans Progrès → Tests
+function corpsView(){const g=profile.ngoal||'maintien';let h='';
     const w=num(profile.poids),hh=num(profile.taille);
     if(!w||!hh||!num(profile.age)||!profile.sexe)h+=bodyForm();
     else{const bmi=w/((hh/100)**2),lo=Math.round(18.5*(hh/100)**2),hi=Math.round(24.9*(hh/100)**2);
@@ -1974,9 +2011,7 @@ function renderNutri(){
       else h+=`<div class="li"><div class="mid"><div class="nm">Il te faut pour toucher ${SP().barL}</div><div class="sub">sauter de</div></div><div class="r">${Math.max(0,net()-r)} cm</div></div>`;
       h+=`</div>`;
     }
-  }
-  $('#view').innerHTML=h;
-}
+  return h}
 // Journal du jour : produits scannés et calories ajoutées à la main
 const foodOf=d=>nut.f[d]||[],kcalSum=d=>foodOf(d).reduce((a,x)=>a+(+x.kc||0),0);
 function foodCard(nd){const t=todayStr(),l=foodOf(t),kc=kcalSum(t),pr=l.reduce((a,x)=>a+(+x.pr||0),0);
@@ -1998,9 +2033,20 @@ function weightCard(g){const l=wSorted(),t=wTrend();
   ${t?`<div class="stats3"><div><b>${l[l.length-1].kg}</b><small>kg</small></div><div><b style="color:var(--yel)">${sgn(fr(t.pw,2))}</b><small>kg / semaine</small></div><div><b>${sgn(fr(t.pct,1))}%</b><small>par semaine</small></div></div>`:''}
   <div class="goal" style="color:${t?'var(--ink)':'var(--mute)'}">${ic('target')}<span>${trendMsg(t,g)}</span></div>
   ${l.length?`<details style="margin-top:14px"><summary class="small muted">Mes pesées ${ic('chev')}</summary><div class="det">${[...l].reverse().slice(0,10).map(x=>`<div class="li"><div class="mid"><div class="nm">${fr(x.kg)} kg</div><div class="sub">${relDay(x.date)}</div></div><button class="xbtn" data-act="delw" data-id="${x.id}" aria-label="Supprimer">${ic('trash')}</button></div>`).join('')}</div></details>`:''}</div>`}
+// Bilan des 28 derniers jours comparé aux 28 précédents
+function monthCard(streak,total){const t=todayStr(),a=addDays(t,-27),b=addDays(t,-55),E=Object.values(logs).filter(e=>EX[e.exId]&&hasData(e));
+  const win=(x,y)=>{const L=E.filter(e=>e.date>=x&&e.date<=y);return{ses:new Set(L.map(e=>e.date)).size,sets:L.reduce((s,e)=>s+e.sets.filter(x2=>x2.d&&isDone(x2)).length,0),vol:Math.round(L.reduce((s,e)=>s+volOf(e),0))}};
+  const cur=win(a,t),prev=win(b,addDays(a,-1));let prs=0;
+  Object.keys(EX).forEach(id=>{const l=sessionsFor(id);if(!l.length)return;const ex=EX[id],sc=e=>ex.wl==='kg'?best1rm(e):Math.max(0,...e.sets.filter(isDone).map(s=>exMode(id)==='r'?s.r:(s.w||0)));
+    const bef=Math.max(0,...l.filter(e=>e.date<a).map(sc)),inW=Math.max(0,...l.filter(e=>e.date>=a).map(sc));if(bef>0&&inW>bef)prs++});
+  const dl=(c,p)=>{if(!p)return '';const d=Math.round((c-p)/p*100);if(!d)return '<em style="color:var(--mute)">= stable</em>';return `<em style="color:${d>=0?'var(--good)':'var(--ora)'}">${d>=0?'↑':'↓'} ${Math.abs(d)} %</em>`};
+  const kg=v=>v>=1000?fr(v/1000)+' t':v+' kg';
+  return `<div class="card"><div class="lvrow" style="justify-content:space-between"><span class="t" style="margin:0">${ic('chart')} 28 derniers jours</span><span class="muted small">vs les 28 d’avant</span></div>
+   <div class="mstat"><div><b>${cur.ses}</b><small>séances</small>${dl(cur.ses,prev.ses)}</div><div><b>${cur.sets}</b><small>séries</small>${dl(cur.sets,prev.sets)}</div><div><b>${kg(cur.vol)}</b><small>soulevés</small>${dl(cur.vol,prev.vol)}</div></div>
+   <div class="goal">${ic('trophy')}<span>${prs?prs+' record'+(prs>1?'s':'')+' battu'+(prs>1?'s':'')+' ce mois-ci 🔥':'Aucun record battu ce mois-ci : vise une répétition de plus que la dernière fois.'} · ${streak} sem. d’affilée · ${total} séances au total</span></div></div>`}
 function renderProgress(){
   if(ptab==='trophees')ptab='fiche';if(ptab==='charge')ptab='histo';
-  const segs=Object.assign({fiche:'Fiche',salle:'Salle',detente:'Tests'},profile.team||ptab==='equipe'?{equipe:'Équipe'}:{},{histo:'Historique'});
+  const segs=Object.assign({fiche:'Fiche',salle:'Salle',detente:'Tests & corps'},profile.team||ptab==='equipe'?{equipe:'Équipe'}:{},{histo:'Historique'});
   let h=`<header class="hdr"><div><div class="hello">Tes performances</div><h1>Progrès</h1></div>${avatarBtn()}</header><div class="seg">${Object.keys(segs).map(s=>`<button class="${s===ptab?'on':''}" data-act="ptab" data-v="${s}">${segs[s]}</button>`).join('')}</div>`;
   const t=todayStr(),wk=monday(t),W8=[];for(let i=7;i>=0;i--)W8.push(addDays(wk,-7*i));
   if(ptab==='salle'){
@@ -2008,7 +2054,7 @@ function renderProgress(){
     const vols=W8.map(w=>Object.values(logs).filter(e=>e.date>=w&&e.date<=addDays(w,6)).reduce((a,e)=>a+volOf(e),0));
     const withData=Object.keys(EX).filter(id=>sessionsFor(id).length);
     if(!pex||!withData.includes(pex))pex=withData.sort((a,b)=>{const la=sessionsFor(a),lb=sessionsFor(b);return la[la.length-1].date<lb[lb.length-1].date?1:-1})[0]||null;
-    h+=`<div class="kpis"><div class="kpi"><small>Séances</small><b>${dates.length}</b><em>au total</em></div><div class="kpi"><small>Régularité</small><b>${streak}</b><em>sem. d’affilée</em></div></div>`;
+    h+=monthCard(streak,dates.length);
     if(pex){const s=exSeries(pex),l=sessionsFor(pex),ex=EX[pex],f=s.pts[0].v,la=s.pts[s.pts.length-1].v,b1=ex.wl==='kg'?Math.max(...l.map(best1rm)):0;
       h+=`<div class="card"><span class="t">${ic('chart')} Un exercice</span><select id="pex" aria-label="Exercice">${withData.map(id=>`<option value="${id}" ${id===pex?'selected':''}>${esc(EX[id].name)}</option>`).join('')}</select>
       <div style="margin-top:16px">${line(s.pts,'var(--acc)',s.unit)}</div>
@@ -2016,7 +2062,8 @@ function renderProgress(){
     }else h+=`<div class="card empty">Valide tes premières séries dans « Séance » : ta progression s’affichera ici.</div>`;
     h+=`<div class="card"><span class="t">${ic('dumbbell')} Poids soulevé par semaine</span>${bars(vols,W8.map(fmtDM),7,v=>v>=1000?fr(v/1000)+'t':Math.round(v))}</div>`;
     const recs=withData.map(id=>{const ex=EX[id],l=sessionsFor(id);let b=null;l.forEach(e=>e.sets.filter(isDone).forEach(s=>{const sc=ex.wl==='kg'?e1rm(s.w,s.r):(exMode(id)==='r'?s.r:s.w);if(!b||sc>b.sc)b={w:s.w,r:s.r,d:e.date,sc}}));return{id,b}});
-    h+=`<div class="card"><span class="t">${ic('trophy')} Mes records</span>${recs.length?recs.map(r=>`<div class="li">${thumb(EX[r.id].g)}<div class="mid"><div class="nm">${esc(EX[r.id].name)}</div><div class="sub">${fmtD(r.b.d)}</div></div><div class="r">${fmtSet(EX[r.id],r.b)}</div></div>`).join(''):'<div class="empty">Pas encore de records.</div>'}</div>`;
+    {const d28=addDays(t,-27),rs=recs.filter(r=>r.b).sort((a,b)=>a.b.d<b.b.d?1:-1),row=r=>`<div class="li">${thumb(EX[r.id].g)}<div class="mid"><div class="nm">${esc(EX[r.id].name)}${r.b.d>=d28?' <span class="newpr">NOUVEAU</span>':''}</div><div class="sub">${fmtD(r.b.d)}</div></div><div class="r">${fmtSet(EX[r.id],r.b)}</div></div>`;
+     h+=`<div class="card"><span class="t">${ic('trophy')} Mes records</span>${rs.length?rs.slice(0,6).map(row).join('')+(rs.length>6?`<details style="margin-top:6px"><summary class="small muted">Voir les ${rs.length-6} autres ${ic('chev')}</summary><div class="det">${rs.slice(6).map(row).join('')}</div></details>`:''):'<div class="empty">Pas encore de records.</div>'}</div>`}
   }else if(ptab==='detente'){
     const l=jumpsOf(jkind),J=JK[jkind],r=reach(),u=JU(jkind),ord=[...new Set([...SP().tiles,...Object.keys(JK)])];
     h+=`<div class="chips">${ord.map(x=>`<button class="chip ${x===jkind?'on':''}" data-act="jk" data-v="${x}">${JK[x].s}</button>`).join('')}</div>
@@ -2025,6 +2072,7 @@ function renderProgress(){
     <button class="btn acc block" data-act="sheet-test">${ic('plus')} Nouveau test</button>
     ${l.length?`<div class="card">${[...l].reverse().map(j=>`<div class="li"><div class="mid"><div class="nm">${fmtJ(j.kind,j.val)} ${u}${J.reach&&r?` <span class="muted small">· détente ${j.val-r} cm</span>`:''}</div><div class="sub">${relDay(j.date)} · ${j.method==='capteur'?'téléphone':'mesuré'}${j.note?' · '+esc(j.note):''}</div></div><button class="xbtn" data-act="deljump" data-id="${j.id}" aria-label="Supprimer">${ic('trash')}</button></div>`).join('')}</div>`:''}
     <div class="small muted" style="margin-top:14px">${J.help}</div>`;
+    h+=`<div class="sect-h" style="margin-top:30px"><h3>Ton corps</h3><span class="muted small">IMC, force, puissance</span></div>`+corpsView();
   }else if(ptab==='histo'){h+=calCard()+'<div class="sect-h" style="margin-top:24px"><h3>Charge d’entraînement</h3></div>';
     const ac=acwr(),z=zone(ac.r);
     const gymL=W8.map(w=>sessionDates().filter(d=>d>=w&&d<=addDays(w,6)).reduce((a,d)=>a+gymDur(d)*(rpe[d]||6),0));
@@ -2690,7 +2738,7 @@ document.addEventListener('click',ev=>{
   case 'scadd':{const c=prodCalc(scanCur,scanQty),g=Math.round(c.pr||0),kc=Math.round(c.kc||0);if(!g&&!kc)break;const t0=todayStr(),nd=needs(),before=protSum(t0);
     if(g){prot[t0]=prot[t0]||[];prot[t0].push(g);LS.set('gym_prot',prot)}
     nut.f[t0]=foodOf(t0).concat({id:uid(),n:scanCur.n,kc,pr:g,q:scanQty});saveNut();
-    closeSheet();nseg='besoins';if(tab!=='nutri')go('nutri');else render();toast(nd&&g&&before<nd.P&&before+g>=nd.P?'Objectif protéines atteint ✓ +20 XP':'+'+kc+' kcal'+(g?' · +'+g+' g de protéines':''),2600);break}
+    closeSheet();nseg='auj';if(tab!=='nutri')go('nutri');else render();toast(nd&&g&&before<nd.P&&before+g>=nd.P?'Objectif protéines atteint ✓ +20 XP':'+'+kc+' kcal'+(g?' · +'+g+' g de protéines':''),2600);break}
   case 'jdel':{const t0=todayStr(),x=foodOf(t0).find(y=>y.id===d.id);if(!x)break;nut.f[t0]=foodOf(t0).filter(y=>y.id!==d.id);if(!nut.f[t0].length)delete nut.f[t0];
     if(x.pr&&prot[t0]){const j=prot[t0].lastIndexOf(x.pr);if(j>=0)prot[t0].splice(j,1);if(!prot[t0].length)delete prot[t0];LS.set('gym_prot',prot)}saveNut();render();
     undoBar('Retiré du journal',()=>{nut.f[t0]=foodOf(t0).concat(x);saveNut();if(x.pr){prot[t0]=(prot[t0]||[]).concat(x.pr);LS.set('gym_prot',prot)}});break}
@@ -2820,7 +2868,10 @@ document.addEventListener('click',ev=>{
     volley.push(v);saveVolley();closeSheet();toast((v.type==='match'?(v.res==='v'?'Victoire notée ! 🏆':'Match noté ✓'):'Séance de '+spLow()+' notée ✓')+' +'+(v.type==='match'?80:60)+' XP');if(v.res==='v')confetti();render();break}
   case 'sensgo':sensGo();break;
   case 'senssave':if(sens.att.length){const b=Math.max(...sens.att),pb=bestJ('cmj');jumps.push({id:uid(),date:todayStr(),kind:'cmj',val:b,method:'capteur'});saveJumps();closeSheet();toast(pb!=null&&b>pb?'Nouveau record : '+b+' cm 🚀':'Détente enregistrée : '+b+' cm');if(pb!=null&&b>pb)confetti();jkind='cmj';render()}break;
-  case 'nseg':nseg=d.v;render();break;
+  case 'nseg':nseg=d.v;render();window.scrollTo(0,0);break;
+  case 'nsub':nsub=d.v;render();break;
+  case 'ntm':ntm=d.v;render();break;
+  case 'mealeat':{const g0=profile.ngoal||'maintien',m=(MEALS[g0][d.m]||[])[+d.i];if(!m)break;const t0=todayStr();nut.f[t0]=foodOf(t0).concat({id:uid(),n:m[0],kc:m[1],pr:m[2]});saveNut();render();toast('Noté : '+m[1]+' kcal, '+m[2]+' g de protéines ✓');break}
   case 'nmom':nmom=d.v;render();break;
   case 'ngoal':profile.ngoal=d.v;saveProfile();render();break;
   case 'psexe':profile.sexe=d.v;saveProfile();t.parentNode.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===t));break;
