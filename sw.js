@@ -1,5 +1,5 @@
 // Service worker : l'appli fonctionne hors ligne et se met à jour quand le réseau est là.
-const CACHE = 'carnet-salle-v32';
+const CACHE = 'carnet-salle-v33';
 // Les photos d'exercices ont leur propre cache, gardé d'une version à l'autre
 const PHOTO_CACHE = 'yosha-photos-1';
 const FILES = ['./', './index.html', './guide.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './anton.woff2'];
